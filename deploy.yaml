@@ -1,0 +1,382 @@
+---
+- name: Deploy CTFd
+  hosts: localhost
+  gather_facts: false
+  connection: local
+  vars:
+    project_name: "ctfd"
+  tasks:
+    - name: create {{ project_name }} namespace
+      kubernetes.core.k8s:
+        api_version: v1
+        kind: Namespace
+        name: "{{ project_name }}"
+        state: present
+        wait: yes
+
+    - name: create imagestream
+      kubernetes.core.k8s:
+        api_version: image.openshift.io/v1
+        namespace: "{{ project_name }}"
+        kind: ImageStream
+        name: "ctfd"
+        state: present
+        wait: yes
+
+    - name: create buildconfig for CTFd
+      kubernetes.core.k8s:
+        namespace: "{{ project_name }}"
+        definition:
+          apiVersion: build.openshift.io/v1
+          kind: BuildConfig
+          metadata:
+            annotations:
+            labels:
+              app: ctfd
+            name: ctfd
+          spec:
+            output:
+              to:
+                kind: ImageStreamTag
+                name: ctfd:latest
+            triggers:
+              - type: "ConfigChange"
+            source:
+              git:
+                ref: master
+                uri: https://github.com/catalyst-ctfd/CTFd
+              contextDir:
+              type: Git
+            strategy:
+              dockerStrategy:
+                from:
+                  kind: DockerImage
+                  name: python:3.9-slim-buster
+                forcePull: true
+                noCache: true
+              type: Docker
+        wait: yes
+
+    - name: create mysql pvc
+      kubernetes.core.k8s:
+        namespace: "{{ project_name }}"
+        definition:
+          apiVersion: v1
+          kind: PersistentVolumeClaim
+          metadata:
+            namespace: "{{ project_name }}"
+            creationTimestamp: null
+            labels:
+              ctfd: mysql-pv
+              app: ctfd-mysql-db-pv
+            name: ctfd-mysql-db-pv
+          spec:
+            accessModes:
+            - ReadWriteOnce
+            resources:
+              requests:
+                storage: 100Mi
+
+    - name: create mysql deployment
+      kubernetes.core.k8s:
+        namespace: "{{ project_name }}"
+        definition:
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            namespace: "{{ project_name }}"
+            creationTimestamp: null
+            labels:
+              ctfd: mysql
+              app: ctfd-mysql-db
+            name: ctfd-mysql-db
+          spec:
+            replicas: 1
+            selector:
+              matchLabels:
+                app: ctfd-mysql-db
+            strategy:
+              type: Recreate
+            template:
+              metadata:
+                creationTimestamp: null
+                labels:
+                  ctfd: mysql
+                  app: ctfd-mysql-db
+              spec:
+                containers:
+                - args:
+                  - mysqld
+                  - --character-set-server=utf8mb4
+                  - --collation-server=utf8mb4_unicode_ci
+                  - --wait_timeout=28800
+                  - --log-warnings=0
+                  env:
+                  - name: MYSQL_DATABASE
+                    value: ctfd
+                  - name: MYSQL_PASSWORD
+                    value: ctfd
+                  - name: MYSQL_ROOT_PASSWORD
+                    value: ctfd
+                  - name: MYSQL_USER
+                    value: ctfd
+                  image: mariadb:10.4.12
+                  imagePullPolicy: ""
+                  name: ctfd-mysql-db
+                  resources: {}
+                  volumeMounts:
+                  - mountPath: /var/lib/mysql
+                    name: ctfd-mysql-db-pv
+                restartPolicy: Always
+                serviceAccountName: ""
+                automountServiceAccountToken: false
+                volumes:
+                - name: ctfd-mysql-db-pv
+                  persistentVolumeClaim:
+                    claimName: ctfd-mysql-db-pv
+
+    - name: create mysql service
+      kubernetes.core.k8s:
+        namespace: "{{ project_name }}"
+        definition:
+          apiVersion: v1
+          kind: Service
+          metadata:
+            namespace: "{{ project_name }}"
+            creationTimestamp: null
+            labels:
+              app: ctfd-mysql-db
+            name: ctfd-mysql-db
+          spec:
+            ports:
+            - name: mysql
+              port: 3306
+              protocol: TCP
+              targetPort: 3306
+            selector:
+              app: ctfd-mysql-db
+            type: ClusterIP
+
+    - name: create redis pvc
+      kubernetes.core.k8s:
+        namespace: "{{ project_name }}"
+        definition:
+          apiVersion: v1
+          kind: PersistentVolumeClaim
+          metadata:
+            namespace: "{{ project_name }}"
+            creationTimestamp: null
+            name: ctfd-redis-cache-pv
+            labels:
+              ctfd: redis-pv
+              app: ctfd-redis-cache-pv
+          spec:
+            accessModes:
+            - ReadWriteOnce
+            resources:
+              requests:
+                storage: 100Mi
+
+    - name: create redis deployment
+      kubernetes.core.k8s:
+        namespace: "{{ project_name }}"
+        definition:
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            namespace: "{{ project_name }}"
+            creationTimestamp: null
+            name: ctfd-redis-cache
+            labels:
+              ctfd: redis
+              app: ctfd-redis-cache
+          spec:
+            replicas: 1
+            selector:
+              matchLabels:
+                app: ctfd-redis-cache
+            strategy:
+              type: Recreate
+            template:
+              metadata:
+                creationTimestamp: null
+                labels:
+                  ctfd: redis
+                  app: ctfd-redis-cache
+              spec:
+                containers:
+                - image: redis:4
+                  imagePullPolicy: ""
+                  name: ctfd-redis-cache
+                  resources: {}
+                  volumeMounts:
+                  - mountPath: /data
+                    name: ctfd-redis-cache-pv
+                restartPolicy: Always
+                serviceAccountName: ""
+                automountServiceAccountToken: false
+                volumes:
+                - name: ctfd-redis-cache-pv
+                  persistentVolumeClaim:
+                    claimName: ctfd-redis-cache-pv
+
+    - name: create redis service
+      kubernetes.core.k8s:
+        namespace: "{{ project_name }}"
+        definition:
+          apiVersion: v1
+          kind: Service
+          metadata:
+            namespace: "{{ project_name }}"
+            creationTimestamp: null
+            labels:
+              app: ctfd-redis-cache
+            name: ctfd-redis-cache
+          spec:
+            ports:
+            - name: redis
+              port: 6379
+              protocol: TCP
+              targetPort: 6379
+            selector:
+              app: ctfd-redis-cache
+            type: ClusterIP
+
+    - name: create ctfd logs pvc
+      kubernetes.core.k8s:
+        namespace: "{{ project_name }}"
+        definition:
+          apiVersion: v1
+          kind: PersistentVolumeClaim
+          metadata:
+            creationTimestamp: null
+            labels:
+              ctfd: ctf-pv
+              app: ctf-pv-logs
+            name: ctf-pv-logs
+          spec:
+            accessModes:
+            - ReadWriteOnce
+            resources:
+              requests:
+                storage: 100Mi
+
+    - name: create ctfd uploads pvc
+      kubernetes.core.k8s:
+        namespace: "{{ project_name }}"
+        definition:
+          apiVersion: v1
+          kind: PersistentVolumeClaim
+          metadata:
+            creationTimestamp: null
+            labels:
+              ctfd: ctf-pv
+              app: ctfd-pv-uploads
+            name: ctfd-pv-uploads
+          spec:
+            accessModes:
+            - ReadWriteOnce
+            resources:
+              requests:
+                storage: 500Mi
+
+    - name: create ctfd deployment
+      kubernetes.core.k8s:
+        namespace: "{{ project_name }}"
+        definition:
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            name: ctfd
+            labels:
+              ctfd: ctfd
+              app: ctfd
+          spec:
+            replicas: 1
+            selector:
+              matchLabels:
+                app: ctfd
+            template:
+              metadata:
+                labels:
+                  ctfd: ctfd
+                  app: ctfd
+              spec:
+                containers:
+                - env:
+                  - name: ACCESS_LOG
+                    value: '-'
+                  - name: DATABASE_URL
+                    value: mysql+pymysql://ctfd:ctfd@ctfd-mysql-db/ctfd
+                  - name: ERROR_LOG
+                    value: '-'
+                  - name: LOG_FOLDER
+                    value: /var/log/CTFd
+                  - name: REDIS_URL
+                    value: redis://ctfd-redis-cache:6379
+                  - name: REVERSE_PROXY
+                    value: "true"
+                  - name: UPLOAD_FOLDER
+                    value: /var/uploads
+                  - name: WORKERS
+                    value: "1"
+                  image: "image-registry.openshift-image-registry.svc:5000/{{ project_name }}/ctfd:latest"
+                  imagePullPolicy: ""
+                  name: ctfd
+                  resources: {}
+                  volumeMounts:
+                  - mountPath: /var/log/CTFd
+                    name: ctf-pv-logs
+                  - mountPath: /var/uploads
+                    name: ctfd-pv-uploads
+                restartPolicy: Always
+                serviceAccountName: ""
+                automountServiceAccountToken: false
+                volumes:
+                - name: ctf-pv-logs
+                  persistentVolumeClaim:
+                    claimName: ctf-pv-logs
+                - name: ctfd-pv-uploads
+                  persistentVolumeClaim:
+                    claimName: ctfd-pv-uploads
+
+    - name: create ctfd service
+      kubernetes.core.k8s:
+        namespace: "{{ project_name }}"
+        definition:
+          apiVersion: v1
+          kind: Service
+          metadata:
+            labels:
+              app: ctfd
+            name: ctfd
+          spec:
+            ports:
+            - name: ui
+              port: 8000
+              protocol: TCP
+              targetPort: 8000
+            selector:
+              app: ctfd
+            type: ClusterIP
+
+    - name: create scavenger route
+      kubernetes.core.k8s:
+        namespace: "{{ project_name }}"
+        definition:
+          kind: Route
+          apiVersion: route.openshift.io/v1
+          metadata:
+            name: scavenger
+            labels:
+              app: ctfd
+          spec:
+            to:
+              kind: Service
+              name: ctfd
+              weight: 100
+            port:
+              targetPort: ui
+            tls:
+              termination: edge
+            wildcardPolicy: None
