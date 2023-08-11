@@ -382,7 +382,10 @@
             wildcardPolicy: None
 
     - name: create player accounts
-      shell: oc create secret generic htpasswd --from-file=htpasswd=players.htpasswd -n openshift-config --dry-run=client -o yaml | oc replace -f -
+      shell: |
+        oc get secret htpasswd -o json -n openshift-config | jq .data.htpasswd | tr -d \" | base64 -d - | grep admin > .players.htpasswd
+        cat players.htpasswd >> .players.htpasswd
+        oc create secret generic htpasswd --from-file=htpasswd=.players.htpasswd -n openshift-config --dry-run=client -o yaml | oc replace -f -
 
     - name: create player namespaces
       kubernetes.core.k8s:
@@ -392,3 +395,49 @@
         state: present
         wait: yes
       with_sequence: start=1 end=100
+
+    - name: create gitea operator
+      shell: oc apply -k https://github.com/rhpds/gitea-operator/OLMDeploy
+
+    - name: create gitea namespace
+      kubernetes.core.k8s:
+        api_version: v1
+        kind: Namespace
+        name: gitea
+        state: present
+        wait: yes
+
+    - name: create gitea CRD
+      kubernetes.core.k8s:
+        namespace: gitea
+        definition:
+          apiVersion: pfe.rhpds.com/v1
+          kind: Gitea
+          metadata:
+            name: gitea
+          spec:
+            giteaImageTag: 1.20.0
+            giteaVolumeSize: 4Gi
+            giteaSsl: true
+            postgresqlVolumeSize: 4Gi
+            giteaAdminUser: gitadmin
+            giteaAdminEmail: green@redhat.com
+            giteaAdminPassword: redhat123
+            giteaAdminPasswordLength: 32
+            giteaCreateUsers: true
+            giteaGenerateUserFormat: "player%d"
+            giteaUserNumber: 100
+            giteaUserPassword: openshift
+
+    - name: Wait for gitea pod to be created
+      shell: "kubectl get pod --namespace=gitea --selector app=gitea --output=jsonpath='{.items[*].metadata.name}'"
+      register: gitea_pod_created
+      until: item in gitea_pod_created.stdout
+      retries: 10
+      delay: 30
+      with_items:
+        - gitea
+
+    - name: Wait for gitea to become ready
+      shell: "kubectl wait --namespace=gitea --for=condition=Ready pods --selector app=gitea --timeout=600s"
+      register: gitea_pod_created
