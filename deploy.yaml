@@ -416,7 +416,7 @@
           metadata:
             name: gitea
           spec:
-            giteaImageTag: 1.20.0
+            giteaImageTag: 1.20.1
             giteaVolumeSize: 4Gi
             giteaSsl: true
             postgresqlVolumeSize: 4Gi
@@ -428,6 +428,11 @@
             giteaGenerateUserFormat: "player%d"
             giteaUserNumber: 100
             giteaUserPassword: openshift
+            giteaMigrateRepositories: true
+            giteaRepositoriesList:
+            - repo: https://github.com/catalyst-ctfd/node-starter.git
+              name: node-starter
+              private: true
 
     - name: Wait for gitea pod to be created
       shell: "kubectl get pod --namespace=gitea --selector app=gitea --output=jsonpath='{.items[*].metadata.name}'"
