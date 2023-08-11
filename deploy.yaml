@@ -383,3 +383,12 @@
 
     - name: create player accounts
       shell: oc create secret generic htpasswd --from-file=htpasswd=players.htpasswd -n openshift-config --dry-run=client -o yaml | oc replace -f -
+
+    - name: create player namespaces
+      kubernetes.core.k8s:
+        api_version: v1
+        kind: Namespace
+        name: "player{{ item }}"
+        state: present
+        wait: yes
+      with_sequence: start=1 end=100
