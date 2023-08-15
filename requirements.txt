@@ -1,0 +1,4 @@
+ansible
+openshift
+pyyaml
+kubernetes
