@@ -3,7 +3,7 @@
 Make sure to have the ``oc`` command-line tool installed.
 
 Create a python environment and install all python modules dependancies.
-``pip install requirements.txt``
+``pip install -r requirements.txt``
 
 Log on your OpenShift cluster using the ``oc login`` as admin.
 
