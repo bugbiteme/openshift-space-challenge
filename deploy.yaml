@@ -6,6 +6,8 @@
   vars:
     project_name: "ctfd"
   tasks:
+
+  tasks:
     - name: create {{ project_name }} namespace
       kubernetes.core.k8s:
         api_version: v1
@@ -484,7 +486,20 @@
     - name: Create ctfd users
       shell: python ./make-ctfd-users.py > ctfd-config/db/users.json
 
-# TODO: add a task to update all of the URLs in the challages
+    - name: Get the cluster console URL
+      shell: oc get routes --all-namespaces | grep console-openshift | awk '{ print $3 }'
+      register: oc_output
+
+    - name: Extract the cluster domain
+      set_fact:
+        extracted_domain: "{{ oc_output.stdout.split('apps.')[1] }}"
+
+    - name: Patch challenges.json file
+      template:
+        src: "{{ playbook_dir }}/ctfd-config/db/challenges.json.in"
+        dest: "{{ playbook_dir }}/ctfd-config/db/challenges.json"
+      vars:
+        cluster_url: "{{ extracted_domain }}"
 
     - name: create ctfd archive for uploading
       community.general.archive:
