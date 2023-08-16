@@ -13,6 +13,8 @@
         name: "{{ project_name }}"
         state: present
         wait: yes
+      retries: 20
+      delay: 15
 
     - name: create imagestream
       kubernetes.core.k8s:
@@ -22,6 +24,8 @@
         name: "ctfd"
         state: present
         wait: yes
+      retries: 20
+      delay: 15
 
     - name: create buildconfig for CTFd
       kubernetes.core.k8s:
@@ -56,6 +60,8 @@
                 noCache: true
               type: Docker
         wait: yes
+      retries: 20
+      delay: 15
 
     - name: create mysql pvc
       kubernetes.core.k8s:
@@ -76,6 +82,8 @@
             resources:
               requests:
                 storage: 100Mi
+      retries: 20
+      delay: 15
 
     - name: create mysql deployment
       kubernetes.core.k8s:
@@ -134,6 +142,8 @@
                 - name: ctfd-mysql-db-pv
                   persistentVolumeClaim:
                     claimName: ctfd-mysql-db-pv
+      retries: 20
+      delay: 15
 
     - name: create mysql service
       kubernetes.core.k8s:
@@ -156,6 +166,8 @@
             selector:
               app: ctfd-mysql-db
             type: ClusterIP
+      retries: 20
+      delay: 15
 
     - name: create redis pvc
       kubernetes.core.k8s:
@@ -176,6 +188,8 @@
             resources:
               requests:
                 storage: 100Mi
+      retries: 20
+      delay: 15
 
     - name: create redis deployment
       kubernetes.core.k8s:
@@ -219,6 +233,8 @@
                 - name: ctfd-redis-cache-pv
                   persistentVolumeClaim:
                     claimName: ctfd-redis-cache-pv
+      retries: 20
+      delay: 15
 
     - name: create redis service
       kubernetes.core.k8s:
@@ -241,6 +257,8 @@
             selector:
               app: ctfd-redis-cache
             type: ClusterIP
+      retries: 20
+      delay: 15
 
     - name: create ctfd logs pvc
       kubernetes.core.k8s:
@@ -260,6 +278,8 @@
             resources:
               requests:
                 storage: 100Mi
+      retries: 20
+      delay: 15
 
     - name: create ctfd uploads pvc
       kubernetes.core.k8s:
@@ -279,6 +299,8 @@
             resources:
               requests:
                 storage: 500Mi
+      retries: 20
+      delay: 15
 
     - name: create ctfd deployment
       kubernetes.core.k8s:
@@ -339,6 +361,8 @@
                 - name: ctfd-pv-uploads
                   persistentVolumeClaim:
                     claimName: ctfd-pv-uploads
+      retries: 20
+      delay: 15
 
     - name: create ctfd service
       kubernetes.core.k8s:
@@ -359,6 +383,8 @@
             selector:
               app: ctfd
             type: ClusterIP
+      retries: 20
+      delay: 15
 
     - name: create scavenger route
       kubernetes.core.k8s:
@@ -380,6 +406,8 @@
             tls:
               termination: edge
             wildcardPolicy: None
+      retries: 20
+      delay: 15
 
     - name: create player accounts
       shell: |
@@ -395,6 +423,8 @@
         state: present
         wait: yes
       with_sequence: start=1 end=100
+      retries: 20
+      delay: 15
 
     - name: create gitea operator
       shell: oc apply -k https://github.com/rhpds/gitea-operator/OLMDeploy
@@ -406,6 +436,8 @@
         name: gitea
         state: present
         wait: yes
+      retries: 20
+      delay: 15
 
     - name: create gitea CRD
       kubernetes.core.k8s:
@@ -433,6 +465,8 @@
             - repo: https://github.com/catalyst-ctfd/node-starter.git
               name: node-starter
               private: true
+      retries: 20
+      delay: 15
 
     - name: Wait for gitea pod to be created
       shell: "kubectl get pod --namespace=gitea --selector app=gitea --output=jsonpath='{.items[*].metadata.name}'"
