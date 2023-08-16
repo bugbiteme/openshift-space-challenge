@@ -469,7 +469,7 @@
       delay: 15
 
     - name: Wait for gitea pod to be created
-      shell: "kubectl get pod --namespace=gitea --selector app=gitea --output=jsonpath='{.items[*].metadata.name}'"
+      shell: "oc get pod --namespace=gitea --selector app=gitea --output=jsonpath='{.items[*].metadata.name}'"
       register: gitea_pod_created
       until: item in gitea_pod_created.stdout
       retries: 10
@@ -478,5 +478,17 @@
         - gitea
 
     - name: Wait for gitea to become ready
-      shell: "kubectl wait --namespace=gitea --for=condition=Ready pods --selector app=gitea --timeout=600s"
+      shell: "oc wait --namespace=gitea --for=condition=Ready pods --selector app=gitea --timeout=600s"
       register: gitea_pod_created
+
+    - name: Create ctfd users
+      shell: python ./make-ctfd-users.py > ctfd-config/db/users.json
+
+# TODO: add a task to update all of the URLs in the challages
+
+    - name: create ctfd archive for uploading
+      community.general.archive:
+        path:
+        - "{{ playbook_dir }}/ctfd-config/"
+        dest: "{{ playbook_dir }}/ctfd-upload-me.zip"
+        format: zip

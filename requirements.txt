@@ -2,3 +2,5 @@ ansible
 openshift
 pyyaml
 kubernetes
+passlib
+datetime
