@@ -105,17 +105,18 @@ def submit_flag(player, challenge, flag):
     # Check if it was right
     print(r.json()["data"])
 
-def challenge_4():
+def challenges_4_and_5():
     for i in range(1, PLAYER_COUNT + 1):
-        url_to_check = "https://hello-player{}.apps.{}/".format(i, config['DEFAULT']['cluster_domain'])
-        if check_url_response(url_to_check, "Hello World"):
-            submit_flag(i, 4, "FLAG_HELLO_99")
-
-def challenge_5():
-    for i in range(1, PLAYER_COUNT + 1):
-        url_to_check = "https://hello-player{}.apps.{}/".format(i, config['DEFAULT']['cluster_domain'])
-        if check_url_response(url_to_check, "Bonjour Monde"):
-            submit_flag(i, 5, "FLAG_BONJOUR_99")
+        url = "https://hello-player{}.apps.{}/".format(i, config['DEFAULT']['cluster_domain'])
+        print(url)
+        try:
+            response = requests.get(url).text.strip()
+            if response == "Hello World":
+                submit_flag(i, 4, "FLAG_HELLO_99")
+            if response == "Bonjour Monde":
+                submit_flag(i, 5, "FLAG_BONJOUR_99")
+        except requests.RequestException:
+            return False
 
 def main():
 
@@ -126,8 +127,7 @@ def main():
             PASSWORDS.append(row[1])
 
     while True:
-        challenge_4()
-        challenge_5()
+        challenges_4_and_5()
 
 if __name__ == "__main__":
     main()
