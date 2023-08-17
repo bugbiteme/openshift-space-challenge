@@ -441,6 +441,11 @@
       retries: 20
       delay: 15
 
+    - name: Assing players to namespaces
+      shell: |
+        oc adm policy add-role-to-user edit "player{{ item }}" -n "player{{ item }}"
+      with_sequence: start=1 end=100
+
     - name: create gitea CRD
       kubernetes.core.k8s:
         namespace: gitea
