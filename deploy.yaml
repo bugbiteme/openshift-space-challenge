@@ -506,6 +506,13 @@
       vars:
         cluster_url: "{{ extracted_domain }}"
 
+    - name: Patch judge config/settings.ini
+      template:
+        src: "{{ playbook_dir }}/judge/settings.ini.in"
+        dest: "{{ playbook_dir }}/judge/settings.ini"
+      vars:
+        cluster_url: "{{ extracted_domain }}"
+
     - name: create ctfd archive for uploading
       community.general.archive:
         path:

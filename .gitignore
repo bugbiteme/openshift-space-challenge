@@ -3,3 +3,4 @@
 *.aux
 *.dvi
 .players.htpasswd
+/judge/settings.ini
