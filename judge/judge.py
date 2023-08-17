@@ -106,18 +106,16 @@ def submit_flag(player, challenge, flag):
     print(r.json()["data"])
 
 def challenge_4():
-    while True:
-        for i in range(1, PLAYER_COUNT + 1):
-            url_to_check = "https://hello-player{}.apps.{}/".format(i, config['DEFAULT']['cluster_domain'])
-            if check_url_response(url_to_check, "Hello World"):
-                submit_flag(i, 4, "FLAG_HELLO_99")
+    for i in range(1, PLAYER_COUNT + 1):
+        url_to_check = "https://hello-player{}.apps.{}/".format(i, config['DEFAULT']['cluster_domain'])
+        if check_url_response(url_to_check, "Hello World"):
+            submit_flag(i, 4, "FLAG_HELLO_99")
 
 def challenge_5():
-    while True:
-        for i in range(1, PLAYER_COUNT + 1):
-            url_to_check = "https://hello-player{}.apps.{}/".format(i, config['DEFAULT']['cluster_domain'])
-            if check_url_response(url_to_check, "Bonjour Monde"):
-                submit_flag(i, 5, "FLAG_BONJOUR_99")
+    for i in range(1, PLAYER_COUNT + 1):
+        url_to_check = "https://hello-player{}.apps.{}/".format(i, config['DEFAULT']['cluster_domain'])
+        if check_url_response(url_to_check, "Bonjour Monde"):
+            submit_flag(i, 5, "FLAG_BONJOUR_99")
 
 def main():
 
