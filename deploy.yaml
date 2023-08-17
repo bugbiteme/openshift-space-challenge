@@ -441,7 +441,7 @@
       retries: 20
       delay: 15
 
-    - name: Assing players to namespaces
+    - name: Assigning players to namespaces
       shell: |
         oc adm policy add-role-to-user edit "player{{ item }}" -n "player{{ item }}"
       with_sequence: start=1 end=100
