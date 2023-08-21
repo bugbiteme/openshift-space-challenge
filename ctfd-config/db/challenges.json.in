@@ -1,5 +1,5 @@
 {
-  "count": 6,
+  "count": 8,
   "results": [
     {
       "id": 1,
@@ -68,11 +68,37 @@
     },
     {
       "id": 7,
-        "name": "Message in a Bottle",
-        "description": "Isolated on a mysterious island, you notice that every so often, bottles drift ashore. These bottles contain notes, some from distant places, others seemingly from nearby. Driven by curiosity and a sense of adventure, you decide to pen down your name and your location on the island. By placing your message in a bottle and casting it into the sea, you hope that someone, somewhere will find it and send their own message back.\r\n\r\n# Objective:\r\nDevelop an API receives floating bottles, extract the message, and send your own message as a reply.  A pre-existing ConfigMap in your project called `location` contains your location.\r\n\r\n# Specifications:\r\n**Endpoint:** POST /float-bottle\r\n\r\n**Input:**\r\n\r\nJSON body with TBD\r\n\r\nThere is no need to enter a flag.  This challenge will be judged automatically!  \r\n\r\nThe judge must be able to access your service at https://hello-playerX.apps.{{ cluster_url }}/ , where `X` is your player number.\r\n\r\n* gitea: https://gitea-gitea.apps.{{ cluster_url }}\r\n* ocp: https://console-openshift-console.apps.{{ cluster_url }}",
+      "name": "Message in a Bottle",
+      "description": "Isolated on a mysterious island, you notice that every so often, bottles drift ashore. These bottles contain notes, some from distant places, others seemingly from nearby. Driven by curiosity and a sense of adventure, you decide to pen down your name and your location on the island. By placing your message in a bottle and casting it into the sea, you hope that someone, somewhere will find it and send their own message back.\r\n\r\n# Objective:\r\nDevelop an API receives floating bottles, extract the message, and send your own message as a reply.  A pre-existing ConfigMap in your project called `location` contains your location.\r\n\r\n# Specifications:\r\n**Endpoint:** POST /float-bottle\r\n\r\n**Input:**\r\n\r\nJSON body with TBD\r\n\r\nThere is no need to enter a flag.  This challenge will be judged automatically!  \r\n\r\nThe judge must be able to access your service at https://hello-playerX.apps.{{ cluster_url }}/ , where `X` is your player number.\r\n\r\n* gitea: https://gitea-gitea.apps.{{ cluster_url }}\r\n* ocp: https://console-openshift-console.apps.{{ cluster_url }}",
       "max_attempts": 0,
       "value": 20,
       "category": "Level 2",
+      "type": "standard",
+      "state": "visible",
+      "requirements": null,
+      "connection_info": null,
+      "next_id": null
+    },
+    {
+      "id": 8,
+      "name": "Kubernetes-native Java",
+      "description": "Log in the OpenShift console using your username/password.\r\n\r\nIn the top/left, make sure you are in the \"Developer\" view.    In this view, your first option in the left menu is \"+Add\".    This page helps you quickly build services from different sources.\r\n\r\nUnder \"Getting started resources\", you'll find a \"Create applications using samples\" section.  What language come first as the best way to run Kubernetes-native Java with low memory footprint and fast boot times for microservices and serverless applications.\r\n\r\n* gitea: https://gitea-gitea.apps.{{ cluster_url }}\r\n* ocp: https://console-openshift-console.apps.{{ cluster_url }}",
+      "max_attempts": 0,
+      "value": 4,
+      "category": "Level 0 - Warm Up",
+      "type": "standard",
+      "state": "visible",
+      "requirements": null,
+      "connection_info": null,
+      "next_id": null
+    },
+    {
+      "id": 9,
+      "name": "Your default StorageClass",
+      "description": "Log in the OpenShift console using your username/password.\r\n\r\nIn the top/left, make sure you are in the \"Administrator\" view.    In this view, click on \"Storage\" in the left bar menu.  Then click on \"StorageClasses\".\r\n\r\nWhat is your current default storageclass?\r\n\r\n* gitea: https://gitea-gitea.apps.{{ cluster_url }}\r\n* ocp: https://console-openshift-console.apps.{{ cluster_url }}",
+      "max_attempts": 0,
+      "value": 4,
+      "category": "Level 0 - Warm Up",
       "type": "standard",
       "state": "visible",
       "requirements": null,
