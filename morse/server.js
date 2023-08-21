@@ -18,8 +18,15 @@ if (CSV_TO_MORSE) {
 
 app.post('/decode-morse', (req, res) => {
     const { message } = req.body;
-    message.split(' ').map(morseChar => console.log(morseChar))
-    const decodedMessage = message.split(' ').map(morseChar => morseDict[morseChar] || '').join('');
+
+    const words = message.split('/'); // Split by word breaks
+    const decodedWords = words.map(word => {
+        return word.trim().split(' ').map(morseChar => morseDict[morseChar] || '').join('');
+    });
+    const decodedMessage = decodedWords.join(' '); // Join decoded words with spaces
+
+    console.log(decodedMessage)
+
     return res.send({ decodedMessage });
 });
 
