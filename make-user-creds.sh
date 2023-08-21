@@ -25,5 +25,7 @@ for i in $(seq 1 100); do
   echo "player$i,$PASSWORD" >> $CREDENTIALS_FILE
 done
 
+python make-gitea-passwords.py
+
 latex credential-handouts.tex
 dvipdf credential-handouts.dvi

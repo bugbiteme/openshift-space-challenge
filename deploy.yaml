@@ -519,3 +519,9 @@
         - "{{ playbook_dir }}/ctfd-config/"
         dest: "{{ playbook_dir }}/ctfd-upload-me.zip"
         format: zip
+
+    - name: set gitea passwords
+      shell: |
+        PODNAME=$(oc get pods -n gitea --selector app=gitea -o custom-columns=POD:.metadata.name --no-headers)
+        oc cp gitea-set-passwords.sh $PODNAME:gitea-set-passwords.sh -n gitea
+        oc exec $PODNAME -n gitea -- sh gitea-set-passwords.sh
