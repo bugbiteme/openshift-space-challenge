@@ -2,6 +2,8 @@ import configparser
 import requests
 import time
 import csv
+import concurrent.futures
+import random
 
 PASSWORDS = []
 
@@ -9,6 +11,78 @@ config = configparser.ConfigParser()
 config.read('settings.ini')
 
 PLAYER_COUNT = 100
+MAX_THREADS = 10
+
+morse_messages = {
+    "ROOM SERVICE? ORDERED COCONUTS 3 DAYS AGO.",
+    "SEND PIZZA. TIRED OF COCONUTS.",
+    "YOUR UBER IS ARRIVING NOW. JUST KIDDING.",
+    "SEND SUNSCREEN.",
+    "FORGOT CHARGER. ANY SPARES?",
+    "404: BEACH NOT FOUND. PLEASE REDIRECT.",
+    "HELP! MISSING WIFI CODE!",
+    "THE FLAG CODE IS: CONTAINERS"
+}
+
+morse_dict = {
+    "!":"-.-.--",
+    "$":"...-..-",
+    "&":".-...",
+    "'":".----.",
+    "(":"-.--.",
+    ")":"-.--.-",
+    "+":".-.-.",
+    "-":"-....-",
+    ".":".-.-.-",
+    "/":"-..-.",
+    "0":"-----",
+    "1":".----",
+    "2":"..---",
+    "3":"...--",
+    "4":"....-",
+    "5":".....",
+    "6":"-....",
+    "7":"--...",
+    "8":"---..",
+    "9":"----.",
+    ":":"---...",
+    ";":"-.-.-.",
+    "=":"-...-",
+    "?":"..--..",
+    "@":".--.-.",
+    "A":".-",
+    "B":"-...",
+    "C":"-.-.",
+    "D":"-..",
+    "E":".",
+    "F":"..-.",
+    "G":"--.",
+    "H":"....",
+    "I":"..",
+    "J":".---",
+    "K":"-.-",
+    "L":".-..",
+    "M":"--",
+    "N":"-.",
+    "O":"---",
+    "P":".--.",
+    "Q":"--.-",
+    "R":".-.",
+    "S":"...",
+    "T":"-",
+    "U":"..-",
+    "V":"...-",
+    "W":".--",
+    "X":"-..-",
+    "Y":"-.--",
+    "Z":"--..",
+    "_":"..--.-",
+    " ":"/"
+}
+
+# Function to convert ASCII to Morse code
+def ascii_to_morse(input_string):
+    return ' '.join([morse_dict.get(char.upper(), '') for char in input_string])
 
 def check_url_response(url, message):
     print(url)
@@ -21,6 +95,12 @@ def check_url_response(url, message):
     except requests.RequestException:
         return False
 
+def post_json_and_forget(url, data):
+    try:
+        print(data)
+        requests.post(url, json=data)
+    except:
+        pass  # Ignore exceptions
 
 def get_username(player):
     URL = "https://scavenger-ctfd.apps.{}".format(config['DEFAULT']['cluster_domain'])
@@ -118,6 +198,17 @@ def challenges_4_and_5():
         except requests.RequestException:
             return False
 
+def challenge_morse():
+    with concurrent.futures.ThreadPoolExecutor(max_workers=MAX_THREADS) as executor:
+        for i in range(1, PLAYER_COUNT + 1):
+            url = "https://morse-player{}.apps.{}/decode-morse".format(i, config['DEFAULT']['cluster_domain'])
+            print(url)
+            morse_message = random.choice(list(morse_messages))
+            data = {
+                'message': ascii_to_morse(morse_message)
+            }
+            executor.submit(post_json_and_forget, url, data)
+
 def main():
 
     global PASSWORDS
@@ -127,6 +218,7 @@ def main():
             PASSWORDS.append(row[1])
 
     while True:
+        challenge_morse()
         challenges_4_and_5()
 
 if __name__ == "__main__":
