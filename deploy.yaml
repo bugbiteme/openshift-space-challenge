@@ -525,3 +525,72 @@
         PODNAME=$(oc get pods -n gitea --selector app=gitea -o custom-columns=POD:.metadata.name --no-headers)
         oc cp gitea-set-passwords.sh $PODNAME:gitea-set-passwords.sh -n gitea
         oc exec $PODNAME -n gitea -- sh gitea-set-passwords.sh
+
+    - name: create morse configmaps
+      kubernetes.core.k8s:
+        namespace: "player{{ item }}"
+        definition:
+          apiVersion: v1
+          kind: ConfigMap
+          metadata:
+            name: morse-code
+          data:
+            morse-code.csv: |
+              "!", "-.-.--"
+              "$", "...-..-"
+              "&", ".-..."
+              "'", ".----."
+              "(", "-.--."
+              ")", "-.--.-"
+              "+", ".-.-."
+              ",", "--..--"
+              "-", "-....-"
+              ".", ".-.-.-"
+              "/", "-..-."
+              "0", "-----"
+              "1", ".----"
+              "2", "..---"
+              "3", "...--"
+              "4", "....-"
+              "5", "....."
+              "6", "-...."
+              "7", "--..."
+              "8", "---.."
+              "9", "----."
+              ":", "---..."
+              ";", "-.-.-."
+              "=", "-...-"
+              "?", "..--.."
+              "@", ".--.-."
+              "A", ".-"
+              "B", "-..."
+              "C", "-.-."
+              "D", "-.."
+              "E", "."
+              "F", "..-."
+              "G", "--."
+              "H", "...."
+              "I", ".."
+              "J", ".---"
+              "K", "-.-"
+              "L", ".-.."
+              "M", "--"
+              "N", "-."
+              "O", "---"
+              "P", ".--."
+              "Q", "--.-"
+              "R", ".-."
+              "S", "..."
+              "T", "-"
+              "U", "..-"
+              "V", "...-"
+              "W", ".--"
+              "X", "-..-"
+              "Y", "-.--"
+              "Z", "--.."
+              "_", "..--.-"
+          state: present
+          wait: yes
+      with_sequence: start=1 end=100
+      retries: 20
+      delay: 15
