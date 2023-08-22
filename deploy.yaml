@@ -469,8 +469,14 @@
             giteaUserPassword: openshift
             giteaMigrateRepositories: true
             giteaRepositoriesList:
+            - repo: https://github.com/catalyst-ctfd/python-starter.git
+              name: python-starter
+              private: true
             - repo: https://github.com/catalyst-ctfd/node-starter.git
               name: node-starter
+              private: true
+            - repo: https://github.com/catalyst-ctfd/springboot-starter.git
+              name: springboot-starter
               private: true
       retries: 20
       delay: 15
