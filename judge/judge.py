@@ -234,6 +234,17 @@ def challenges_4_and_5():
         except requests.RequestException:
             return False
 
+def challenge_11():
+    for i in range(1, PLAYER_COUNT + 1):
+        url = "https://hello-player{}.apps.{}/aloha".format(i, config['DEFAULT']['cluster_domain'])
+        print(url)
+        try:
+            response = requests.get(url).text.strip()
+            if (response == "Hello World") or (response == "Bonjour Monde"):
+                submit_flag(i, 11, "FLAG_ALOHA_99")
+        except requests.RequestException:
+            return False
+
 def challenge_morse():
     with concurrent.futures.ThreadPoolExecutor(max_workers=MAX_THREADS) as executor:
         for i in range(1, PLAYER_COUNT + 1):
@@ -251,9 +262,8 @@ def challenge_bottle():
             url = "https://bottle-player{}.apps.{}/beach-bottle".format(i, config['DEFAULT']['cluster_domain'])
             char, x, y = pick_bottle_char()
             data = {
-                'char': char,
-                'x': x,
-                'y': y
+                'character': char,
+                'coordinates': { 'x': x, 'y': y }
             }
             executor.submit(post_json_and_forget, url, data)
 
@@ -269,6 +279,7 @@ def main():
         challenge_bottle()
         challenge_morse()
         challenges_4_and_5()
+        challenge_11()
 
 if __name__ == "__main__":
     main()
