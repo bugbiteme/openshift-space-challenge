@@ -1,5 +1,5 @@
 {
-  "count": 8,
+  "count": 9,
   "results": [
     {
       "id": 1,
@@ -82,10 +82,10 @@
     {
       "id": 8,
       "name": "Kubernetes-native Java",
-      "description": "Log in the OpenShift console using your username/password.\r\n\r\nIn the top/left, make sure you are in the \"Developer\" view.    In this view, your first option in the left menu is \"+Add\".    This page helps you quickly build services from different sources.\r\n\r\nUnder \"Getting started resources\", you'll find a \"Create applications using samples\" section.  What language come first as the best way to run Kubernetes-native Java with low memory footprint and fast boot times for microservices and serverless applications.\r\n\r\n* gitea: https://gitea-gitea.apps.{{ cluster_url }}\r\n* ocp: https://console-openshift-console.apps.{{ cluster_url }}",
+      "description": "Log in the OpenShift console using your username/password.\r\n\r\nIn the top/left, make sure you are in the \"Developer\" view.    In this view, your first option in the left menu is \"+Add\".    This page helps you quickly build services from different sources.\r\n\r\nUnder \"Getting started resources\", you'll find a \"Create applications using samples\" section.  What language come first as the best way to run Kubernetes-native Java with low memory footprint and fast boot times for microservices and serverless applications.\r\n\r\n* ocp: https://console-openshift-console.apps.{{ cluster_url }}",
       "max_attempts": 0,
       "value": 4,
-      "category": "Level 0 - Warm Up",
+      "category": "Level 1",
       "type": "standard",
       "state": "visible",
       "requirements": null,
@@ -95,10 +95,23 @@
     {
       "id": 9,
       "name": "Your default StorageClass",
-      "description": "Log in the OpenShift console using your username/password.\r\n\r\nIn the top/left, make sure you are in the \"Administrator\" view.    In this view, click on \"Storage\" in the left bar menu.  Then click on \"StorageClasses\".\r\n\r\nWhat is your current default storageclass?\r\n\r\n* gitea: https://gitea-gitea.apps.{{ cluster_url }}\r\n* ocp: https://console-openshift-console.apps.{{ cluster_url }}",
+      "description": "Log in the OpenShift console using your username/password.\r\n\r\nIn the top/left, make sure you are in the \"Administrator\" view.    In this view, click on \"Storage\" in the left bar menu.  Then click on \"StorageClasses\".\r\n\r\nWhat is your current default storageclass?\r\n\r\n* ocp: https://console-openshift-console.apps.{{ cluster_url }}",
       "max_attempts": 0,
       "value": 4,
-      "category": "Level 0 - Warm Up",
+      "category": "Level 1",
+      "type": "standard",
+      "state": "visible",
+      "requirements": null,
+      "connection_info": null,
+      "next_id": null
+    }
+    {
+      "id": 10,
+      "name": "Monkey Business",
+      "description": "Help! The island is crawling with chaos monkeys!  Ensure your \"hello\" service is running with multiple replicas for high availability!  You don't want to miss a chance to say Hi on this lonely island.\r\n\r\nNo need to enter a flag.  This challenge will be judged automatically!\r\n\r\n* ocp: https://console-openshift-console.apps.{{ cluster_url }}",
+      "max_attempts": 0,
+      "value": 4,
+      "category": "Level 1",
       "type": "standard",
       "state": "visible",
       "requirements": null,
