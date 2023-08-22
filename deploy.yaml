@@ -478,6 +478,9 @@
             - repo: https://github.com/catalyst-ctfd/springboot-starter.git
               name: springboot-starter
               private: true
+            - repo: https://github.com/catalyst-ctfd/quarkus-starter.git
+              name: quarkus-starter
+              private: true
       retries: 20
       delay: 15
 
