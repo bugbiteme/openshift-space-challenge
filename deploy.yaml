@@ -498,7 +498,7 @@
       register: gitea_pod_created
 
     - name: Create ctfd users
-      shell: python ./make-ctfd-users.py > ctfd-config/db/users.json
+      shell: python3 ./make-ctfd-users.py > ctfd-config/db/users.json
 
     - name: Get the cluster console URL
       shell: oc get routes --all-namespaces | grep console-openshift | awk '{ print $3 }'
