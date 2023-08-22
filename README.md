@@ -1,8 +1,15 @@
 # catalyst
 
-Make sure to have the `oc` command-line tool installed.
+## Requirements
 
-Create a python environment and install all python modules dependancies.
+Currently tested to work on "Red Hat OpenShift Container Platform 4.13 Workshop" from demo.redhat.com
+Make sure to have the `oc` command-line tool installed on your laptop.
+
+## Getting started
+
+Request "Red Hat OpenShift Container Platform 4.13 Workshop" from demo.redhat.com. Provisioning time is usually around 60 mins.
+
+On your laptop, create a python environment and install all python modules dependancies.
 `pip install -r requirements.txt`
 
 Log on your OpenShift cluster using the `oc login` as admin.
@@ -40,7 +47,7 @@ This Git repo will be required to solve some challenges. All users have access t
 Get Gitea URL: `oc get route -n gitea`
 User access: see `credentials.csv`` file.
 
-## Optional scripts and tols
+## Optional scripts and tools
 
 ### Make new user credentials
 
