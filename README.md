@@ -3,7 +3,7 @@
 ## Requirements
 
 Currently tested to work on "Red Hat OpenShift Container Platform 4.13 Workshop" from demo.redhat.com
-Make sure to have the `oc` command-line tool installed on your laptop.
+Make sure to have the `oc` and `jq` command-line tools installed on your laptop.
 
 ## Getting started
 
@@ -34,9 +34,9 @@ Once completed,
 - click on "Admin Panel" in top menu.
 - click on "Config" in top menu.
 - click on "Backup" in side menu.
-- click on "Import" tab, "Choose File" and upload `ctfg-upload-me.zip` created by the `deploy.yaml` playbook.
+- click on "Import" tab, "Choose File" and upload `ctfd-upload-me.zip` created by the `deploy.yaml` playbook.
 
-This will take a few seconds and will send you back to the Login page.  
+This will take a few seconds and will send you back to the Login page.
 Admin access: username = `admin`, password = `redhat123`.
 User access: see `credentials.csv`` file.
 
