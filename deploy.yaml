@@ -593,3 +593,19 @@
       with_sequence: start=1 end=100
       retries: 20
       delay: 15
+
+    - name: create treasure configmaps
+      kubernetes.core.k8s:
+        namespace: "player{{ item }}"
+        definition:
+          apiVersion: v1
+          kind: ConfigMap
+          metadata:
+            name: treasure
+          data:
+            map: eC1tYXJrcy10aGUtc3BvdAo=
+          state: present
+          wait: yes
+      with_sequence: start=1 end=100
+      retries: 20
+      delay: 15

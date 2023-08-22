@@ -1,5 +1,5 @@
 {
-  "count": 10,
+  "count": 11,
   "results": [
     {
       "id": 1,
@@ -125,6 +125,19 @@
       "max_attempts": 0,
       "value": 30,
       "category": "SurvivalOps",
+      "type": "standard",
+      "state": "visible",
+      "requirements": null,
+      "connection_info": null,
+      "next_id": null
+    },
+    {
+      "id": 12,
+      "name": "Treasure Map",
+        "description": "Jackpot!  There's a treasure map hidden in a ConfigMap!  It's base64 encoded, so be sure to decode it once you find it, and enter it in the box below.\r\n\r\n* ocp: https://console-openshift-console.apps.{{ cluster_url }}",
+      "max_attempts": 0,
+      "value": 15,
+      "category": "Treasure Hunts",
       "type": "standard",
       "state": "visible",
       "requirements": null,
