@@ -12,7 +12,9 @@ echo "username,password" > $CREDENTIALS_FILE
 # Loop to generate 100 players
 for i in $(seq 1 100); do
   # Generate random 8 character password
-  PASSWORD=$(cat /dev/urandom | tr -dc 'a-hj-km-np-zA-HJ-KM-NP-Z2-9' | head -c 8)
+  PASSWORD=$(python -c "import random; import string; \
+    print(''.join(random.choice(string.ascii_letters + string.digits) \
+    for _ in range(8)))")
 
   # Append to the htpasswd file
   if [ "$i" -eq 1 ]; then
