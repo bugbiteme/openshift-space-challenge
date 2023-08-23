@@ -515,6 +515,13 @@
       vars:
         cluster_url: "{{ extracted_domain }}"
 
+    - name: Patch config.json file
+      template:
+        src: "{{ playbook_dir }}/ctfd-config/db/config.json.in"
+        dest: "{{ playbook_dir }}/ctfd-config/db/config.json"
+      vars:
+        cluster_url: "{{ extracted_domain }}"
+
     - name: Patch judge config/settings.ini
       template:
         src: "{{ playbook_dir }}/judge/settings.ini.in"
