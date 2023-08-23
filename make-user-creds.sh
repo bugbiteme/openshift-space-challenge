@@ -29,5 +29,4 @@ done
 
 python make-gitea-passwords.py
 
-latex credential-handouts.tex
-dvipdf credential-handouts.dvi
+pdflatex credential-handouts.tex
