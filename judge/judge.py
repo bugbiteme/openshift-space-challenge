@@ -258,14 +258,21 @@ def challenge_morse():
 
 def challenge_bottle():
     with concurrent.futures.ThreadPoolExecutor(max_workers=MAX_THREADS) as executor:
-        for i in range(1, PLAYER_COUNT + 1):
-            url = "https://bottle-player{}.apps.{}/beach-bottle".format(i, config['DEFAULT']['cluster_domain'])
+
+        num_bottles = random.randint(10, 30)  # Randomly choose between 10 to 30 bottles
+        bottles = []
+
+        for _ in range(num_bottles):
             char, x, y = pick_bottle_char()
-            data = {
+            bottle_data = {
                 'character': char,
-                'coordinates': { 'x': x, 'y': y }
+                'coordinates': {'x': x, 'y': y}
             }
-            executor.submit(post_json_and_forget, url, data)
+            bottles.append(bottle_data)
+
+        for i in range(1, PLAYER_COUNT + 1):
+            url = "https://bottle-player{}.apps.{}/collect-bottles".format(i, config['DEFAULT']['cluster_domain'])
+            executor.submit(post_json_and_forget, url, bottles)
 
 def main():
 
