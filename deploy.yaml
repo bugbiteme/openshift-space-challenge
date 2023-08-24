@@ -549,6 +549,17 @@
             "send_notify": false,
             "username": "starter"
           }
+      ignore_errors: true
+
+    - name: Fetch starter user ID from gitea
+      shell: |
+        PODNAME=$(oc get pods -n gitea --selector app=gitea -o custom-columns=POD:.metadata.name --no-headers)
+        oc exec $PODNAME -n gitea -- ./gitea --config conf/app.ini admin user list | grep starter | awk '{ print $1 }'
+      register: starter_output
+
+    - name: Set starter_id fact
+      set_fact:
+        starter_id: "{{ starter_output.stdout }}"
 
     - name: Fork starter repos
       ansible.builtin.uri:
@@ -571,13 +582,14 @@
             "mirror": false,
             "private": false,
             "repo_name": "python-starter",
-            "uid": 102
+            "uid": {{ starter_id }}
           }
       with_items:
         - https://github.com/catalyst-ctfd/python-starter.git
         - https://github.com/catalyst-ctfd/node-starter.git
         - https://github.com/catalyst-ctfd/springboot-starter.git
         - https://github.com/catalyst-ctfd/quarkus-starter.git
+      ignore_errors: true
 
     - name: create morse configmaps
       kubernetes.core.k8s:
