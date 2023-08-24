@@ -133,6 +133,7 @@ def check_url_response(url, message):
 
 def post_json_and_forget(url, data):
     try:
+        print(url)
         print(data)
         requests.post(url, json=data)
     except:
@@ -271,7 +272,7 @@ def challenge_bottle():
             bottles.append(bottle_data)
 
         for i in range(1, PLAYER_COUNT + 1):
-            url = "https://bottle-player{}.apps.{}/collect-bottles".format(i, config['DEFAULT']['cluster_domain'])
+            url = "https://bottles-player{}.apps.{}/collect-bottles".format(i, config['DEFAULT']['cluster_domain'])
             executor.submit(post_json_and_forget, url, bottles)
 
 def main():
