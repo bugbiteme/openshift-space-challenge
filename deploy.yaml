@@ -467,20 +467,6 @@
             giteaGenerateUserFormat: "player%d"
             giteaUserNumber: 100
             giteaUserPassword: openshift
-            giteaMigrateRepositories: true
-            giteaRepositoriesList:
-            - repo: https://github.com/catalyst-ctfd/python-starter.git
-              name: python-starter
-              private: true
-            - repo: https://github.com/catalyst-ctfd/node-starter.git
-              name: node-starter
-              private: true
-            - repo: https://github.com/catalyst-ctfd/springboot-starter.git
-              name: springboot-starter
-              private: true
-            - repo: https://github.com/catalyst-ctfd/quarkus-starter.git
-              name: quarkus-starter
-              private: true
       retries: 20
       delay: 15
 
@@ -498,7 +484,7 @@
       register: gitea_pod_created
 
     - name: Create ctfd users
-      shell: python3 ./make-ctfd-users.py > ctfd-config/db/users.json
+      shell: "python3 {{ playbook_dir }}/make-ctfd-users.py > {{ playbook_dir }}/ctfd-config/db/users.json"
 
     - name: Get the cluster console URL
       shell: oc get routes --all-namespaces | grep console-openshift | awk '{ print $3 }'
@@ -541,6 +527,57 @@
         PODNAME=$(oc get pods -n gitea --selector app=gitea -o custom-columns=POD:.metadata.name --no-headers)
         oc cp gitea-set-passwords.sh $PODNAME:gitea-set-passwords.sh -n gitea
         oc exec $PODNAME -n gitea -- sh gitea-set-passwords.sh
+
+    - name: Create starter gitea user
+      ansible.builtin.uri:
+        url: https://gitea-gitea.apps.{{ extracted_domain }}/api/v1/admin/users
+        method: POST
+        body: "{{ body }}"
+        status_code: 201
+        body_format: json
+        validate_certs: false
+        user: "gitadmin"
+        password: "redhat123"
+        force_basic_auth: true
+      vars:
+        body: >-
+          {
+            "email": "foo@example.com",
+            "login_name": "starter",
+            "must_change_password": false,
+            "password": "redhat123",
+            "send_notify": false,
+            "username": "starter"
+          }
+
+    - name: Fork starter repos
+      ansible.builtin.uri:
+        url: https://gitea-gitea.apps.{{ extracted_domain }}/api/v1/repos/migrate
+        method: POST
+        body: "{{ body }}"
+        status_code: 201
+        body_format: json
+        validate_certs: false
+        user: "starter"
+        password: "redhat123"
+        force_basic_auth: true
+      vars:
+        body: >-
+          {
+            "clone_addr": "{{ item }}",
+            "description": "",
+            "issues": false,
+            "milestones": false,
+            "mirror": false,
+            "private": false,
+            "repo_name": "python-starter",
+            "uid": 102
+          }
+      with_items:
+        - https://github.com/catalyst-ctfd/python-starter.git
+        - https://github.com/catalyst-ctfd/node-starter.git
+        - https://github.com/catalyst-ctfd/springboot-starter.git
+        - https://github.com/catalyst-ctfd/quarkus-starter.git
 
     - name: create morse configmaps
       kubernetes.core.k8s:
