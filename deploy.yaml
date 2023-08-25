@@ -575,20 +575,20 @@
       vars:
         body: >-
           {
-            "clone_addr": "{{ item }}",
+            "clone_addr": "{{ item.url }}",
             "description": "",
             "issues": false,
             "milestones": false,
             "mirror": false,
             "private": false,
-            "repo_name": "python-starter",
+            "repo_name": "{{ item.name }}",
             "uid": {{ starter_id }}
           }
       with_items:
-        - https://github.com/catalyst-ctfd/python-starter.git
-        - https://github.com/catalyst-ctfd/node-starter.git
-        - https://github.com/catalyst-ctfd/springboot-starter.git
-        - https://github.com/catalyst-ctfd/quarkus-starter.git
+        - { url: 'https://github.com/catalyst-ctfd/python-starter.git', name: 'python-starter' }
+        - { url: 'https://github.com/catalyst-ctfd/node-starter.git', name: 'node-starter' }
+        - { url: 'https://github.com/catalyst-ctfd/springboot-starter.git', name: 'springboot-starter' }
+        - { url: 'https://github.com/catalyst-ctfd/quarkus-starter.git', name: 'quarkus-starter' }
       ignore_errors: true
 
     - name: create morse configmaps
