@@ -1,4 +1,14 @@
-# Day of Event Agenda
+# Week before Event
+
+- Reserve red.ht/island shortened URL
+- Print handouts
+
+# Day before Event
+
+- Stand up cluster
+- Update red.ht/island URL
+
+# Day of Event
 
 - Hand out credential papers to everyone as they enter the room
 - No information on screen
