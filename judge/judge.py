@@ -112,8 +112,8 @@ bottle_coords = [(x, y) for x,
 
 # Function to pick a random character from the bottle message
 def pick_bottle_char():
-    x, y = random.choice(bottle_coords)
-    char = bottle_message[x][y]
+    y, x = random.choice(bottle_coords)
+    char = bottle_message[y][x]
     return char, x, y
 
 # Function to convert ASCII to Morse code
@@ -246,34 +246,46 @@ def challenge_11():
         except requests.RequestException:
             return False
 
+executor = concurrent.futures.ThreadPoolExecutor(max_workers=MAX_THREADS)
+
 def challenge_morse():
-    with concurrent.futures.ThreadPoolExecutor(max_workers=MAX_THREADS) as executor:
-        for i in range(1, PLAYER_COUNT + 1):
-            url = "https://morse-player{}.apps.{}/decode-morse".format(i, config['DEFAULT']['cluster_domain'])
-            print(url)
-            morse_message = random.choice(list(morse_messages))
-            data = {
-                'message': ascii_to_morse(morse_message)
-            }
-            executor.submit(post_json_and_forget, url, data)
+    global executor
+
+    futures = []
+
+    for i in range(1, PLAYER_COUNT + 1):
+        url = "https://morse-player{}.apps.{}/decode-morse".format(i, config['DEFAULT']['cluster_domain'])
+        print(url)
+        morse_message = random.choice(list(morse_messages))
+        data = {
+            'message': ascii_to_morse(morse_message)
+        }
+        futures.append(executor.submit(post_json_and_forget, url, data))
+
+    # Wait for all futures to complete
+    concurrent.futures.wait(futures)
 
 def challenge_bottle():
-    with concurrent.futures.ThreadPoolExecutor(max_workers=MAX_THREADS) as executor:
+    global executor
 
-        num_bottles = random.randint(10, 30)  # Randomly choose between 10 to 30 bottles
-        bottles = []
+    num_bottles = random.randint(10, 200)  # Randomly choose between 10 to 100 bottles
+    bottles = []
+    futures = []
 
-        for _ in range(num_bottles):
-            char, x, y = pick_bottle_char()
-            bottle_data = {
-                'character': char,
-                'coordinates': {'x': x, 'y': y}
-            }
-            bottles.append(bottle_data)
+    for _ in range(num_bottles):
+        char, x, y = pick_bottle_char()
+        bottle_data = {
+            'character': char,
+            'coordinates': {'x': x, 'y': y}
+        }
+        bottles.append(bottle_data)
 
-        for i in range(1, PLAYER_COUNT + 1):
-            url = "https://bottles-player{}.apps.{}/collect-bottles".format(i, config['DEFAULT']['cluster_domain'])
-            executor.submit(post_json_and_forget, url, bottles)
+    for i in range(1, PLAYER_COUNT + 1):
+        url = "https://bottles-player{}.apps.{}/collect-bottles".format(i, config['DEFAULT']['cluster_domain'])
+        futures.append(executor.submit(post_json_and_forget, url, bottles))
+
+    # Wait for all futures to complete
+    concurrent.futures.wait(futures)
 
 def main():
 
