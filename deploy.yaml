@@ -388,14 +388,14 @@
       retries: 20
       delay: 15
 
-    - name: create scavenger route
+    - name: create island route
       kubernetes.core.k8s:
         namespace: "{{ project_name }}"
         definition:
           kind: Route
           apiVersion: route.openshift.io/v1
           metadata:
-            name: scavenger
+            name: island
             labels:
               app: ctfd
           spec:
