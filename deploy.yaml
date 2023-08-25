@@ -674,3 +674,57 @@
       with_sequence: start=1 end=100
       retries: 20
       delay: 15
+
+    - name: Create INSTRUCTIONS repo in Gitea
+      ansible.builtin.uri:
+        url: https://gitea-gitea.apps.{{ extracted_domain }}/api/v1/user/repos
+        method: POST
+        body_format: json
+        validate_certs: false
+        user: "starter"
+        password: "redhat123"
+        force_basic_auth: true
+        body:
+          name: "INSTRUCTIONS"
+          description: "Instructions Repository"
+          private: false
+      register: repo_response
+      ignore_errors: true
+
+    - name: Generate README.md from template
+      template:
+        src: STARTER-README.j2
+        dest: /tmp/README.md
+      vars:
+        cluster_domain: "{{ extracted_domain }}"
+
+    - name: Ensure INSTRUCTIONS directory is absent
+      ansible.builtin.file:
+        path: /tmp/INSTRUCTIONS
+        state: absent
+
+    - name: Ensure INSTRUCTIONS directory is present
+      ansible.builtin.file:
+        path: /tmp/INSTRUCTIONS
+        state: directory
+
+    - name: Move README.md to INSTRUCTIONS directory
+      ansible.builtin.copy:
+        src: '/tmp/README.md'
+        dest: '/tmp/INSTRUCTIONS/README.md'
+        remote_src: yes
+
+    - name: Add, commit, and push README.md
+      shell: |
+        git init
+        git add README.md
+        git commit -m "Add README.md"
+        git remote add origin https://starter:redhat123@gitea-gitea.apps.cluster-lgftq.lgftq.sandbox2348.opentlc.com/starter/INSTRUCTIONS.git
+        git push --set-upstream origin master
+      args:
+        chdir: "/tmp/INSTRUCTIONS"
+      environment:
+        GIT_COMMITTER_NAME: "starter"
+        GIT_COMMITTER_EMAIL: "starter@example.com"
+        GIT_AUTHOR_NAME: "starter"
+        GIT_AUTHOR_EMAIL: "starter@example.com"
