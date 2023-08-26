@@ -4,11 +4,12 @@ import time
 import csv
 import concurrent.futures
 import random
+from kubernetes import client, config
 
 PASSWORDS = []
 
-config = configparser.ConfigParser()
-config.read('settings.ini')
+config_parser = configparser.ConfigParser()
+config_parser.read('settings.ini')
 
 PLAYER_COUNT = 100
 MAX_THREADS = 16
@@ -110,6 +111,26 @@ bottle_coords = [(x, y) for x,
                  chosen_str in enumerate(bottle_message) for y,
                  char in enumerate(chosen_str) if char.strip()]
 
+
+def list_all_running_pods():
+    config.load_kube_config()
+    v1 = client.CoreV1Api()
+    pods = v1.list_pod_for_all_namespaces(watch=False)
+
+    running_pods = {}
+
+    for pod in pods.items:
+        if pod.status.phase == "Running":
+            namespace = pod.metadata.namespace
+            if namespace not in running_pods:
+                running_pods[namespace] = []
+            running_pods[namespace].append({
+                'pod_name': pod.metadata.name,
+                'replicas': len(pod.status.container_statuses) if pod.status.container_statuses else 0
+            })
+
+    return running_pods
+
 # Function to pick a random character from the bottle message
 def pick_bottle_char():
     y, x = random.choice(bottle_coords)
@@ -140,7 +161,7 @@ def post_json_and_forget(url, data):
         pass  # Ignore exceptions
 
 def get_username(player):
-    URL = "https://scavenger-ctfd.apps.{}".format(config['DEFAULT']['cluster_domain'])
+    URL = "https://scavenger-ctfd.apps.{}".format(config_parser['DEFAULT']['cluster_domain'])
     username = "admin"
     password = "redhat123"
 
@@ -171,7 +192,7 @@ def get_username(player):
     return (r.json()['data']['name'])
 
 def submit_flag(player, challenge, flag):
-    URL = "https://scavenger-ctfd.apps.{}".format(config['DEFAULT']['cluster_domain'])
+    URL = "https://scavenger-ctfd.apps.{}".format(config_parser['DEFAULT']['cluster_domain'])
     username = get_username(player)
     password = PASSWORDS[player]
 
@@ -224,7 +245,7 @@ def submit_flag(player, challenge, flag):
 
 def challenges_4_and_5():
     for i in range(1, PLAYER_COUNT + 1):
-        url = "https://hello-player{}.apps.{}/".format(i, config['DEFAULT']['cluster_domain'])
+        url = "https://hello-player{}.apps.{}/".format(i, config_parser['DEFAULT']['cluster_domain'])
         print(url)
         try:
             response = requests.get(url).text.strip()
@@ -237,7 +258,7 @@ def challenges_4_and_5():
 
 def challenge_11():
     for i in range(1, PLAYER_COUNT + 1):
-        url = "https://hello-player{}.apps.{}/aloha".format(i, config['DEFAULT']['cluster_domain'])
+        url = "https://hello-player{}.apps.{}/aloha".format(i, config_parser['DEFAULT']['cluster_domain'])
         print(url)
         try:
             response = requests.get(url).text.strip()
@@ -254,7 +275,7 @@ def challenge_morse():
     futures = []
 
     for i in range(1, PLAYER_COUNT + 1):
-        url = "https://morse-player{}.apps.{}/decode-morse".format(i, config['DEFAULT']['cluster_domain'])
+        url = "https://morse-player{}.apps.{}/decode-morse".format(i, config_parser['DEFAULT']['cluster_domain'])
         print(url)
         morse_message = random.choice(list(morse_messages))
         data = {
@@ -281,11 +302,20 @@ def challenge_bottle():
         bottles.append(bottle_data)
 
     for i in range(1, PLAYER_COUNT + 1):
-        url = "https://bottles-player{}.apps.{}/collect-bottles".format(i, config['DEFAULT']['cluster_domain'])
+        url = "https://bottles-player{}.apps.{}/collect-bottles".format(i, config_parser['DEFAULT']['cluster_domain'])
         futures.append(executor.submit(post_json_and_forget, url, bottles))
 
     # Wait for all futures to complete
     concurrent.futures.wait(futures)
+
+def challenge_13_postgres():
+    all_pods = list_all_running_pods()
+    for i in range(1, 101):
+        namespace_name = f"player{i}"
+        if namespace_name in all_pods:
+            for pod in all_pods[namespace_name]:
+                if pod['pod_name'].startswith("postgres-"):
+                    submit_flag(i, 13, "FLAG_POSTGRES_99")
 
 def main():
 
@@ -300,6 +330,7 @@ def main():
         challenge_morse()
         challenges_4_and_5()
         challenge_11()
+        challenge_13_postgres()
 
 if __name__ == "__main__":
     main()
