@@ -8,6 +8,20 @@
   tasks:
 
   tasks:
+    - name: delete old island-logs configmaps
+      shell: |
+        oc delete cm island-logs -n player{{ item }} --ignore-not-found=true
+      with_sequence: start=1 end=100
+      retries: 20
+      delay: 15
+
+    - name: create island-logs configmaps
+      shell: |
+        oc create cm island-logs --from-file="{{ playbook_dir }}/island-logs.sql" -n player{{ item }}
+      with_sequence: start=1 end=100
+      retries: 20
+      delay: 15
+
     - name: create {{ project_name }} namespace
       kubernetes.core.k8s:
         api_version: v1
@@ -671,6 +685,14 @@
             map: eC1tYXJrcy10aGUtc3BvdAo=
           state: present
           wait: yes
+      with_sequence: start=1 end=100
+      retries: 20
+      delay: 15
+
+    - name: create island-logs configmaps
+      shell: |
+        oc delete cm island-logs --ignore-not-found=true
+        "oc create cm island-logs --from-file={{ playbook_dir }}/island-logs.sql -n player{{ item }}"
       with_sequence: start=1 end=100
       retries: 20
       delay: 15
