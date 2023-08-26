@@ -533,6 +533,8 @@
       community.general.archive:
         path:
         - "{{ playbook_dir }}/ctfd-config/"
+        exclusion_patterns:
+        - "*.in"
         dest: "{{ playbook_dir }}/ctfd-upload-me.zip"
         format: zip
 
