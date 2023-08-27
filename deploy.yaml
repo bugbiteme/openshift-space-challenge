@@ -440,7 +440,7 @@
 
     - name: create player accounts
       shell: |
-        oc get secret htpasswd -o json -n openshift-config | jq .data.htpasswd | tr -d \" | base64 -d - | grep admin > .players.htpasswd
+        if [ "$(uname)" = "Darwin" ]; then oc get secret htpasswd -o json -n openshift-config | jq -r '.data.htpasswd' | tr -d ' ' | base64 -D; else oc get secret htpasswd -o json -n openshift-config | jq -r '.data.htpasswd' | tr -d ' ' | base64 -d; fi | grep "admin" > .players.htpasswd
         cat players.htpasswd >> .players.htpasswd
         oc create secret generic htpasswd --from-file=htpasswd=.players.htpasswd -n openshift-config --dry-run=client -o yaml | oc replace -f -
 
