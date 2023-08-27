@@ -481,6 +481,7 @@
             giteaGenerateUserFormat: "player%d"
             giteaUserNumber: 100
             giteaUserPassword: openshift
+            giteaDisableRegistration: true
       retries: 20
       delay: 15
 
