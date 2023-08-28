@@ -678,14 +678,6 @@
       retries: 20
       delay: 15
 
-    - name: create island-logs configmaps
-      shell: |
-        oc delete cm island-logs --ignore-not-found=true
-        "oc create cm island-logs --from-file={{ playbook_dir }}/island-logs.sql -n player{{ item }}"
-      with_sequence: start=1 end=100
-      retries: 20
-      delay: 15
-
     - name: Create INSTRUCTIONS repo in Gitea
       ansible.builtin.uri:
         url: https://gitea-gitea.apps.{{ extracted_domain }}/api/v1/user/repos
@@ -744,12 +736,11 @@
       shell: |
         oc delete cm island-logs -n player{{ item }} --ignore-not-found=true
       with_sequence: start=1 end=100
-      retries: 20
-      delay: 15
+      ignore_errors: true
 
     - name: create island-logs configmaps
       shell: |
-        oc create cm island-logs --from-file="{{ playbook_dir }}/island-logs.sql" -n player{{ item }}
+        oc create cm island-logs --from-file="{{ playbook_dir }}/island-logs.sql" -n "player{{ item }}"
       with_sequence: start=1 end=100
       retries: 20
       delay: 15
