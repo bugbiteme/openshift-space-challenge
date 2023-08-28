@@ -1,12 +1,12 @@
 {
-  "count": 14,
+  "count": 15,
   "results": [
     {
       "id": 1,
-      "name": "Guess a Number!",
-      "description": "Guess a number between 1 and 5",
+      "name": "Write your name in the sand",
+      "description": "Write your name in the sand.  This way, a search plane might see it and know you are there and come rescue you.\r\n\r\n## Objective:\r\nYour current name is PlayerX.   Please change it for your real name and also add your email address.  This will be important to have a chance to win prizes.\r\n\r\n## Specifications:\r\nIn the top right corner, click on \"Settings\"\r\nChange the User Name for your full name:  e.g.  John Smith\r\nChange the Email address:  e.g. jsmith@mycompany.com\r\n\r\n*(optionally) you can change your password.  That said, please note that only the GAME UI password will be changed.   The OpenShift console and your Gitea environment will keep the same username/password.*\r\n\r\nOnce completed, enter \"DONE\" in the flag section and click submit to receive your first point!\r\n",
       "max_attempts": 0,
-      "value": 10,
+      "value": 1,
       "category": "Warm Up",
       "type": "standard",
       "state": "visible",
@@ -62,7 +62,11 @@
       "category": "Island APIs",
       "type": "standard",
       "state": "visible",
-      "requirements": null,
+      "requirements": {
+        "prerequisites": [
+          17
+        ]
+      },
       "connection_info": null,
       "next_id": null
     },
@@ -75,7 +79,11 @@
       "category": "Island APIs",
       "type": "standard",
       "state": "visible",
-      "requirements": null,
+      "requirements": {
+        "prerequisites": [
+          17
+        ]
+      },
       "connection_info": null,
       "next_id": null
     },
@@ -88,7 +96,11 @@
       "category": "Treasure Hunts",
       "type": "standard",
       "state": "visible",
-      "requirements": null,
+      "requirements": {
+        "prerequisites": [
+          17
+        ]
+      },
       "connection_info": null,
       "next_id": null
     },
@@ -101,7 +113,11 @@
       "category": "Treasure Hunts",
       "type": "standard",
       "state": "visible",
-      "requirements": null,
+      "requirements": {
+        "prerequisites": [
+          17
+        ]
+      },
       "connection_info": null,
       "next_id": null
     },
@@ -114,7 +130,11 @@
       "category": "SurvivalOps",
       "type": "standard",
       "state": "visible",
-      "requirements": null,
+      "requirements": {
+        "prerequisites": [
+          17
+        ]
+      },
       "connection_info": null,
       "next_id": null
     },
@@ -127,7 +147,11 @@
       "category": "SurvivalOps",
       "type": "standard",
       "state": "visible",
-      "requirements": null,
+      "requirements": {
+        "prerequisites": [
+          17
+        ]
+      },
       "connection_info": null,
       "next_id": null
     },
@@ -140,7 +164,11 @@
       "category": "Treasure Hunts",
       "type": "standard",
       "state": "visible",
-      "requirements": null,
+      "requirements": {
+        "prerequisites": [
+          17
+        ]
+      },
       "connection_info": null,
       "next_id": null
     },
@@ -153,7 +181,11 @@
       "category": "SurvivalOps",
       "type": "standard",
       "state": "visible",
-      "requirements": null,
+      "requirements": {
+        "prerequisites": [
+          17
+        ]
+      },
       "connection_info": null,
       "next_id": null
     },
@@ -177,10 +209,27 @@
     {
       "id": 16,
       "name": "Journal",
-        "description": "It occurs to you that the personal logs of the explorers may provide a clue to escaping the island.  If the explorers left the island, then perhaps their last journal entry would suggest what they did to escape!\r\n\r\nWhat it the final journal entry for the most skilled explorer?\r\n\r\n* ocp: https://console-openshift-console.apps.{{ cluster_url }}",
+      "description": "It occurs to you that the personal logs of the explorers may provide a clue to escaping the island.  If the explorers left the island, then perhaps their last journal entry would suggest what they did to escape!\r\n\r\nWhat it the final journal entry for the most skilled explorer?\r\n\r\n* ocp: https://console-openshift-console.apps.{{ cluster_url }}",
       "max_attempts": 0,
       "value": 15,
       "category": "SurvivalOps",
+      "type": "standard",
+      "state": "visible",
+      "requirements": {
+        "prerequisites": [
+          17
+        ]
+      },
+      "connection_info": null,
+      "next_id": null
+    },
+    {
+      "id": 17,
+      "name": "Unlock the island",
+      "description": "Wait for the game master to provide a KEY to unlock the rest of the island.  \r\nEnter this key in the flag section and click submit.\r\n\r\n",
+      "max_attempts": 0,
+      "value": 11,
+      "category": "Warm Up",
       "type": "standard",
       "state": "visible",
       "requirements": null,
