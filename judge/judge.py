@@ -161,7 +161,7 @@ def post_json_and_forget(url, data):
         pass  # Ignore exceptions
 
 def get_username(player):
-    URL = "https://scavenger-ctfd.apps.{}".format(config_parser['DEFAULT']['cluster_domain'])
+    URL = "https://island-ctfd.apps.{}".format(config_parser['DEFAULT']['cluster_domain'])
     username = "admin"
     password = "redhat123"
 
@@ -170,6 +170,7 @@ def get_username(player):
 
     # Grab a nonce
     r = s.get(f"{URL}/login")
+    print(r)
     if r.status_code != 200:
         raise AuthenticationError(
             f"Received status code {r.status_code} from login get"
@@ -192,7 +193,7 @@ def get_username(player):
     return (r.json()['data']['name'])
 
 def submit_flag(player, challenge, flag):
-    URL = "https://scavenger-ctfd.apps.{}".format(config_parser['DEFAULT']['cluster_domain'])
+    URL = "https://island-ctfd.apps.{}".format(config_parser['DEFAULT']['cluster_domain'])
     username = get_username(player)
     password = PASSWORDS[player]
 
@@ -314,7 +315,7 @@ def challenge_13_postgres():
         namespace_name = f"player{i}"
         if namespace_name in all_pods:
             for pod in all_pods[namespace_name]:
-                if pod['pod_name'].startswith("postgres-"):
+                if pod['pod_name'].startswith("postgresql-"):
                     submit_flag(i, 13, "FLAG_POSTGRES_99")
 
 def main():
