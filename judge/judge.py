@@ -259,7 +259,7 @@ def challenges_4_and_5():
 
 def challenge_11():
     for i in range(1, PLAYER_COUNT + 1):
-        url = "https://hello-player{}.apps.{}/aloha".format(i, config_parser['DEFAULT']['cluster_domain'])
+        url = "https://aloha-player{}.apps.{}/".format(i, config_parser['DEFAULT']['cluster_domain'])
         print(url)
         try:
             response = requests.get(url).text.strip()
