@@ -79,12 +79,12 @@
       "data": "case_insensitive"
     },
     {
-      "id": 18,
-      "challenge_id": 17,
-      "type": "static",
-      "content": "MjcwNTYK",
-      "data": ""
-    }    
+  		"id": 14,
+  		"challenge_id": 18,
+  		"type": "static",
+  		"content": "MjcwNTYK",
+  		"data": ""
+	  }   
   ],
   "meta": {}
 }
