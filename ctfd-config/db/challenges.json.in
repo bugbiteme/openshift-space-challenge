@@ -235,7 +235,22 @@
       "requirements": null,
       "connection_info": null,
       "next_id": null
-    }
+    },
+    {
+		"id": 18,
+		"name": "PV Challenge",
+		"description": "Create a pod to load the file from the island-treasure PVC to get access to your key\r\n\r\nNo need to enter a flag.  This challenge will be judged automatically!",
+		"max_attempts": 0,
+		"value": 20,
+		"category": "SurvivalOps",
+		"type": "standard",
+		"state": "visible",
+		"requirements": {
+			"prerequisites": [17]
+		},
+		"connection_info": null,
+		"next_id": null
+	}
   ],
   "meta": {}
 }
