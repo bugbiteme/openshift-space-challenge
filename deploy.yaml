@@ -745,20 +745,9 @@
       retries: 20
       delay: 15
 
-    - name: delete old treasure-key configmaps
-      shell: |
-        oc delete cm treasure-key -n player{{ item }} --ignore-not-found=true
-      with_sequence: start=1 end=100
-      ignore_errors: true
-
-    - name: create treasure-key configmaps
-      shell: |
-        oc create cm treasure-key --from-file="{{ playbook_dir }}/mykey.txt" -n "player{{ item }}"
-      with_sequence: start=1 end=100
-      retries: 20
-      delay: 15
-
     - name: create treasure key pvc
+      tags:
+        - pv-challenge
       kubernetes.core.k8s:
         namespace: "player{{ item }}"
         definition:
@@ -778,9 +767,9 @@
       retries: 20
       delay: 15
 
-    - name: Deploy pod to mount the file to pv
+    - name: Deploy treasure-key pod to mount the mykey file to pv
       tags:
-        - deploy
+        - pv-challenge
       kubernetes.core.k8s:
         namespace: "player{{ item }}"
         definition:
@@ -793,26 +782,34 @@
               - name: treasure-key-vol
                 persistentVolumeClaim:
                   claimName: treasure-key-pvc
-              - name: treasure-key-cm-file
-                configMap:
-                  name: treasure-key
             containers:
               - name: treasure-key-container
-                image: nginx
+                image: registry.access.redhat.com/ubi8/httpd-24:1-274.1692780861
                 ports:
-                  - containerPort: 80
+                  - containerPort: 8080
                     name: "http-server"
                 volumeMounts:
                   - mountPath: "/tmp/treasure-key/"
                     name: treasure-key-vol
-                  - mountPath: /tmp/treasure-key/mykey.txt
-                    subPath: mykey.txt
-                    name: treasure-key-cm-file
+            initContainers:
+              - command:
+                  - /bin/bash
+                  - '-c'
+                  - >-
+                      echo "MjcwNTYK" > /tmp/treasure-key/mykey.txt;
+                image: registry.redhat.io/openshift4/ose-cli
+                imagePullPolicy: IfNotPresent
+                name: my-init-container
+                volumeMounts:
+                  - name: treasure-key-vol
+                    mountPath: /tmp/treasure-key/
       with_sequence: start=1 end=100
       retries: 20
       delay: 15
 
-    - name: delete pods after mounting the file to pv
+    - name: delete treasure-key pod after mounting the treasure key file
+      tags:
+        - pv-challenge
       shell: |
         oc delete pod treasure-key-pod -n player{{ item }}
       with_sequence: start=1 end=100
