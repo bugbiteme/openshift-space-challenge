@@ -744,3 +744,77 @@
       with_sequence: start=1 end=100
       retries: 20
       delay: 15
+
+    - name: delete old treasure-key configmaps
+      shell: |
+        oc delete cm treasure-key -n player{{ item }} --ignore-not-found=true
+      with_sequence: start=1 end=100
+      ignore_errors: true
+
+    - name: create treasure-key configmaps
+      shell: |
+        oc create cm treasure-key --from-file="{{ playbook_dir }}/mykey.txt" -n "player{{ item }}"
+      with_sequence: start=1 end=100
+      retries: 20
+      delay: 15
+
+    - name: create treasure key pvc
+      kubernetes.core.k8s:
+        namespace: "player{{ item }}"
+        definition:
+          apiVersion: v1
+          kind: PersistentVolumeClaim
+          metadata:
+            name: treasure-key-pvc
+            labels:
+              app: treasure-key-pvc
+          spec:
+            accessModes:
+            - ReadWriteOnce
+            resources:
+              requests:
+                storage: 1Mi
+      with_sequence: start=1 end=100
+      retries: 20
+      delay: 15
+
+    - name: Deploy pod to mount the file to pv
+      tags:
+        - deploy
+      kubernetes.core.k8s:
+        namespace: "player{{ item }}"
+        definition:
+          apiVersion: v1
+          kind: Pod
+          metadata:
+            name: treasure-key-pod
+          spec:
+            volumes:
+              - name: treasure-key-vol
+                persistentVolumeClaim:
+                  claimName: treasure-key-pvc
+              - name: treasure-key-cm-file
+                configMap:
+                  name: treasure-key
+            containers:
+              - name: treasure-key-container
+                image: nginx
+                ports:
+                  - containerPort: 80
+                    name: "http-server"
+                volumeMounts:
+                  - mountPath: "/tmp/treasure-key/"
+                    name: treasure-key-vol
+                  - mountPath: /tmp/treasure-key/mykey.txt
+                    subPath: mykey.txt
+                    name: treasure-key-cm-file
+      with_sequence: start=1 end=100
+      retries: 20
+      delay: 15
+
+    - name: delete pods after mounting the file to pv
+      shell: |
+        oc delete pod treasure-key-pod -n player{{ item }}
+      with_sequence: start=1 end=100
+      retries: 20
+      delay: 15
