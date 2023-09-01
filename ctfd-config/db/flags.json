@@ -84,7 +84,21 @@
   		"type": "static",
   		"content": "MjcwNTYK",
   		"data": ""
-	  }   
+	  },
+    {
+      "id": 15,
+      "challenge_id": 8,
+      "type": "static",
+      "content": "quarkus",
+      "data": "case_insensitive"
+    },
+    {
+      "id": 16,
+      "challenge_id": 9,
+      "type": "static",
+      "content": "gp3-csi",
+      "data": "case_insensitive"
+    }
   ],
   "meta": {}
 }
