@@ -15,6 +15,16 @@
       set_fact:
         extracted_domain: "{{ oc_output.stdout.split('apps.')[1] }}"
 
+    - name: create {{ project_name }} namespace
+      kubernetes.core.k8s:
+        api_version: v1
+        kind: Namespace
+        name: "{{ project_name }}"
+        state: present
+        wait: yes
+      retries: 20
+      delay: 15
+
     - name: Create ConfigMap
       kubernetes.core.k8s:
         definition:
@@ -25,16 +35,6 @@
             namespace: judge
           data:
             cluster-domain: "{{ extracted_domain }}"
-
-    - name: create {{ project_name }} namespace
-      kubernetes.core.k8s:
-        api_version: v1
-        kind: Namespace
-        name: "{{ project_name }}"
-        state: present
-        wait: yes
-      retries: 20
-      delay: 15
 
     - name: Repo SSH key
       kubernetes.core.k8s:

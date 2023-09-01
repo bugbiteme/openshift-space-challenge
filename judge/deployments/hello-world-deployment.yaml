@@ -20,8 +20,8 @@ spec:
           ports:
             - containerPort: 8080
           env: # Add this section
-            - name: judge-settings
+            - name: cluster-domain
               valueFrom:
                 configMapKeyRef:
-                  name: cluster-domain
-                  key: cluster_domain
+                  name: judge-settings
+                  key: cluster-domain
