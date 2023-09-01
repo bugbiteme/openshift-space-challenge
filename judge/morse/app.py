@@ -1,7 +1,6 @@
 import random
 import configparser
 import requests
-from kubernetes import client, config
 
 config_parser = configparser.ConfigParser()
 config_parser.read('settings.ini')
