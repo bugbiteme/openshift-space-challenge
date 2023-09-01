@@ -1,15 +1,15 @@
 apiVersion: build.openshift.io/v1
 kind: BuildConfig
 metadata:
-  name: hello_world
+  name: hello-world
   namespace: judge
 spec:
   output:
     to:
       kind: ImageStreamTag
-      name: hello_world:latest
+      name: hello-world:latest
   source:
-    contextDir: /judge/hello_world
+    contextDir: /judge/hello-world
     git:
       uri: git@github.com:catalyst-ctfd/catalyst.git
     sourceSecret:
@@ -25,11 +25,11 @@ spec:
   triggers:
     - generic:
         secretReference:
-          name: hello_world-generic-webhook-secret
+          name: hello-world-generic-webhook-secret
       type: Generic
     - github:
         secretReference:
-          name: hello_world-github-webhook-secret
+          name: hello-world-github-webhook-secret
       type: GitHub
     - imageChange: {}
       type: ImageChange

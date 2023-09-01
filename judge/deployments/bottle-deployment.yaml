@@ -19,9 +19,3 @@ spec:
           name: bottle
           ports:
             - containerPort: 8080
-          env: # Add this section
-            - name: cluster_domain
-              valueFrom:
-                configMapKeyRef:
-                  name: cluster_domain
-                  key: cluster_domain

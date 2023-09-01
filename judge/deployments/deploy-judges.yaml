@@ -21,10 +21,10 @@
           apiVersion: v1
           kind: ConfigMap
           metadata:
-            name: cluster_domain
+            name: judge-settings
             namespace: judge
           data:
-            cluster_domain: { { extracted_domain } }
+            cluster-domain: "{{ extracted_domain }}"
 
     - name: create {{ project_name }} namespace
       kubernetes.core.k8s:
@@ -40,7 +40,7 @@
       kubernetes.core.k8s:
         definition: "{{ lookup('file', 'ssh-secret.yaml') }}"
 
-    - name: Bottle - DeploymentConfig
+    - name: Bottle - BuildConfig
       kubernetes.core.k8s:
         definition: "{{ lookup('file', 'bottle-buildconfig.yaml') }}"
 
@@ -57,7 +57,7 @@
       kubernetes.core.k8s:
         definition: "{{ lookup('file', 'bottle-deployment.yaml') }}"
 
-    - name: Morse - DeploymentConfig
+    - name: Morse - BuildConfig
       kubernetes.core.k8s:
         definition: "{{ lookup('file', 'morse-buildconfig.yaml') }}"
 
@@ -74,19 +74,19 @@
       kubernetes.core.k8s:
         definition: "{{ lookup('file', 'morse-deployment.yaml') }}"
 
-    - name: hello_world - DeploymentConfig
+    - name: hello-world - BuildConfig
       kubernetes.core.k8s:
-        definition: "{{ lookup('file', 'hello_world-buildconfig.yaml') }}"
+        definition: "{{ lookup('file', 'hello-world-buildconfig.yaml') }}"
 
-    - name: hello_world - Imagestream
+    - name: hello-world - Imagestream
       kubernetes.core.k8s:
-        definition: "{{ lookup('file', 'hello_world-imagestream.yaml') }}"
+        definition: "{{ lookup('file', 'hello-world-imagestream.yaml') }}"
 
     - name: Start the Build
-      command: oc start-build hello_world -n judge
+      command: oc start-build hello-world -n judge
       register: build_result
       changed_when: "'completed' not in build_result.stdout"
 
-    - name: hello_world - Deployment
+    - name: hello-world - Deployment
       kubernetes.core.k8s:
-        definition: "{{ lookup('file', 'hello_world-deployment.yaml') }}"
+        definition: "{{ lookup('file', 'hello-world-deployment.yaml') }}"
