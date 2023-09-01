@@ -3,7 +3,7 @@ import requests
 import csv
 
 
-cluster_domain = os.environ.get('cluster_domain', '')
+cluster_domain = os.environ.get('cluster-domain', '')
 
 PLAYER_COUNT = 100
 PASSWORDS = []
