@@ -1,19 +1,16 @@
-import random
-import configparser
+import os
 import requests
 import csv
-from kubernetes import client, config
 
-config_parser = configparser.ConfigParser()
-config_parser.read('settings.ini')
+
+cluster_domain = os.environ.get('cluster_domain', '')
 
 PLAYER_COUNT = 100
 PASSWORDS = []
 
 
 def get_username(player):
-    URL = "https://island-ctfd.apps.{}".format(
-        config_parser['DEFAULT']['cluster_domain'])
+    URL = f"https://island-ctfd.apps.{cluster_domain}"
     username = "admin"
     password = "redhat123"
 
@@ -46,8 +43,7 @@ def get_username(player):
 
 
 def submit_flag(player, challenge, flag):
-    URL = "https://island-ctfd.apps.{}".format(
-        config_parser['DEFAULT']['cluster_domain'])
+    URL = f"https://island-ctfd.apps.{cluster_domain}"
     username = get_username(player)
     password = PASSWORDS[player]
 
@@ -100,9 +96,9 @@ def submit_flag(player, challenge, flag):
 
 
 def hello_world():
+
     for i in range(1, PLAYER_COUNT + 1):
-        url = f"https://hello-player{i}.apps.{config_parser['DEFAULT']['cluster_domain']}/"
-        print(PLAYER_COUNT)
+        url = f"https://hello-player{i}.apps.{cluster_domain}/"
         print(url)
         try:
             response = requests.get(url).text.strip()
@@ -112,13 +108,12 @@ def hello_world():
                 submit_flag(i, 5, "FLAG_BONJOUR_99")
         except requests.RequestException as err:
             print("error:", err)
-            return False
 
 
 def main():
 
     global PASSWORDS
-    with open("../../credentials.csv", 'r') as csvfile:
+    with open("credentials.csv", 'r') as csvfile:
         reader = csv.reader(csvfile)
         for row in reader:
             PASSWORDS.append(row[1])
