@@ -1,8 +1,6 @@
-import random
 import requests
 import os
 import time
-import csv
 from kubernetes import client, config
 
 PLAYER_COUNT = 100
