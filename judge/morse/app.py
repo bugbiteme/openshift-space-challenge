@@ -1,12 +1,11 @@
 import random
-import configparser
 import requests
-
-config_parser = configparser.ConfigParser()
-config_parser.read('settings.ini')
+import os
+import time
 
 PLAYER_COUNT = 100
-MAX_THREADS = 16
+
+cluster_domain = os.environ.get('CLUSTERDOMAIN', '')
 
 morse_messages = {
     "ROOM SERVICE? ORDERED COCONUTS 3 DAYS AGO.",
@@ -90,7 +89,7 @@ def post_json_and_forget(url, data):
 def challenge_morse():
 
     for i in range(1, PLAYER_COUNT + 1):
-        url = f"https://morse-player{i}.apps.{config_parser['DEFAULT']['cluster_domain']}/decode-morse"
+        url = f"https://morse-player{i}.apps.{cluster_domain}/decode-morse"
         morse_message = random.choice(list(morse_messages))
         data = {
             'message': ascii_to_morse(morse_message)
@@ -102,6 +101,7 @@ def challenge_morse():
 def main():
     while True:
         challenge_morse()
+        time.sleep(0.1)
 
 
 if __name__ == "__main__":

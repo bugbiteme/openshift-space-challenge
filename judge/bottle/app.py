@@ -1,9 +1,9 @@
-import configparser
 import requests
 import random
+import os
+import time
 
-config_parser = configparser.ConfigParser()
-config_parser.read('settings.ini')
+cluster_domain = os.environ.get('CLUSTERDOMAIN', '')
 
 PLAYER_COUNT = 100
 
@@ -48,7 +48,7 @@ def pick_bottle_char():
 def post_json_and_forget(url, data):
     try:
         print(url)
-        print(data)
+        # print(data)
         requests.post(url, json=data)
     except:
         pass  # Ignore exceptions
@@ -69,8 +69,7 @@ def challenge_bottle():
         bottles.append(bottle_data)
 
     for i in range(1, PLAYER_COUNT + 1):
-        url = "https://bottles-player{}.apps.{}/collect-bottles".format(
-            i, config_parser['DEFAULT']['cluster_domain'])
+        url = f"https://bottles-player{i}.apps.{cluster_domain}/collect-bottles"
         post_json_and_forget(url, bottles)
 
 
@@ -78,6 +77,7 @@ def main():
 
     while True:
         challenge_bottle()
+        time.sleep(0.1)
 
 
 if __name__ == "__main__":

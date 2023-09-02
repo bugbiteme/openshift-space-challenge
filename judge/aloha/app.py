@@ -95,17 +95,17 @@ def submit_flag(player, challenge, flag):
     print(r.json()["data"])
 
 
-def hello_world():
+def aloha():
 
     for i in range(1, PLAYER_COUNT + 1):
-        url = f"https://hello-player{i}.apps.{cluster_domain}/"
+        url = f"https://aloha-player{i}.apps.{cluster_domain}"
         print(url)
         try:
             response = requests.get(url).text.strip()
             if response == "Hello World":
-                submit_flag(i, 4, "FLAG_HELLO_99")
+                submit_flag(i, 11, "FLAG_ALOHA_99")
             if response == "Bonjour Monde":
-                submit_flag(i, 5, "FLAG_BONJOUR_99")
+                submit_flag(i, 11, "FLAG_ALOHA_99")
         except requests.RequestException as err:
             print("error:", err)
 
@@ -119,7 +119,7 @@ def main():
             PASSWORDS.append(row[1])
 
     while True:
-        hello_world()
+        aloha()
 
 
 if __name__ == "__main__":
