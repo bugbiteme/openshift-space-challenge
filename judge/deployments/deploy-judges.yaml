@@ -90,3 +90,37 @@
     - name: hello-world - Deployment
       kubernetes.core.k8s:
         definition: "{{ lookup('file', 'hello-world-deployment.yaml') }}"
+
+    - name: aloha - BuildConfig
+      kubernetes.core.k8s:
+        definition: "{{ lookup('file', 'aloha-buildconfig.yaml') }}"
+
+    - name: aloha - Imagestream
+      kubernetes.core.k8s:
+        definition: "{{ lookup('file', 'aloha-imagestream.yaml') }}"
+
+    - name: Start the Build
+      command: oc start-build aloha -n judge
+      register: build_result
+      changed_when: "'completed' not in build_result.stdout"
+
+    - name: aloha - Deployment
+      kubernetes.core.k8s:
+        definition: "{{ lookup('file', 'aloha-deployment.yaml') }}"
+
+    - name: postgres - BuildConfig
+      kubernetes.core.k8s:
+        definition: "{{ lookup('file', 'postgres-buildconfig.yaml') }}"
+
+    - name: postgres - Imagestream
+      kubernetes.core.k8s:
+        definition: "{{ lookup('file', 'postgres-imagestream.yaml') }}"
+
+    - name: Start the Build
+      command: oc start-build postgres -n judge
+      register: build_result
+      changed_when: "'completed' not in build_result.stdout"
+
+    - name: postgres - Deployment
+      kubernetes.core.k8s:
+        definition: "{{ lookup('file', 'postgres-deployment.yaml') }}"

@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+  namespace: judge
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+        deployment: postgres
+    spec:
+      containers:
+        - image: image-registry.openshift-image-registry.svc:5000/judge/postgres:latest
+          name: postgres
+          ports:
+            - containerPort: 8080
+          env: # Add this section
+            - name: CLUSTERDOMAIN
+              valueFrom:
+                configMapKeyRef:
+                  name: judge-settings
+                  key: cluster-domain
