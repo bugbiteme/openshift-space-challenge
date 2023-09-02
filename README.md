@@ -47,6 +47,20 @@ This Git repo will be required to solve some challenges. All users have access t
 Get Gitea URL: `oc get route -n gitea`
 User access: see `credentials.csv`` file.
 
+
+## Running Judges required by some challenges.
+
+Some challenges need a juge to get points or to receive some info on your app API endpoint.   You start all judges this way:
+`ansible-playbook catalyst/judge/deployments/deploy-judges.yaml`
+
+This script will deploy all judges in the judge namespace.  Each judge will run in one pod, but you can scale those pods manually if needed.   
+
+It's also possible to run any judge locally on your laptop.  Export your cluster domain before running your judge script:
+`export CLUSTERDOMAIN=cluster-dgdbx.dgdbx.sandboxXXXX.opentlc.com`
+`python catalyst/judge/{judge_name}/app.py`
+
+
+
 ## Optional scripts and tools
 
 ### Make new user credentials
