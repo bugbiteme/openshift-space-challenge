@@ -44,7 +44,7 @@ def get_username(player):
 
 
 def submit_flag(player, challenge, flag):
-    time.sleep(1)
+    time.sleep(10)
     URL = f"https://island-ctfd.apps.{cluster_domain}"
     username = get_username(player)
     password = PASSWORDS[player]
