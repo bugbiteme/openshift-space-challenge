@@ -98,6 +98,13 @@
       "type": "static",
       "content": "gp3-csi",
       "data": "case_insensitive"
+    },
+    {
+      "id": 17,
+      "challenge_id": 10,
+      "type": "static",
+      "content": "FLAG_MONKEY_BUSINESS_99",
+      "data": "case_insensitive"
     }
   ],
   "meta": {}
