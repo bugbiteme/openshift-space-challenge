@@ -228,7 +228,7 @@ INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (15, '20
 INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (25, '2020-04-30', 'Trying to deploy the data packet.');
 INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (9, '2020-03-12', 'I''m having trouble analyzeing the firewall.');
 INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (17, '2021-03-16', 'The database seems corrupted; I''ll need to analyze it.');
-INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (22, '2021-11-28', 'I''ve just compileed the proxy.');
+INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (22, '2021-11-28', 'I''ve just compiled the proxy.');
 INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (9, '2020-10-27', 'The encryption key seems corrupted; I''ll need to compile it.');
 INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (4, '2021-06-13', 'I''ve just bypassed the virtual machine.');
 INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (26, '2022-01-07', 'I''ve just patched the gateway.');
@@ -276,7 +276,7 @@ INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (7, '202
 INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (16, '2022-11-10', 'I''ve just deployed the network protocol.');
 INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (23, '2020-05-02', 'I''m having trouble rebooting the system kernel.');
 INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (17, '2023-01-01', 'The cloud server seems corrupted; I''ll need to deploy it.');
-INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (14, '2022-11-21', 'I''ve just compileed the hypervisor.');
+INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (14, '2022-11-21', 'I''ve just compiled the hypervisor.');
 INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (16, '2022-07-07', 'Trying to debug the proxy.');
 INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (19, '2020-11-16', 'Trying to analyze the message bus.');
 INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (24, '2023-03-23', 'Trying to analyze the gateway.');
@@ -305,8 +305,8 @@ INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (3, '202
 INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (24, '2021-04-09', 'I''m having trouble decrypting the virtual machine.');
 INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (11, '2021-11-15', 'The encryption key seems corrupted; I''ll need to decrypt it.');
 INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (1, '2023-02-09', 'I''ve just hacked the algorithm.');
-INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (9, '2021-10-04', 'I''ve just compileed the algorithm.');
-INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (14, '2023-06-04', 'I''ve just compileed the proxy.');
+INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (9, '2021-10-04', 'I''ve just compiled the algorithm.');
+INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (14, '2023-06-04', 'I''ve just compiled the proxy.');
 INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (17, '2020-12-13', 'I''m having trouble reverse-engineering the virtual machine.');
 INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (2, '2023-05-19', 'The hypervisor seems corrupted; I''ll need to compile it.');
 INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (6, '2022-01-27', 'Trying to hack the data packet.');
@@ -357,7 +357,7 @@ INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (30, '20
 INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (29, '2021-09-20', 'Trying to patch the algorithm.');
 INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (4, '2021-04-03', 'I''ve just hacked the algorithm.');
 INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (15, '2022-02-23', 'The message bus seems corrupted; I''ll need to patch it.');
-INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (22, '2022-10-02', 'I''ve just compileed the algorithm.');
+INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (22, '2022-10-02', 'I''ve just compiled the algorithm.');
 INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (12, '2020-11-15', 'I''ve just reconfigureed the database.');
 INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (4, '2021-05-12', 'Trying to inject the database.');
 INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (2, '2023-06-14', 'I''m having trouble analyzeing the network protocol.');
@@ -432,7 +432,7 @@ INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (23, '20
 INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (9, '2022-09-21', 'The algorithm seems corrupted; I''ll need to decrypt it.');
 INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (26, '2023-01-19', 'The cloud server seems corrupted; I''ll need to reconfigure it.');
 INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (4, '2023-06-14', 'The message bus seems corrupted; I''ll need to patch it.');
-INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (30, '2021-05-29', 'I''ve just compileed the binary.');
+INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (30, '2021-05-29', 'I''ve just compiled the binary.');
 INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (5, '2020-12-30', 'Trying to compile the data packet.');
 INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (26, '2022-02-24', 'I''ve just deployed the network protocol.');
 INSERT INTO journal_log_entry (explorer_id, entry_date, content) VALUES (10, '2020-07-29', 'The cloud server seems corrupted; I''ll need to debug it.');
