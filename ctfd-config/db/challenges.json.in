@@ -209,7 +209,7 @@
     {
       "id": 16,
       "name": "Journal",
-      "description": "It occurs to you that the personal logs of the explorers may provide a clue to escaping the island.  If the explorers left the island, then perhaps their last journal entry would suggest what they did to escape!\r\n\r\nWhat it the final journal entry for the most skilled explorer?\r\n\r\n* ocp: https://console-openshift-console.apps.{{ cluster_url }}",
+      "description": "It occurs to you that the personal logs of the explorers may provide a clue to escaping the island.  If the explorers left the island, then perhaps their last journal entry would suggest what they did to escape!\r\n\r\nWhat is the final journal entry for the most skilled explorer?\r\n\r\n* ocp: https://console-openshift-console.apps.{{ cluster_url }}",
       "max_attempts": 0,
       "value": 15,
       "category": "SurvivalOps",
