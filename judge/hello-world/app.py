@@ -1,6 +1,7 @@
 import os
 import requests
 import csv
+import time
 
 
 cluster_domain = os.environ.get('CLUSTERDOMAIN', '')
@@ -43,6 +44,7 @@ def get_username(player):
 
 
 def submit_flag(player, challenge, flag):
+    time.sleep(10)
     URL = f"https://island-ctfd.apps.{cluster_domain}"
     username = get_username(player)
     password = PASSWORDS[player]
@@ -120,7 +122,7 @@ def main():
 
     while True:
         hello_world()
-
+        time.sleep(1)
 
 if __name__ == "__main__":
     main()
