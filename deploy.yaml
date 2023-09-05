@@ -731,6 +731,7 @@
         GIT_COMMITTER_EMAIL: "starter@example.com"
         GIT_AUTHOR_NAME: "starter"
         GIT_AUTHOR_EMAIL: "starter@example.com"
+      ignore_errors: true
 
     - name: delete old island-logs configmaps
       shell: |
