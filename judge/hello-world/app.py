@@ -1,7 +1,6 @@
 import os
 import requests
 import csv
-import time
 
 
 cluster_domain = os.environ.get('CLUSTERDOMAIN', '')
@@ -121,7 +120,6 @@ def main():
 
     while True:
         hello_world()
-        time.sleep(1)
 
 
 if __name__ == "__main__":
