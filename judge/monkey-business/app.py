@@ -133,7 +133,7 @@ def monkeyBusinessChecker():
         try:
             replicas = checkReplicas(i)
             if replicas >= 2:
-                submit_flag(i, 10, "FLAG_HELLO_99")     
+                submit_flag(i, 10, "FLAG_MONKEY_BUSINESS_99")     
         except requests.RequestException as err:
             print("error:", err)
 
