@@ -245,7 +245,11 @@
 	"category": "SurvivalOps",
 	"type": "standard",
 	"state": "visible",
-	"requirements": null,
+  "requirements": {
+    "prerequisites": [
+      17
+    ]
+  },
 	"connection_info": null,
 	"next_id": null
 
