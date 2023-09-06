@@ -9,6 +9,7 @@ token = os.environ.get('JUDGE_SA_TOKEN', '')
 
 PLAYER_COUNT = 100
 PASSWORDS = []
+successful_flags = []
 
 def checkReplicas(player):
     # Define your OpenShift API server URL, namespace, resource type, and resource name
@@ -131,8 +132,10 @@ def monkeyBusinessChecker():
     for i in range(1, PLAYER_COUNT + 1):
         try:
             replicas = checkReplicas(i)
-            if replicas >= 2:
-                submit_flag(i, 10, "FLAG_MONKEY_BUSINESS_99")  
+            if replicas >= 2 and i not in successful_flags:
+                submit_flag(i, 10, "FLAG_MONKEY_BUSINESS_99")
+                successful_flags.append(i) 
+
             else:
                 print("Hello deployment not found. Skip Flag submission")
         except requests.RequestException as err:
