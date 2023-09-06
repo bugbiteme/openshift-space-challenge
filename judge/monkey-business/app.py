@@ -140,6 +140,12 @@ def monkeyBusinessChecker():
 
 def main():
 
+    global PASSWORDS
+    with open("credentials.csv", 'r') as csvfile:
+        reader = csv.reader(csvfile)
+        for row in reader:
+            PASSWORDS.append(row[1])
+
     while True:
         monkeyBusinessChecker()
         time.sleep(30)
