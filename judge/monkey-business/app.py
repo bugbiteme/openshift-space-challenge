@@ -35,7 +35,7 @@ def checkReplicas(player):
         print(f'Number of Replicas for {resource_type.capitalize()}: {replicas}')
     else:
         replicas = 0
-        print(f'Error: Unable to fetch data. Status code: {response.status_code}')
+        print(f'No replicas found for hello deployment. Status code: {response.status_code}')
 
     return replicas
 
