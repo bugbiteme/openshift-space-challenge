@@ -138,7 +138,9 @@ def monkeyBusinessChecker():
                     successful_flags.append(i) 
 
                 else:
-                    print("Hello deployment not found. Skip Flag submission")
+                    print("Hello deployment not found. Skipping Flag submission")
+            else:
+                print(f"Flag for player{i} already submitted." )
         except requests.RequestException as err:
             print("error:", err)
 
