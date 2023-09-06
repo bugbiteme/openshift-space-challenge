@@ -131,13 +131,14 @@ def monkeyBusinessChecker():
 
     for i in range(1, PLAYER_COUNT + 1):
         try:
-            replicas = checkReplicas(i)
-            if replicas >= 2 and i not in successful_flags:
-                submit_flag(i, 10, "FLAG_MONKEY_BUSINESS_99")
-                successful_flags.append(i) 
+            if i not in successful_flags:
+                replicas = checkReplicas(i)
+                if replicas >= 2:
+                    submit_flag(i, 10, "FLAG_MONKEY_BUSINESS_99")
+                    successful_flags.append(i) 
 
-            else:
-                print("Hello deployment not found. Skip Flag submission")
+                else:
+                    print("Hello deployment not found. Skip Flag submission")
         except requests.RequestException as err:
             print("error:", err)
 
