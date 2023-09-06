@@ -20,6 +20,7 @@ def checkReplicas(player):
     url = f'{api_server_url}/apis/apps/v1/namespaces/{namespace}/{resource_type}/{resource_name}'
     print(f'url: {url}')
 
+    print(f'token: {token}')
     # Set up the headers with the authentication token
     headers = {
         'Authorization': f'Bearer {token}'
