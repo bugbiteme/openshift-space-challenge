@@ -8,6 +8,7 @@ cluster_domain = os.environ.get('CLUSTERDOMAIN', '')
 token = os.environ.get('JUDGE_SA_TOKEN', '')
 
 PLAYER_COUNT = 100
+PASSWORDS = []
 
 def checkReplicas(player):
     # Define your OpenShift API server URL, namespace, resource type, and resource name
