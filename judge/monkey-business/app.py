@@ -5,6 +5,7 @@ import time
 
 
 cluster_domain = os.environ.get('CLUSTERDOMAIN', '')
+token = os.environ.get('SA_TOKEN', '')
 
 PLAYER_COUNT = 100
 
@@ -14,9 +15,6 @@ def checkReplicas(player):
     namespace = f'player{player}'
     resource_type = 'deployments'  # Change to 'replicasets' for ReplicaSets
     resource_name = 'hello'
-
-    # Define your authentication token
-    token = 'sha256~CnExbMcd67TACH6ekwY0gG12FzIJDAfKXFQi8NHvHNg'
 
     # Construct the API endpoint URL
     url = f'{api_server_url}/apis/apps/v1/namespaces/{namespace}/{resource_type}/{resource_name}'
