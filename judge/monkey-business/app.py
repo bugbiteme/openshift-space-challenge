@@ -5,7 +5,7 @@ import time
 
 
 cluster_domain = os.environ.get('CLUSTERDOMAIN', '')
-token = os.environ.get('SA_TOKEN', '')
+token = os.environ.get('JUDGE_SA_TOKEN', '')
 
 PLAYER_COUNT = 100
 
