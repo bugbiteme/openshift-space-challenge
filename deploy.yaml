@@ -816,3 +816,9 @@
       with_sequence: start=1 end=100
       retries: 20
       delay: 15
+
+    - name: Disable project creation for players
+      shell: |
+        oc patch clusterrolebinding.rbac self-provisioners -p '{"subjects": null}
+      retries: 20
+      delay: 15
