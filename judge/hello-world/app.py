@@ -8,7 +8,6 @@ cluster_domain = os.environ.get('CLUSTERDOMAIN', '')
 
 PLAYER_COUNT = 100
 PASSWORDS = []
-successful_flags = []
 
 
 def get_username(player):
@@ -45,7 +44,7 @@ def get_username(player):
 
 
 def submit_flag(player, challenge, flag):
-    time.sleep(1)
+    time.sleep(10)
     URL = f"https://island-ctfd.apps.{cluster_domain}"
     username = get_username(player)
     password = PASSWORDS[player]
@@ -101,19 +100,16 @@ def submit_flag(player, challenge, flag):
 def hello_world():
 
     for i in range(1, PLAYER_COUNT + 1):
-        if i not in successful_flags:
-            url = f"https://hello-player{i}.apps.{cluster_domain}/"
-            print(url)
-            try:
-                response = requests.get(url).text.strip()
-                if response == "Hello World":
-                    submit_flag(i, 4, "FLAG_HELLO_99")
-                if response == "Bonjour Monde":
-                    submit_flag(i, 5, "FLAG_BONJOUR_99")
-            except requests.RequestException as err:
-                print("error:", err)
-        else:
-            print(f"Flag for player{i} already submitted." )
+        url = f"https://hello-player{i}.apps.{cluster_domain}/"
+        print(url)
+        try:
+            response = requests.get(url).text.strip()
+            if response == "Hello World":
+                submit_flag(i, 4, "FLAG_HELLO_99")
+            if response == "Bonjour Monde":
+                submit_flag(i, 5, "FLAG_BONJOUR_99")
+        except requests.RequestException as err:
+            print("error:", err)
 
 
 def main():
