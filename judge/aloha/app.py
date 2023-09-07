@@ -8,6 +8,7 @@ cluster_domain = os.environ.get('CLUSTERDOMAIN', '')
 
 PLAYER_COUNT = 100
 PASSWORDS = []
+successful_flags = []
 
 
 def get_username(player):
@@ -100,17 +101,21 @@ def submit_flag(player, challenge, flag):
 def aloha():
 
     for i in range(1, PLAYER_COUNT + 1):
-        url = f"https://aloha-player{i}.apps.{cluster_domain}"
-        print(url)
-        try:
-            response = requests.get(url).text.strip()
-            if response == "Hello World":
-                submit_flag(i, 11, "FLAG_ALOHA_99")
-            if response == "Bonjour Monde":
-                submit_flag(i, 11, "FLAG_ALOHA_99")
-        except requests.RequestException as err:
-            print("error:", err)
-
+        if i not in successful_flags:
+            url = f"https://aloha-player{i}.apps.{cluster_domain}"
+            print(url)
+            try:
+                response = requests.get(url).text.strip()
+                if response == "Hello World":
+                    submit_flag(i, 11, "FLAG_ALOHA_99")
+                    successful_flags.append(i) 
+                if response == "Bonjour Monde":
+                    submit_flag(i, 11, "FLAG_ALOHA_99")
+                    successful_flags.append(i) 
+            except requests.RequestException as err:
+                print("error:", err)
+        else:
+            print(f"Flag for player{i} already submitted." )
 
 def main():
 
