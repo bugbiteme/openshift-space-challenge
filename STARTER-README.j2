@@ -5,3 +5,187 @@ Island Challanges: [https://island-ctfd.apps.{{ cluster_domain }}](https://islan
 OpenShift console: [https://console-openshift-console.apps.{{ cluster_domain }}](https://console-openshift-console.apps.{{ cluster_domain }})
 
 Gitea: [https://gitea-gitea.apps.{{ cluster_domain }}](https://gitea-gitea.apps.{{ cluster_domain }})
+
+---
+
+# Survival Skills
+
+## Introduction
+
+Surviving and thriving on the island will require some critical
+OpenShift skills; most importantly, building, deploying and modifying
+applications.
+
+The following instructions are intended to get you past the island's
+*Warm Up* challenges.
+
+---
+
+## Table of Contents
+
+1. [Step 1: Prepare your private application repo](#step-1-prepare-your-private-application-repo)
+2. [Step 2: Build and deploy in OpenShift](#step-2-build-and-deploy-in-openshift)
+3. [Step 3: Modifying your application](#step-3-modifying-your-application)
+4. [Additional Tips](#additional-tips)
+
+---
+
+## Step 1: Prepare your private application repo
+
+The "starter" account on gitea includes a number of starter
+application repos.  We'll be using the python starter app for the
+purposes of these instructions.
+
+First you'll need to connect to gitea and login using your game
+credentials.   The login link is on the top right of the screen.
+
+<p align="center"><img src="https://gitea-gitea.apps.{{ cluster_domain }}/starter/INSTRUCTIONS/raw/branch/master/images/images/shadow_i1.png" alt="drawing" width="700"/></p>
+
+Once you log in, you'll be looking at your gitea account contents.  Of
+course, there are no git repos in your account yet.  We will have to
+copy one of the starter repos in here.
+
+<p align="center"><img src="https://gitea-gitea.apps.{{ cluster_domain }}/starter/INSTRUCTIONS/raw/branch/master/images/images/shadow_i3.png" alt="drawing" width="700"/></p>
+
+Go to the `starter` account at https://gitea-gitea.apps.{{ cluster_domain }}/starter to
+see the list of available choices.
+
+<p align="center"><img src="https://gitea-gitea.apps.{{ cluster_domain }}/starter/INSTRUCTIONS/raw/branch/master/images/images/shadow_i4.png" alt="drawing" width="700"/></p>
+
+Select the `python-starter` repo, and copy the `HTTPS` URL by clicking
+on the copy icon to the left of the URL.
+
+<p align="center"><img src="https://gitea-gitea.apps.{{ cluster_domain }}/starter/INSTRUCTIONS/raw/branch/master/images/images/shadow_i6.png" alt="drawing" width="700"/></p>
+
+Now go back to your own account and select `New Migration` in the top
+right of the browser window.
+
+<p align="center"><img src="https://gitea-gitea.apps.{{ cluster_domain }}/starter/INSTRUCTIONS/raw/branch/master/images/images/shadow_i7.png" alt="drawing" width="700"/></p>
+
+Now select `gitea` from the list of possible migration sources.
+
+<p align="center"><img src="https://gitea-gitea.apps.{{ cluster_domain }}/starter/INSTRUCTIONS/raw/branch/master/images/images/shadow_i8.png" alt="drawing" width="700"/></p>
+
+Paste the `python-starter` URL into `Migrate / Clone from URL` field,
+and check the `Make Repository Private` box.  Now click on the green
+`Migrate Repository` button.  This will copy the `python-starter` repo
+into your private gitea account.
+
+<p align="center"><img src="https://gitea-gitea.apps.{{ cluster_domain }}/starter/INSTRUCTIONS/raw/branch/master/images/images/shadow_i9.png" alt="drawing" width="700"/></p>
+
+You will need the repo URL for this repository in order to tell
+OpenShift how to build it.  So just like before, press the copy button
+to the right of the blue `HTTPS` field.
+
+<p align="center"><img src="https://gitea-gitea.apps.{{ cluster_domain }}/starter/INSTRUCTIONS/raw/branch/master/images/images/shadow_i10.png" alt="drawing" width="700"/></p>
+
+---
+
+## Step 2: Build and Deploy in OpenShift
+
+Now that we have a private copy of one of the starter applications, we
+can build and deploy it on OpenShift.  First, you'll need to login to
+the OpenShift console using your game credentials.
+
+<p align="center"><img src="https://gitea-gitea.apps.{{ cluster_domain }}/starter/INSTRUCTIONS/raw/branch/master/images/images/shadow_i11.png" alt="drawing" width="700"/></p>
+
+You're now looking at the *Developer Perspective* of the OCP console.  You can go through the tour if you like, or just `Skip tour`.
+
+<p align="center"><img src="https://gitea-gitea.apps.{{ cluster_domain }}/starter/INSTRUCTIONS/raw/branch/master/images/images/shadow_i12.png" alt="drawing" width="700"/></p>
+
+You have an OpenShift project assigned to you already.  In this case,
+we are `player1`.  Select the `player1` project from this list.
+
+<p align="center"><img src="https://gitea-gitea.apps.{{ cluster_domain }}/starter/INSTRUCTIONS/raw/branch/master/images/images/shadow_i14.png" alt="drawing" width="700"/></p>
+
+The *Add* page provides many options for adding application resources
+to your project namespace.  We're going to use the `Import from Git`
+option to bring our application code over from gitea.
+
+<p align="center"><img src="https://gitea-gitea.apps.{{ cluster_domain }}/starter/INSTRUCTIONS/raw/branch/master/images/images/shadow_i15.png" alt="drawing" width="700"/></p>
+
+We'll need to fill in a few fields on this `Import from Git` page.
+First, paste the URL for your starter repo into `Git Repo URL` field.
+
+<p align="center"><img src="https://gitea-gitea.apps.{{ cluster_domain }}/starter/INSTRUCTIONS/raw/branch/master/images/images/shadow_i16.png" alt="drawing" width="700"/></p>
+
+Next, because it's a private repo, we'll need to give OpenShift the
+credentials (your username/password) to access the private report.
+Click on the `Advanced Git options` drop-down button, and go to the
+`Source Secret` section.  Click on `Select Secret name` and `Create
+new Secret`.
+
+<p align="center"><img src="https://gitea-gitea.apps.{{ cluster_domain }}/starter/INSTRUCTIONS/raw/branch/master/images/images/shadow_i17.png" alt="drawing" width="700"/></p>
+
+Enter a secret a name (`git` in this example), followed by your
+username and password for basic authentication.  Clicking on `Create`
+will create the kubernetes Secret object that OpenShift will use to
+access your private repository.  Be sure to use this same secret any
+time you want to import a private git repo into your OpenShift
+project.
+
+<p align="center"><img src="https://gitea-gitea.apps.{{ cluster_domain }}/starter/INSTRUCTIONS/raw/branch/master/images/images/shadow_i22.png" alt="drawing" width="700"/></p>
+
+Scrolling down, you'll see a number of builder container images.
+Select the image that matches your application (python, in our
+example).  This is an s2i container image that knows how to build
+applications from source.
+
+<p align="center"><img src="https://gitea-gitea.apps.{{ cluster_domain }}/starter/INSTRUCTIONS/raw/branch/master/images/images/shadow_i23.png" alt="drawing" width="700"/></p>
+
+Finally, we need to specify a unique `Name` for the application.
+Importantly, OpenShift will use this name to automatically create a
+Route for network ingress.  For this example, we're using `hello`.
+When OpenShift creates your application in this manner, it will
+automatically create the route `hello-playerX.apps.{{ cluster_domain }}`,
+where `playerX` is your project name / namespace.
+
+Now click on the `Create` button.
+
+<p align="center"><img src="https://gitea-gitea.apps.{{ cluster_domain }}/starter/INSTRUCTIONS/raw/branch/master/images/images/shadow_i24.png" alt="drawing" width="700"/></p>
+
+You will now be taken to the developer Topology view.  You can always
+get back to this view by selecting Topology on the left hand side of
+the web console.
+
+The glyph in the center of the screen represents your python
+application.  Click on `hello` at the bottom and a sidebar will appear
+with important information and links.
+
+<p align="center"><img src="https://gitea-gitea.apps.{{ cluster_domain }}/starter/INSTRUCTIONS/raw/branch/master/images/images/shadow_i25.png" alt="drawing" width="700"/></p>
+
+From here you can see:
+* the list of builds and their logs.
+* the list of deployed pods.
+* active routes for ingress.
+* a link to the actual Deployment or DeploymentConfig (the blue `D` at the top)
+
+Each one of these links take you to different parts of the OpenShift
+console for accessing information, editing settings, and controlling
+your application.  Take some time to explore them, while remembering
+that you can always get back to the Topology view by using the sidebar
+on the left.
+
+Also note that the button on the top right of the python logo is a
+link to your route.  Once the application has been built and deployed,
+clicking on that link should show "Hello World".
+
+<p align="center"><img src="https://gitea-gitea.apps.{{ cluster_domain }}/starter/INSTRUCTIONS/raw/branch/master/images/images/shadow_i26.png" alt="drawing" width="700"/></p>
+
+---
+
+## Step 3: Modifying your application
+
+> **Tip**: Any additional information or tip related to this step.
+
+
+> **Warning**: Important warnings or pitfalls to avoid.
+
+---
+
+## Additional Tips
+
+- **Tip 1**: Detailed description of the tip.
+- **Tip 2**: Detailed description of another tip.
+
+---
