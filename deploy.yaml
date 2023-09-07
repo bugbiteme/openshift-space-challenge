@@ -825,6 +825,6 @@
 
     - name: Disable project creation for players
       shell: |
-        oc patch clusterrolebinding.rbac self-provisioners -p '{"subjects": null}
+        oc patch clusterrolebinding.rbac self-provisioners -p '{"subjects": null}'
       retries: 20
       delay: 15
