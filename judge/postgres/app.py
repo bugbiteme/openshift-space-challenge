@@ -3,9 +3,13 @@ import os
 import time
 import csv
 from kubernetes import client, config
+import urllib3
+
+urllib3.disable_warnings()
 
 PLAYER_COUNT = 100
 PASSWORDS = []
+successful_flags = []
 
 cluster_domain = os.environ.get('CLUSTERDOMAIN', '')
 
@@ -123,11 +127,18 @@ def challenge_13_postgres():
     all_pods = list_all_running_pods()
 
     for i in range(1, PLAYER_COUNT + 1):
-        namespace_name = f"player{i}"
-        if namespace_name in all_pods:
-            for pod in all_pods[namespace_name]:
-                if pod['pod_name'].startswith("postgresql-"):
-                    submit_flag(i, 13, "FLAG_POSTGRES_99")
+        print(f"checking if any pods from player{i} starts with postgresql-*")
+        time.sleep(0.1)
+        if i not in successful_flags:
+            namespace_name = f"player{i}"
+            if namespace_name in all_pods:
+                for pod in all_pods[namespace_name]:
+                    print(f"{pod['pod_name']}")
+                    if pod['pod_name'].startswith("postgresql-"):
+                        submit_flag(i, 13, "FLAG_POSTGRES_99")
+                        successful_flags.append(i) 
+        else:
+                print(f"Flag for player{i} already submitted." )                
 
 def main():
     
@@ -139,7 +150,6 @@ def main():
             
     while True:
         challenge_13_postgres()
-        time.sleep(0.1)
 
 if __name__ == "__main__":
     main()
