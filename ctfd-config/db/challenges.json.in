@@ -4,7 +4,7 @@
     {
       "id": 1,
       "name": "Write your name in the sand",
-      "description": "Write your name in the sand.  This way, a search plane might see it and know you are there and come rescue you.\r\n\r\n## Objective:\r\nYour current name is PlayerX.   Please change it for your real name and also add your email address.  This will be important to have a chance to win prizes.\r\n\r\n## Specifications:\r\nIn the top right corner, click on \"Settings\"\r\nChange the User Name for your full name:  e.g.  John Smith\r\nChange the Email address:  e.g. jsmith@mycompany.com\r\n\r\n*(optionally) you can change your password.  That said, please note that only the GAME UI password will be changed.   The OpenShift console and your Gitea environment will keep the same username/password.*\r\n\r\nOnce completed, enter \"DONE\" in the flag section and click submit to receive your first point!\r\n",
+      "description": "Write your name in the sand.  This way, a search plane might see it and know you are there and come rescue you.\r\n\r\n## Objective:\r\nYour current name is PlayerX.   Please change it for your real name and also add your email address.  This will be important to have a chance to win prizes.\r\n\r\n## Specifications:\r\nIn the top right corner, click on \"Settings\"\r\nChange the User Name for your full name:  e.g.  John Smith\r\nChange the Email address:  e.g. jsmith@mycompany.com\r\n\r\nOnce completed, enter \"DONE\" in the flag section and click submit to receive your first point!\r\n",
       "max_attempts": 0,
       "value": 1,
       "category": "Warm Up",
