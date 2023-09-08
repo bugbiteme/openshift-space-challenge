@@ -529,7 +529,8 @@
       shell: |
         PODNAME=$(oc get pods -n gitea --selector app=gitea -o custom-columns=POD:.metadata.name --no-headers)
         oc cp gitea-set-passwords.sh $PODNAME:gitea-set-passwords.sh -n gitea
-        oc exec $PODNAME -n gitea -- sh gitea-set-passwords.sh > gitea-set-passwords.log 2>&1
+        oc exec $PODNAME -n gitea -- chmod +x ./gitea-set-passwords.sh
+        oc exec $PODNAME -n gitea -- sh -c "./gitea-set-passwords.sh > gitea-set-passwords.log 2>&1"
 
     - name: Create starter gitea user
       ansible.builtin.uri:

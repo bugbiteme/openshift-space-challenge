@@ -1,3 +1,5 @@
+set -x
+
 ./gitea --config conf/app.ini admin user change-password -u player1 -p zPDdXTJb
 ./gitea --config conf/app.ini admin user change-password -u player2 -p 4TEhueU5
 ./gitea --config conf/app.ini admin user change-password -u player3 -p nsNwNSaA
