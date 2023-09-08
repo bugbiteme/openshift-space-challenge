@@ -1,5 +1,5 @@
 {
-  "count": 11,
+  "count": 16,
   "results": [
     {
       "id": 2,
@@ -104,6 +104,13 @@
       "challenge_id": 10,
       "type": "static",
       "content": "FLAG_MONKEY_BUSINESS_99",
+      "data": "case_insensitive"
+    },
+    {
+      "id": 18,
+      "challenge_id": 7,
+      "type": "static",
+      "content": "Galapagos",
       "data": "case_insensitive"
     }
   ],
