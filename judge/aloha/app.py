@@ -102,6 +102,7 @@ def aloha():
 
     for i in range(1, PLAYER_COUNT + 1):
         if i not in successful_flags:
+            time.sleep(0.1)
             url = f"https://aloha-player{i}.apps.{cluster_domain}"
             print(url)
             try:
