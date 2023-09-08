@@ -79,11 +79,26 @@ def ascii_to_morse(input_string):
     return ' '.join([morse_dict.get(char.upper(), '') for char in input_string])
 
 
+
 def post_json_and_forget(url, data):
+
     try:
-        requests.post(url, json=data)
-    except:
-        pass  # Ignore exceptions
+        print(url)
+        # print(data)
+        response = requests.post(url, json=data)
+        
+        if response.status_code == 200:
+            print(f"{response.status_code} - morse code succesfully received")
+            print(data)
+        elif response.status_code == 503:
+            print(f"{response.status_code} - player API endpoint not responsing yet")
+        else:
+            print(f"An unexpected error occurred: {response.status_code}")
+
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+
+
 
 
 def challenge_morse():
@@ -94,8 +109,8 @@ def challenge_morse():
         data = {
             'message': ascii_to_morse(morse_message)
         }
-        print(url)
-        post_json_and_forget, url, data
+        post_json_and_forget(url, data)
+        time.sleep(0.1)
 
 
 def main():

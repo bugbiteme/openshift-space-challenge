@@ -46,12 +46,23 @@ def pick_bottle_char():
 
 
 def post_json_and_forget(url, data):
+
     try:
         print(url)
         # print(data)
-        requests.post(url, json=data)
-    except:
-        pass  # Ignore exceptions
+        response = requests.post(url, json=data)
+        
+        if response.status_code == 200:
+            print(f"{response.status_code} - bottle succesfully received")
+        elif response.status_code == 503:
+            print(f"{response.status_code} - player API endpoint not responsing yet")
+        else:
+            print(f"An unexpected error occurred: {response.status_code}")
+
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+
+
 
 
 def challenge_bottle():
@@ -71,6 +82,7 @@ def challenge_bottle():
     for i in range(1, PLAYER_COUNT + 1):
         url = f"https://bottles-player{i}.apps.{cluster_domain}/collect-bottles"
         post_json_and_forget(url, bottles)
+        time.sleep(0.1)
 
 
 def main():
