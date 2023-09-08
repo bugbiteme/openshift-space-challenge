@@ -82,14 +82,13 @@ def challenge_bottle():
     for i in range(1, PLAYER_COUNT + 1):
         url = f"https://bottles-player{i}.apps.{cluster_domain}/collect-bottles"
         post_json_and_forget(url, bottles)
-        time.sleep(0.1)
+        time.sleep(0.05)
 
 
 def main():
 
     while True:
         challenge_bottle()
-        time.sleep(0.1)
 
 
 if __name__ == "__main__":
