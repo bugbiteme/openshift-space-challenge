@@ -103,6 +103,7 @@ def hello_world():
 
     for i in range(1, PLAYER_COUNT + 1):
         if i not in successful_flags:
+            time.sleep(0.2)
             url = f"https://hello-player{i}.apps.{cluster_domain}/"
             print(url)
             try:
@@ -121,6 +122,7 @@ def bonjour_monde():
 
     for i in range(1, PLAYER_COUNT + 1):
         if i not in successful_flags_2:
+            time.sleep(0.2)
             url = f"https://hello-player{i}.apps.{cluster_domain}/"
             print(url)
             try:
