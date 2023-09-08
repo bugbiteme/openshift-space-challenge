@@ -48,9 +48,9 @@ def pick_bottle_char():
 def post_json_and_forget(url, data):
 
     try:
-        print(url)
-        # print(data)
+        print(f"HTTP POST: {url}")
         response = requests.post(url, json=data)
+        print(response)
         
         if response.status_code == 200:
             print(f"{response.status_code} - bottle succesfully received")
