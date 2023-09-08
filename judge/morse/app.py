@@ -83,9 +83,9 @@ def ascii_to_morse(input_string):
 def post_json_and_forget(url, data):
 
     try:
-        print(url)
-        # print(data)
+        print(f"HTTP POST: {url}")
         response = requests.post(url, json=data)
+        print(response)
         
         if response.status_code == 200:
             print(f"{response.status_code} - morse code succesfully received")
