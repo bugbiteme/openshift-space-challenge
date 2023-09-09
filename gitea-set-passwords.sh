@@ -103,6 +103,7 @@ while true; do
         ./gitea --config conf/app.ini admin user change-password -u player98 -p AccRacJ8
         ./gitea --config conf/app.ini admin user change-password -u player99 -p b8Hz6HZh
         ./gitea --config conf/app.ini admin user change-password -u player100 -p xPBxFYKN
+        exit 0;
     fi
     sleep 10
 done
