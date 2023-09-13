@@ -176,22 +176,38 @@ clicking on that link should show "Hello World".
 
 ## Step 3: Modifying your application
 
+Now that your service is running in OpenShift, you'll want to make a change and deploy the new version.  First, let's back to our application repo in gitea.
+
 <p align="center"><img src="https://gitea-gitea.apps.{{ cluster_domain }}/starter/INSTRUCTIONS/raw/branch/master/images/images/p6-shadowed.png" alt="drawing" width="700"/></p>
+
+We want to change the "Hello World" message to "Bonjour Monde".  The code for displaying "Hello World" is found in `app.py`.   Click on `app.py` to view the code.
+
 <p align="center"><img src="https://gitea-gitea.apps.{{ cluster_domain }}/starter/INSTRUCTIONS/raw/branch/master/images/images/p7-shadowed.png" alt="drawing" width="700"/></p>
+
+Gitea has a nice built-in web-based editor you can use to make your change.   Click on the pencil icon near the top right of your code window to bring up the editor.  Now go to line 8 of the python program and make the necessary change as below.
+
 <p align="center"><img src="https://gitea-gitea.apps.{{ cluster_domain }}/starter/INSTRUCTIONS/raw/branch/master/images/images/p8-shadowed.png" alt="drawing" width="700"/></p>
+
+Once you've edited your code, you need to commit this change back into gitea's git repo.  Scroll down to find the green `Commit Changes` button, and click on that.
+
 <p align="center"><img src="https://gitea-gitea.apps.{{ cluster_domain }}/starter/INSTRUCTIONS/raw/branch/master/images/images/p9-shadowed.png" alt="drawing" width="700"/></p>
+
+Now that you've changed your code in gitea, switch back to your
+project on OpenShift.  Bring up the sidebar on the right again, and
+find the `Start Build` button.  Clicking on that should start a new
+build, where it will pull your code from git and create a new
+container image.  Once built, it will automatically deploy the new
+version, and clicking on the route should bring up `Bonjour Monde` in
+your browser.
+
 <p align="center"><img src="https://gitea-gitea.apps.{{ cluster_domain }}/starter/INSTRUCTIONS/raw/branch/master/images/images/p10-shadowed.png" alt="drawing" width="700"/></p>
 
 > **Tip**: Any additional information or tip related to this step.
 
+FIXME
 
 > **Warning**: Important warnings or pitfalls to avoid.
 
----
-
-## Additional Tips
-
-- **Tip 1**: Detailed description of the tip.
-- **Tip 2**: Detailed description of another tip.
+FIXME
 
 ---
