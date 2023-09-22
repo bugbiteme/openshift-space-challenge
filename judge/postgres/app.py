@@ -128,7 +128,7 @@ def list_all_running_pods():
 
     # Make a GET request to list running pods
     response = requests.get(api_url, headers=headers, params=params, verify=False)  # Use verify=False to ignore SSL certificate verification (not recommended for production)
-
+    print(f"Response status code : {response.status_code}")
     # Check if the request was successful
     if response.status_code == 200:
         pods_data = json.loads(response.text)
