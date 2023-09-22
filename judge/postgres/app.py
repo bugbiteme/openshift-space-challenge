@@ -113,7 +113,7 @@ def list_all_running_pods():
     
     # Define the headers with the authentication token
     headers = {
-        "Authorization": f"{token}",
+        "Authorization": f"Bearer {token}",
         "Content-Type": "application/json"
     }
 
