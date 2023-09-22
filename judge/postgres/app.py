@@ -114,7 +114,9 @@ def list_all_running_pods():
     # Define the headers with the authentication token
     headers = {
         "Authorization": f"{token}",
+        "namespace": "",
         "Content-Type": "application/json"
+
     }
 
     # Define query parameters to filter running pods
