@@ -123,7 +123,7 @@ def list_all_running_pods():
         namespace = f'player{i}'
         # Define the headers with the authentication token
         headers = {
-            "Authorization": f"{token}",
+            "Authorization": f"Bearer {token}",
             "namespace": f"{namespace}",
             "Content-Type": "application/json"
         }
