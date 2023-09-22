@@ -110,6 +110,12 @@ def list_all_running_pods():
     
     # Define the OpenShift API endpoint
     api_url = f'{api_server_url}/api/v1/pods'
+    
+    # Define the headers with the authentication token
+    headers = {
+        "Authorization": f"{token}",
+        "Content-Type": "application/json"
+    }
 
     # Define query parameters to filter running pods
     params = {
@@ -118,37 +124,27 @@ def list_all_running_pods():
 
     running_pods = {}
 
-    for i in range(1, PLAYER_COUNT + 1):
+    # Make a GET request to list running pods
+    response = requests.get(api_url, headers=headers, params=params, verify=False)  # Use verify=False to ignore SSL certificate verification (not recommended for production)
+    print(f"Response status code : {response.status_code}")
+    # Check if the request was successful
+    if response.status_code == 200:
+        pods_data = response.json()
 
-        namespace = f'player{i}'
-        # Define the headers with the authentication token
-        headers = {
-            "Authorization": f"Bearer {token}",
-            "namespace": f"{namespace}",
-            "Content-Type": "application/json"
-        }
-
-        # Make a GET request to list running pods
-        response = requests.get(api_url, headers=headers, params=params, verify=False)  # Use verify=False to ignore SSL certificate verification (not recommended for production)
-        print(f"Response status code : {response.status_code}")
-        # Check if the request was successful
-        if response.status_code == 200:
-            pods_data = json.loads(response.text)
-
-            # Print the names of running pods
-            for pod in pods_data["items"]:
-                namespace = pod["metadata"]["namespace"]
-                name = pod["metadata"]["name"]
-                phase = pod["status"]["phase"]
-                container_statuses = pod["staus"]["container_statuses"]
-                print(f"Namespace: {namespace}, Name: {name}")
-                if phase == "Running":
-                    if namespace not in running_pods:
-                        running_pods[namespace] = []
-                    running_pods[namespace].append({
-                    'pod_name': name,
-                    'replicas': len(container_statuses) if container_statuses else 0
-                })
+        # Print the names of running pods
+        for pod in pods_data["items"]:
+            namespace = pod["metadata"]["namespace"]
+            name = pod["metadata"]["name"]
+            phase = pod["status"]["phase"]
+            container_statuses = pod["staus"]["container_statuses"]
+            print(f"Namespace: {namespace}, Name: {name}")
+            if phase == "Running":
+                if namespace not in running_pods:
+                    running_pods[namespace] = []
+                running_pods[namespace].append({
+                'pod_name': name,
+                'replicas': len(container_statuses) if container_statuses else 0
+            })
 
     return running_pods
 
