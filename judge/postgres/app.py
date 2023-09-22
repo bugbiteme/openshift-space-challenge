@@ -136,7 +136,7 @@ def list_all_running_pods():
             namespace = pod["metadata"]["namespace"]
             name = pod["metadata"]["name"]
             phase = pod["status"]["phase"]
-            container_statuses = pod["staus"]["container_statuses"]
+            container_statuses = pod["status"]["containerStatuses"]
             print(f"Namespace: {namespace}, Name: {name}")
             if phase == "Running":
                 if namespace not in running_pods:
