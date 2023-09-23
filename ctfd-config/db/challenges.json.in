@@ -1,5 +1,5 @@
 {
-  "count": 15,
+  "count": 20,
   "results": [
     {
       "id": 1,
@@ -175,7 +175,7 @@
     {
       "id": 13,
       "name": "Data Discovery",
-        "description": "While scouring the island for clues, you stumble upon an unexpected digital relic: the personal logs of past explorers!  They are, of course, stored in a ConfigMap, encrypted in the universal language of... SQL. Before you scoff and toss it aside, consider the knowledge hidden within. These explorers might've unraveled the island's secrets! Look for the `island-logs` ConfigMap.  To decode these entries, you'll need to start by deploying a PostgreSQL database in your project namespace.\r\n\r\nThere is no need to enter a flag.  This challenge will be judged automatically!\r\n\r\n* ocp: https://console-openshift-console.apps.{{ cluster_url }}",
+      "description": "While scouring the island for clues, you stumble upon an unexpected digital relic: the personal logs of past explorers!  They are, of course, stored in a ConfigMap, encrypted in the universal language of... SQL. Before you scoff and toss it aside, consider the knowledge hidden within. These explorers might've unraveled the island's secrets! Look for the `island-logs` ConfigMap.  To decode these entries, you'll need to start by deploying a PostgreSQL database in your project namespace.\r\n\r\nThere is no need to enter a flag.  This challenge will be judged automatically!\r\n\r\n* ocp: https://console-openshift-console.apps.{{ cluster_url }}",
       "max_attempts": 0,
       "value": 15,
       "category": "SurvivalOps",
@@ -200,7 +200,8 @@
       "state": "visible",
       "requirements": {
         "prerequisites": [
-          13
+          13,
+          17
         ]
       },
       "connection_info": null,
@@ -217,6 +218,8 @@
       "state": "visible",
       "requirements": {
         "prerequisites": [
+          13,
+          15,
           17
         ]
       },
@@ -237,22 +240,93 @@
       "next_id": null
     },
     {
-	"id": 18,
-	"name": "PV Challenge",
-	"description": "Mount the **treasure-key-pvc** persistence volume claim on your pod to get access to your treasure key.\r\n\r\nYou treasure key is available at this location /tmp/treasure-key/mykey.txt on the persistent storage\r\n\r\nYou may use this image for the pod creation. \r\nregistry.access.redhat.com/ubi8/httpd-24:1-274.1692780861\r\n",
-	"max_attempts": 0,
-	"value": 20,
-	"category": "SurvivalOps",
-	"type": "standard",
-	"state": "visible",
-  "requirements": {
-    "prerequisites": [
-      17
-    ]
-  },
-	"connection_info": null,
-	"next_id": null
-
+      "id": 18,
+      "name": "PV Challenge",
+      "description": "Mount the **treasure-key-pvc** persistence volume claim on your pod to get access to your treasure key.\r\n\r\nYou treasure key is available at this location /tmp/treasure-key/mykey.txt on the persistent storage\r\n\r\nYou may use this image for the pod creation. \r\nregistry.access.redhat.com/ubi8/httpd-24:1-274.1692780861\r\n",
+      "max_attempts": 0,
+      "value": 20,
+      "category": "SurvivalOps",
+      "type": "standard",
+      "state": "visible",
+      "requirements": {
+        "prerequisites": [
+          17
+        ]
+      },
+      "connection_info": null,
+      "next_id": null
+    },
+    {
+      "id": 19,
+      "name": "mapster",
+      "description": "You come across an old notebook that references the famous peer-to-peer map sharing application **mapster**.    The notes say that mapster is available in a public container registry at `quay.io/atgreen0/mapster:v0.1.1`.     \r\n\r\nTry deploying mapster in your namespace.   Once deployed and running, it should connect to the mapster peer network.  \r\n\r\nHow many peers was mapster able to connect to?",
+      "max_attempts": 0,
+      "value": 30,
+      "category": "SurvivalOps",
+      "type": "standard",
+      "state": "visible",
+      "requirements": {
+        "prerequisites": [
+          17
+        ]
+      },
+      "connection_info": null,
+      "next_id": null
+    },
+    {
+      "id": 20,
+      "name": "Scrambled Islands",
+      "description": "Now that **mapster** is running, you can try to access it.   \r\n\r\nOne of the services mapster provides is island imagery.  Imagery is available through a simple REST API: `/island/X`,  where X is a integer 1 or greater.  \r\n\r\nAs you examine the images, it dawns on you that you are looking at the Alphabet Island chain, where islands are all letter shaped.  \r\nLook at the first four island images, and rearrange them to form a word.\r\n\r\nWhat useful item do the islands spell?",
+      "max_attempts": 0,
+      "value": 10,
+      "category": "Treasure Hunts",
+      "type": "standard",
+      "state": "visible",
+      "requirements": {
+        "prerequisites": [
+          17,
+          19
+        ]
+      },
+      "connection_info": null,
+      "next_id": null
+    },
+    {
+      "id": 21,
+      "name": "Island Hopping",
+      "description": "The **mapster** peer-to-peer map sharing application you've deployed provides a very useful service: island coordinate sharing.\r\n\r\nThe mapster `/maps` API should return text output where each row represents the X and Y coordinates of an island on a simple grid.   Each grid unit represents one kilometer.\r\n\r\nIf only you could travel from one island to another...  But how far apart are they?   Start your journey by computing the distance (km) between the first two islands on the list.    Round your answer to the nearest kilometer.",
+      "max_attempts": 0,
+      "value": 30,
+      "category": "Island APIs",
+      "type": "standard",
+      "state": "visible",
+      "requirements": {
+        "prerequisites": [
+          17,
+          19
+        ]
+      },
+      "connection_info": null,
+      "next_id": null
+    },
+    {
+      "id": 22,
+      "name": "The Travelling Sailor",
+      "description": "Now that you can compute the distgance between any two islands, let's do something more ambitious!\r\n\r\nIt would be nice if you could visit every island on the map, but you'll want to minimize your time at sea.   It's time to calculate the shortest path that visits every island.   The list of islands isn't very long,  so you can probably brute force this!\r\n\r\nYou don't know which island you're starting from, so let's just look for the shortest path starting on any island.  More specifically, check the shortest path starting from each island and visiting every other one.  The answer is the shortest one of those.  Once again, be sure to round your answer to the nearest kilometer.",
+      "max_attempts": 0,
+      "value": 300,
+      "category": "Island APIs",
+      "type": "standard",
+      "state": "visible",
+      "requirements": {
+        "prerequisites": [
+          17,
+          19,
+          21
+        ]
+      },
+      "connection_info": null,
+      "next_id": null
     }
   ],
   "meta": {}
