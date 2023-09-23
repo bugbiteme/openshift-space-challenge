@@ -259,7 +259,7 @@
     {
       "id": 19,
       "name": "mapster",
-      "description": "You come across an old notebook that references the famous peer-to-peer map sharing application **mapster**.    The notes say that mapster is available in a public container registry at `quay.io/atgreen0/mapster:v0.1.1`.     \r\n\r\nTry deploying mapster in your namespace.   Once deployed and running, it should connect to the mapster peer network.  \r\n\r\nHow many peers was mapster able to connect to?",
+      "description": "You come across an old notebook that references the famous peer-to-peer map sharing application **mapster**.    The notes say that mapster is available in a public container registry at `quay.io/atgreen0/mapster:latest`.     \r\n\r\nTry deploying mapster in your namespace.   Once deployed and running, it should connect to the mapster peer network.  \r\n\r\nHow many peers was mapster able to connect to?",
       "max_attempts": 0,
       "value": 30,
       "category": "SurvivalOps",
