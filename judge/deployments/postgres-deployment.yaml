@@ -25,3 +25,8 @@ spec:
                 configMapKeyRef:
                   name: judge-settings
                   key: cluster-domain
+            - name: JUDGE_SA_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: judge-secret
+                  key: sa-token

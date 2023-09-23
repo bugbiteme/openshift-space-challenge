@@ -829,3 +829,8 @@
         oc patch clusterrolebinding.rbac self-provisioners -p '{"subjects": null}'
       retries: 20
       delay: 15
+
+    - name: install web cli operator
+      tags:
+        - web-terminal
+      shell: oc apply -f web-cli-operator/subscription.yaml -n openshift-operators
