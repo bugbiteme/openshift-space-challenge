@@ -276,7 +276,7 @@
     {
       "id": 20,
       "name": "Scrambled Islands",
-      "description": "Now that **mapster** is running, you can try to access it.   \r\n\r\nOne of the services mapster provides is island imagery.  Imagery is available through a simple REST API: `/island/X`,  where X is a integer 1 or greater.  \r\n\r\nAs you examine the images, it dawns on you that you are looking at the Alphabet Island chain, where islands are all letter shaped.  \r\nLook at the first four island images, and rearrange them to form a word.\r\n\r\nWhat useful item do the islands spell?",
+      "description": "Now that **mapster** is running, you can try to access it.   \r\n\r\nOne of the services mapster provides is island imagery.  Imagery is available through a simple REST API: `/island/X`,  where X is a integer 1 or greater.  \r\n\r\nAs you examine the images, it dawns on you that you are looking at the *Alphabet Island* chain, where islands are all shaped like letters.  \r\nLook at the first four island images, and rearrange them to form a word.\r\n\r\nWhat useful item do the rearranged letters spell?",
       "max_attempts": 0,
       "value": 10,
       "category": "Treasure Hunts",
