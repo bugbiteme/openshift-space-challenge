@@ -311,7 +311,7 @@
     },
     {
       "id": 22,
-      "name": "The Travelling Sailor",
+      "name": "The Traveling Sailor",
       "description": "Now that you can compute the distance between any two islands, let's do something more ambitious!\r\n\r\nIt would be nice if you could visit every island on the map, but you'll want to minimize your time at sea.   It's time to calculate the shortest path that visits every island.   The list of islands isn't very long,  so you can probably brute force this!\r\n\r\nYou don't know which island you're starting from, so let's just look for the shortest path starting on any island.  More specifically, check the shortest path starting from each island and visiting every other one.  The answer is the shortest one of those.  Once again, be sure to round your answer to the nearest kilometer.",
       "max_attempts": 0,
       "value": 300,
