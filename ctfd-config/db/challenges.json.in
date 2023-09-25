@@ -106,7 +106,7 @@
     },
     {
       "id": 9,
-      "name": "Your default StorageClass",
+      "name": "Classy Storage",
       "description": "Log in the OpenShift console using your username/password.\r\n\r\nIn the top/left, make sure you are in the \"Administrator\" view.    In this view, click on \"Storage\" in the left bar menu.  Then click on \"StorageClasses\".\r\n\r\nWhat is your current default storageclass?\r\n\r\n* ocp: https://console-openshift-console.apps.{{ cluster_url }}",
       "max_attempts": 0,
       "value": 15,
@@ -175,7 +175,7 @@
     {
       "id": 13,
       "name": "Data Discovery",
-      "description": "While scouring the island for clues, you stumble upon an unexpected digital relic: the personal logs of past explorers!  They are, of course, stored in a ConfigMap, encrypted in the universal language of... SQL. Before you scoff and toss it aside, consider the knowledge hidden within. These explorers might've unraveled the island's secrets! Look for the `island-logs` ConfigMap.  To decode these entries, you'll need to start by deploying a PostgreSQL database in your project namespace.   Don't worry about loading the data yet, this will come later.\r\n\r\nThere is no need to enter a flag.  This challenge will be judged automatically!\r\n\r\n* ocp: https://console-openshift-console.apps.{{ cluster_url }}",
+      "description": "While scouring the island for clues, you stumble upon an unexpected digital relic: the personal logs of past explorers!  They are, of course, stored in a ConfigMap, encrypted in the universal language of... SQL. Before you scoff and toss it aside, consider the knowledge hidden within. These explorers might've unraveled the island's secrets! Look for the `island-logs` ConfigMap.  To decode these entries, you'll need to start by deploying a PostgreSQL database in your project namespace.   Don't worry about loading the data yet, this will come later.\r\n\r\nThere is no need to enter a flag.  This challenge will be judged automatically!    But for judging to work properly, the postgres pod must have a name that starts with `postgres-`.   This will be the case if you depoy the database using one of the database application templates on OpenShift's \"**Add**\" page.\r\n\r\n* ocp: https://console-openshift-console.apps.{{ cluster_url }}",
       "max_attempts": 0,
       "value": 15,
       "category": "SurvivalOps",
@@ -241,8 +241,8 @@
     },
     {
       "id": 18,
-      "name": "PV Challenge",
-      "description": "Mount the **treasure-key-pvc** persistence volume claim on your pod to get access to your treasure key.\r\n\r\nYou treasure key is available at this location /tmp/treasure-key/mykey.txt on the persistent storage\r\n\r\nYou may use this image for the pod creation. \r\nregistry.access.redhat.com/ubi8/httpd-24:1-274.1692780861\r\n",
+      "name": "Persistence Pays Off",
+      "description": "There's a treasure key stored on a  Persistent Volume!\r\n\r\n Your namespace already includes a Persistent Volume Claim called **treasure-key-pvc**.    Mount the volume into a container and access `mykey.txt`.  The text flag you're looking for is in that file.",
       "max_attempts": 0,
       "value": 20,
       "category": "SurvivalOps",
@@ -259,7 +259,7 @@
     {
       "id": 19,
       "name": "mapster",
-      "description": "You come across an old notebook that references the famous peer-to-peer map sharing application **mapster**.    The notes say that mapster is available in a public container registry at `quay.io/atgreen0/mapster:latest`.     \r\n\r\nTry deploying mapster in your namespace.   Once deployed and running, it should connect to the mapster peer network.  \r\n\r\nHow many peers was mapster able to connect to?",
+      "description": "You come across an old notebook that references the famous peer-to-peer map sharing application **mapster**.    The notes say that mapster is available in a public container registry at `quay.io/atgreen0/mapster:latest`.     \r\n\r\nTry deploying mapster in your namespace.   Once deployed and running, it should connect to the mapster peer network.  \r\n\r\nHow many peers was mapster able to connect to?\r\n\r\n* ocp: https://console-openshift-console.apps.{{ cluster_url }}",
       "max_attempts": 0,
       "value": 30,
       "category": "SurvivalOps",
@@ -276,7 +276,7 @@
     {
       "id": 20,
       "name": "Scrambled Islands",
-      "description": "Now that **mapster** is running, you can try to access it.   \r\n\r\nOne of the services mapster provides is island imagery.  Imagery is available through a simple REST API: `/island/X`,  where X is a integer 1 or greater.  \r\n\r\nAs you examine the images, it dawns on you that you are looking at the *Alphabet Island* chain, where islands are all shaped like letters.  \r\nLook at the first four island images, and rearrange them to form a word.\r\n\r\nWhat useful item do the rearranged letters spell?",
+      "description": "Now that **mapster** is running, you can try to access it.   \r\n\r\nOne of the services mapster provides is island imagery.  Imagery is available through a simple REST API: `/island/X`,  where X is a integer 1 or greater.  \r\n\r\nAs you examine the images, it dawns on you that you are looking at the *Alphabet Island* chain, where islands are all shaped like letters.  \r\nLook at the first four island images, and rearrange them to form a word.\r\n\r\nWhat useful item do the rearranged letters spell?\r\n\r\n* ocp: https://console-openshift-console.apps.{{ cluster_url }}",
       "max_attempts": 0,
       "value": 10,
       "category": "Treasure Hunts",
@@ -312,7 +312,7 @@
     {
       "id": 22,
       "name": "The Traveling Sailor",
-      "description": "Now that you can compute the distance between any two islands, let's do something more ambitious!\r\n\r\nIt would be nice if you could visit every island on the map, but you'll want to minimize your time at sea.   It's time to calculate the shortest path that visits every island.   The list of islands isn't very long,  so you can probably brute force this!\r\n\r\nYou don't know which island you're starting from, so let's just look for the shortest path starting on any island.  More specifically, check the shortest path starting from each island and visiting every other one.  The answer is the shortest one of those.  Once again, be sure to round your answer to the nearest kilometer.",
+      "description": "Now that you can compute the distance between any two islands, let's do something more ambitious!\r\n\r\nIt would be nice if you could visit every island listed by **mapster**'s `/maps` API, but you'll want to minimize your time at sea.   It's time to calculate the shortest path that visits every island.   The list of islands isn't very long,  so you can probably brute force this!\r\n\r\nYou don't know which island you're starting from, so let's just look for the shortest path starting on any island.  More specifically, check the shortest path starting from each island and visiting every other one.  The answer is the shortest one of those.  Once again, be sure to round your answer to the nearest kilometer.\r\n\r\n* ocp: https://console-openshift-console.apps.{{ cluster_url }}",
       "max_attempts": 0,
       "value": 300,
       "category": "Island APIs",
