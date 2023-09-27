@@ -108,23 +108,6 @@
       kubernetes.core.k8s:
         definition: "{{ lookup('file', 'aloha-deployment.yaml') }}"
 
-    - name: postgres - BuildConfig
-      kubernetes.core.k8s:
-        definition: "{{ lookup('file', 'postgres-buildconfig.yaml') }}"
-
-    - name: postgres - Imagestream
-      kubernetes.core.k8s:
-        definition: "{{ lookup('file', 'postgres-imagestream.yaml') }}"
-
-    - name: Start the Build
-      command: oc start-build postgres -n judge
-      register: build_result
-      changed_when: "'completed' not in build_result.stdout"
-
-    - name: postgres - Deployment
-      kubernetes.core.k8s:
-        definition: "{{ lookup('file', 'postgres-deployment.yaml') }}"
-
     - name: monkey-business - ServiceAccount
       kubernetes.core.k8s:
         definition: "{{ lookup('file', 'serviceaccount.yaml') }}"
@@ -161,7 +144,7 @@
       command: oc start-build monkey-business -n judge
       register: build_result
       changed_when: "'completed' not in build_result.stdout"
-    
+
     - name: monkey-business - Deployment
       kubernetes.core.k8s:
         definition: "{{ lookup('file', 'monkey-business-deployment.yaml') }}"
