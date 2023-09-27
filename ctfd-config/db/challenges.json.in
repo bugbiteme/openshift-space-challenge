@@ -156,26 +156,9 @@
       "next_id": null
     },
     {
-      "id": 13,
-      "name": "Data Discovery",
-      "description": "While scouring the island for clues, you stumble upon an unexpected digital relic: the personal logs of past explorers!  They are, of course, stored in a ConfigMap, encrypted in the universal language of... SQL. Before you scoff and toss it aside, consider the knowledge hidden within. These explorers might've unraveled the island's secrets! Look for the `island-logs` ConfigMap.  To decode these entries, you'll need to start by deploying a PostgreSQL database in your project namespace.   Don't worry about loading the data yet, this will come later.\r\n\r\nThere is no need to enter a flag.  This challenge will be judged automatically!    But for judging to work properly, the postgres pod must have a name that starts with `postgres-`.   This will be the case if you depoy the database using one of the database application templates on OpenShift's \"**Add**\" page.\r\n\r\n* ocp: https://console-openshift-console.apps.{{ cluster_url }}",
-      "max_attempts": 0,
-      "value": 30,
-      "category": "SurvivalOps",
-      "type": "standard",
-      "state": "visible",
-      "requirements": {
-        "prerequisites": [
-          17
-        ]
-      },
-      "connection_info": null,
-      "next_id": null
-    },
-    {
       "id": 15,
       "name": "Top Explorer",
-      "description": "Interestingly, in addition to the personal logs, the SQL tables also include skill assessment scores for every explorer across a number of IT survival skills.\r\n\r\nWhat's the name of the explorer with the highest aggregate skills score?\r\n\r\n* ocp: https://console-openshift-console.apps.{{ cluster_url }}",
+        "description": "While scouring the island for clues, you stumble upon an unexpected digital relic: the personal logs of past explorers!  They are, of course, stored in a ConfigMap, encrypted in the universal language of... SQL. Before you scoff and toss it aside, consider the knowledge hidden within. These explorers might've unraveled the island's secrets! Look for the `island-logs` ConfigMap, then deploy a postgresql database using one of the database application templates on OpenShift's \"**Add**\" page.\r\n\r\nInterestingly, in addition to the personal logs, the SQL tables also includes skill assessment scores for every explorer across a number of IT survival skills.\r\n\r\nWhat's the name of the explorer with the highest aggregate skills score?\r\n\r\n* ocp: https://console-openshift-console.apps.{{ cluster_url }}",
       "max_attempts": 0,
       "value": 40,
       "category": "SurvivalOps",
@@ -183,7 +166,6 @@
       "state": "visible",
       "requirements": {
         "prerequisites": [
-          13,
           17
         ]
       },
@@ -201,7 +183,6 @@
       "state": "visible",
       "requirements": {
         "prerequisites": [
-          13,
           15,
           17
         ]
