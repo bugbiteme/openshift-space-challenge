@@ -1,4 +1,4 @@
-# catalyst
+# OpenShift Island Challenge
 
 ## Requirements
 
@@ -71,3 +71,7 @@ credentials.
 ### Add more challenges
 
 Using the admin access in CTFd, you can create new challenges. Under Config/Backup, you can export all your configuration including your new challenges. `challenges.json` is the file you need. That said, this file must be cleaned up as a template before pushing it to your git repo. You can use this script to generate this file: `cat challenges.json | update-challenges.sh > ./ctfd-config/db/challenges.json.in`
+
+### Authors
+
+The OpenShift Island Challenge was created by Anthony Green, Marco Berube and Nikhil Malvankar.
