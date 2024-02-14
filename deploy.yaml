@@ -83,7 +83,7 @@
             - ReadWriteOnce
             resources:
               requests:
-                storage: 100Mi
+                storage: 200Mi
       retries: 20
       delay: 15
 
@@ -189,7 +189,7 @@
             - ReadWriteOnce
             resources:
               requests:
-                storage: 100Mi
+                storage: 200Mi
       retries: 20
       delay: 15
 
@@ -279,7 +279,7 @@
             - ReadWriteOnce
             resources:
               requests:
-                storage: 100Mi
+                storage: 200Mi
       retries: 20
       delay: 15
 
