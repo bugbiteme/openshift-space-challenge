@@ -30,7 +30,7 @@
     {
       "id": 4,
       "name": "Hello World",
-      "description": "Your gitea account includes a project called `node-starter`.  Deploy it in your OCP namespace.\r\n\r\nThis will deploy a webserver with the FLAG you must capture!  \r\n\r\nOnce deployed, it should be here: https://hello-playerX.apps.{{ cluster_url }}/ , where `X` is your player number.\r\n\r\n* ocp: https://console-openshift-console.apps.{{ cluster_url }}\r\n* gitea: https://gitea-gitea.apps.{{ cluster_url }}\r\n* starters: https://gitea-gitea.apps.{{ cluster_url }}/starter\r\n",
+      "description": "Your gitea account includes a project called `python-starter`.  Deploy it in your OCP namespace.\r\n\r\nThis will deploy a webserver with the FLAG you must capture!  \r\n\r\nOnce deployed, it should be here: https://hello-playerX.apps.{{ cluster_url }}/ , where `X` is your player number.\r\n\r\n* ocp: https://console-openshift-console.apps.{{ cluster_url }}\r\n* gitea: https://gitea-gitea.apps.{{ cluster_url }}\r\n* starters: https://gitea-gitea.apps.{{ cluster_url }}/starter\r\n",
       "max_attempts": 0,
       "value": 10,
       "category": "Warm Up",
