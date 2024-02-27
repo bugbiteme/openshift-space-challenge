@@ -30,7 +30,7 @@
     {
       "id": 4,
       "name": "Hello World",
-      "description": "Your gitea account includes a project called `node-starter`.  Deploy it in your OCP namespace.\r\n\r\nThere is no need to enter a flag.  This challenge will be judged automatically!  \r\n\r\nThe judge must be able to access your service at https://hello-playerX.apps.{{ cluster_url }}/ , where `X` is your player number.   The only correct response is `Hello World`.\r\n\r\n* ocp: https://console-openshift-console.apps.{{ cluster_url }}\r\n* gitea: https://gitea-gitea.apps.{{ cluster_url }}\r\n* starters: https://gitea-gitea.apps.{{ cluster_url }}/starter\r\n",
+      "description": "Your gitea account includes a project called `node-starter`.  Deploy it in your OCP namespace.\r\n\r\nThis will deploy a webserver with the FLAG you must capture!  \r\n\r\nOnce deployed, it should be here: https://hello-playerX.apps.{{ cluster_url }}/ , where `X` is your player number.\r\n\r\n* ocp: https://console-openshift-console.apps.{{ cluster_url }}\r\n* gitea: https://gitea-gitea.apps.{{ cluster_url }}\r\n* starters: https://gitea-gitea.apps.{{ cluster_url }}/starter\r\n",
       "max_attempts": 0,
       "value": 10,
       "category": "Warm Up",
@@ -43,7 +43,7 @@
     {
       "id": 5,
       "name": "The French Connection",
-      "description": "The service you deployed in the **Hello World** challenge must now say `Bonjour Monde` instead of `Hello World`.\r\n\r\nNo need to enter a flag.  This challenge will be judged automatically!\r\n\r\n* gitea: https://gitea-gitea.apps.{{ cluster_url }}\r\n* ocp: https://console-openshift-console.apps.{{ cluster_url }}",
+      "description": "Now let's learn how to modify our code to return the French version of this FLAG.     The base64 version of our FLAG is:\r\nRkxBR19CT05KT1VSXzk5\r\n\r\nYou have to decrypt this base64 variable and return your flag in your webservice to get it.      Here is the code you will need.   Modify the \"hello\" function with this code:\r\n\r\nimport base64\r\n\r\nbase64_string = \"RkxBR19CT05KT1VSXzk5\"\r\n\r\nflag = base64.b64decode(base64_string).decode('utf-8')\r\n\r\nreturn FLAG\r\n\r\nThen restart your container to see the result.\r\n\r\n* gitea: https://gitea-gitea.apps.{{ cluster_url }}\r\n* ocp: https://console-openshift-console.apps.{{ cluster_url }}",
       "max_attempts": 0,
       "value": 10,
       "category": "Warm Up",
@@ -158,7 +158,7 @@
     {
       "id": 15,
       "name": "Top Explorer",
-        "description": "While scouring the island for clues, you stumble upon an unexpected digital relic: the personal logs of past explorers!  They are, of course, stored in a ConfigMap, encrypted in the universal language of... SQL. Before you scoff and toss it aside, consider the knowledge hidden within. These explorers might've unraveled the island's secrets! Look for the `island-logs` ConfigMap, then deploy a postgresql database using one of the database application templates on OpenShift's \"**Add**\" page.\r\n\r\nInterestingly, in addition to the personal logs, the SQL tables also includes skill assessment scores for every explorer across a number of IT survival skills.\r\n\r\nWhat's the name of the explorer with the highest aggregate skills score?\r\n\r\n* ocp: https://console-openshift-console.apps.{{ cluster_url }}",
+      "description": "While scouring the island for clues, you stumble upon an unexpected digital relic: the personal logs of past explorers!  They are, of course, stored in a ConfigMap, encrypted in the universal language of... SQL. Before you scoff and toss it aside, consider the knowledge hidden within. These explorers might've unraveled the island's secrets! Look for the `island-logs` ConfigMap, then deploy a postgresql database using one of the database application templates on OpenShift's \"**Add**\" page.\r\n\r\nInterestingly, in addition to the personal logs, the SQL tables also includes skill assessment scores for every explorer across a number of IT survival skills.\r\n\r\nWhat's the name of the explorer with the highest aggregate skills score?\r\n\r\n* ocp: https://console-openshift-console.apps.{{ cluster_url }}",
       "max_attempts": 0,
       "value": 40,
       "category": "SurvivalOps",
