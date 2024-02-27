@@ -4,4 +4,4 @@ pyyaml
 kubernetes
 passlib
 datetime
-bcrypt
+bcrypt==4.0.1
