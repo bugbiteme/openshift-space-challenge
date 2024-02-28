@@ -5,6 +5,7 @@
   connection: local
   vars:
     project_name: "ctfd"
+    player_count: 100
   tasks:
 
   tasks:
@@ -437,14 +438,14 @@
         name: "player{{ item }}"
         state: present
         wait: yes
-      with_sequence: start=1 end=100
+      with_sequence: start=1 end={{ player_count }}
       retries: 20
       delay: 15
 
     - name: Assigning players to namespaces
       shell: |
         oc adm policy add-role-to-user edit "player{{ item }}" -n "player{{ item }}"
-      with_sequence: start=1 end=100
+      with_sequence: start=1 end={{ player_count }}
 
     - name: create gitea CRD
       kubernetes.core.k8s:
@@ -661,7 +662,7 @@
               _,..--.-
           state: present
           wait: yes
-      with_sequence: start=1 end=100
+      with_sequence: start=1 end={{ player_count }}
       retries: 20
       delay: 15
 
@@ -677,7 +678,7 @@
             map: eC1tYXJrcy10aGUtc3BvdAo=
           state: present
           wait: yes
-      with_sequence: start=1 end=100
+      with_sequence: start=1 end={{ player_count }}
       retries: 20
       delay: 15
 
@@ -745,13 +746,13 @@
     - name: delete old island-logs configmaps
       shell: |
         oc delete cm island-logs -n player{{ item }} --ignore-not-found=true
-      with_sequence: start=1 end=100
+      with_sequence: start=1 end={{ player_count }}
       ignore_errors: true
 
     - name: create island-logs configmaps
       shell: |
         oc create cm island-logs --from-file="{{ playbook_dir }}/island-logs.sql" -n "player{{ item }}"
-      with_sequence: start=1 end=100
+      with_sequence: start=1 end={{ player_count }}
       retries: 20
       delay: 15
 
@@ -773,7 +774,7 @@
             resources:
               requests:
                 storage: 1Mi
-      with_sequence: start=1 end=100
+      with_sequence: start=1 end={{ player_count }}
       retries: 20
       delay: 15
 
@@ -813,7 +814,7 @@
                 volumeMounts:
                   - name: treasure-key-vol
                     mountPath: /tmp/treasure-key/
-      with_sequence: start=1 end=100
+      with_sequence: start=1 end={{ player_count }}
       retries: 20
       delay: 15
 
@@ -822,7 +823,7 @@
         - pv-challenge
       shell: |
         oc delete pod treasure-key-pod -n player{{ item }}
-      with_sequence: start=1 end=100
+      with_sequence: start=1 end={{ player_count }}
       retries: 20
       delay: 15
 
