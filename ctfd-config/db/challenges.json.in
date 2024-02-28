@@ -124,7 +124,7 @@
     {
       "id": 11,
       "name": "Aloha!",
-      "description": "While the island appears tropical, there are few other clues to help you identify your location.  Are you in Hawai'i?  Maybe \"aloha\" is the customary greeting on this island.\r\n\r\nAdd a second route to your \"Hello World\" service from the \"Warm Up\" level so that it reachable at https://aloha-playerX.apps.{{ cluster_url }}/\r\n\r\nNo need to enter a flag.  This challenge will be judged automatically!\r\n\r\n* ocp: https://console-openshift-console.apps.{{ cluster_url }}",
+      "description": "While the island appears tropical, there are few other clues to help you identify your location.  Are you in Hawai'i?  Maybe \"aloha\" is the customary greeting on this island.\r\n\r\nAdd a second route to your \"Hello World\" service from the \"Warm Up\" level so that it reachable at https://aloha-playerX.apps.{{ cluster_url }}/\r\n\r\nThe response from the new route will be your flag\r\n\r\n* ocp: https://console-openshift-console.apps.{{ cluster_url }}",
       "max_attempts": 0,
       "value": 20,
       "category": "SurvivalOps",
