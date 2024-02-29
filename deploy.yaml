@@ -447,6 +447,25 @@
         oc adm policy add-role-to-user edit "player{{ item }}" -n "player{{ item }}"
       with_sequence: start=1 end={{ player_count }}
 
+    - name: Get the cluster console URL
+      shell: oc get routes --all-namespaces | grep console-openshift | awk '{ print $3 }'
+      register: oc_output
+
+    - name: Extract the cluster domain
+      set_fact:
+        extracted_domain: "{{ oc_output.stdout.split('apps.')[1] }}"
+
+    - name: Generate gitea custom configmap from template
+      template:
+        src: gitea_configmap.j2
+        dest: /tmp/gitea_configmap.yaml
+      vars:
+        cluster_domain: "{{ extracted_domain }}"
+
+    - name: Create custom configmap for gitea
+      shell: |
+        oc apply -f /tmp/gitea_configmap.yaml -n gitea
+
     - name: create gitea CRD
       kubernetes.core.k8s:
         namespace: gitea
@@ -456,19 +475,26 @@
           metadata:
             name: gitea
           spec:
-            giteaImageTag: 1.20.1
+            giteaUserNumber: 100
+            giteaAdminPasswordLength: 32
+            giteaGenerateUserFormat: player%d
             giteaVolumeSize: 4Gi
-            giteaSsl: true
-            postgresqlVolumeSize: 4Gi
             giteaAdminUser: gitadmin
+            giteaImageTag: 1.20.1
+            postgresqlVolumeSize: 4Gi
+            giteaDisableRegistration: true
+            giteaUserPassword: openshift
             giteaAdminEmail: green@redhat.com
             giteaAdminPassword: redhat123
-            giteaAdminPasswordLength: 32
             giteaCreateUsers: true
-            giteaGenerateUserFormat: "player%d"
-            giteaUserNumber: 100
-            giteaUserPassword: openshift
-            giteaDisableRegistration: true
+            giteaSsl: true
+            giteaConfigMapName: custom-gitea-config
+            giteaHostname: "gitea-gitea.apps.{{ extracted_domain }}"
+            postgresqlSetup: true
+            giteaPostgresqlServiceName: postgresql-gitea
+            giteaPostgresqlDatabaseName: giteadb
+            giteaPostgresqlUser: giteauser
+            giteaPostgresqlPassword: giteapassword
       retries: 20
       delay: 15
 
@@ -487,14 +513,6 @@
 
     - name: Create ctfd users
       shell: "python3 {{ playbook_dir }}/make-ctfd-users.py > {{ playbook_dir }}/ctfd-config/db/users.json"
-
-    - name: Get the cluster console URL
-      shell: oc get routes --all-namespaces | grep console-openshift | awk '{ print $3 }'
-      register: oc_output
-
-    - name: Extract the cluster domain
-      set_fact:
-        extracted_domain: "{{ oc_output.stdout.split('apps.')[1] }}"
 
     - name: Patch challenges.json file
       template:
@@ -536,6 +554,8 @@
       delay: 30
 
     - name: Create starter gitea user
+      tags:
+        - gitea
       ansible.builtin.uri:
         url: https://gitea-gitea.apps.{{ extracted_domain }}/api/v1/admin/users
         method: POST
@@ -559,16 +579,22 @@
       ignore_errors: true
 
     - name: Fetch starter user ID from gitea
+      tags:
+        - gitea
       shell: |
         PODNAME=$(oc get pods -n gitea --selector app=gitea -o custom-columns=POD:.metadata.name --no-headers)
         oc exec $PODNAME -n gitea -- ./gitea --config conf/app.ini admin user list | grep starter | awk '{ print $1 }'
       register: starter_output
 
     - name: Set starter_id fact
+      tags:
+        - gitea
       set_fact:
         starter_id: "{{ starter_output.stdout }}"
 
     - name: Fork starter repos
+      tags:
+        - gitea
       ansible.builtin.uri:
         url: https://gitea-gitea.apps.{{ extracted_domain }}/api/v1/repos/migrate
         method: POST
@@ -836,4 +862,5 @@
     - name: install web cli operator
       tags:
         - web-terminal
-      shell: oc apply -f web-cli-operator/subscription.yaml -n openshift-operators
+      shell: |
+        oc apply -f web-cli-operator/subscription.yaml -n openshift-operators
