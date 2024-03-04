@@ -329,9 +329,9 @@ def main():
     while True:
         challenge_bottle()
         challenge_morse()
-        challenges_4_and_5()
-        challenge_11()
-        challenge_13_postgres()
+       #challenges_4_and_5()
+       #challenge_11()
+       #challenge_13_postgres()
 
 if __name__ == "__main__":
     main()
