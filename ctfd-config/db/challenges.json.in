@@ -112,7 +112,7 @@
       "value": 15,
       "category": "SurvivalOps",
       "type": "standard",
-      "state": "visible",
+      "state": "hidden",
       "requirements": {
         "prerequisites": [
           17
