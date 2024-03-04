@@ -48,7 +48,7 @@
       "value": 10,
       "category": "Warm Up",
       "type": "standard",
-      "state": "visible",
+      "state": "hidden",
       "requirements": null,
       "connection_info": null,
       "next_id": null
