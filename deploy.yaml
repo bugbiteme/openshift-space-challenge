@@ -20,6 +20,7 @@
       delay: 15
 
     - name: create imagestream
+      tags: ctfd-app
       kubernetes.core.k8s:
         api_version: image.openshift.io/v1
         namespace: "{{ project_name }}"
@@ -31,6 +32,7 @@
       delay: 15
 
     - name: create buildconfig for CTFd
+      tags: ctfd-app
       kubernetes.core.k8s:
         namespace: "{{ project_name }}"
         definition:
@@ -67,6 +69,7 @@
       delay: 15
 
     - name: create mysql pvc
+      tags: ctfd-app
       kubernetes.core.k8s:
         namespace: "{{ project_name }}"
         definition:
@@ -89,6 +92,7 @@
       delay: 15
 
     - name: create mysql deployment
+      tags: ctfd-app
       kubernetes.core.k8s:
         namespace: "{{ project_name }}"
         definition:
@@ -149,6 +153,7 @@
       delay: 15
 
     - name: create mysql service
+      tags: ctfd-app
       kubernetes.core.k8s:
         namespace: "{{ project_name }}"
         definition:
@@ -173,6 +178,7 @@
       delay: 15
 
     - name: create redis pvc
+      tags: ctfd-app
       kubernetes.core.k8s:
         namespace: "{{ project_name }}"
         definition:
@@ -195,6 +201,7 @@
       delay: 15
 
     - name: create redis deployment
+      tags: ctfd-app
       kubernetes.core.k8s:
         namespace: "{{ project_name }}"
         definition:
@@ -240,6 +247,7 @@
       delay: 15
 
     - name: create redis service
+      tags: ctfd-app
       kubernetes.core.k8s:
         namespace: "{{ project_name }}"
         definition:
@@ -264,6 +272,7 @@
       delay: 15
 
     - name: create ctfd logs pvc
+      tags: ctfd-app
       kubernetes.core.k8s:
         namespace: "{{ project_name }}"
         definition:
@@ -285,6 +294,7 @@
       delay: 15
 
     - name: create ctfd uploads pvc
+      tags: ctfd-app
       kubernetes.core.k8s:
         namespace: "{{ project_name }}"
         definition:
@@ -306,6 +316,7 @@
       delay: 15
 
     - name: create ctfd deployment
+      tags: ctfd-app
       kubernetes.core.k8s:
         namespace: "{{ project_name }}"
         definition:
@@ -368,6 +379,7 @@
       delay: 15
 
     - name: create ctfd service
+      tags: ctfd-app
       kubernetes.core.k8s:
         namespace: "{{ project_name }}"
         definition:
@@ -390,6 +402,7 @@
       delay: 15
 
     - name: create island route
+      tags: ctfd-app
       kubernetes.core.k8s:
         namespace: "{{ project_name }}"
         definition:
