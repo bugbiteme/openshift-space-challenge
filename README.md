@@ -1,4 +1,4 @@
-# OpenShift Island Challenge
+# OpenShift Space Challenge
 
 ## Requirements
 
