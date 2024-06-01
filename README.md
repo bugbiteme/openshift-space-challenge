@@ -74,4 +74,4 @@ Using the admin access in CTFd, you can create new challenges. Under Config/Back
 
 # Authors
 
-The OpenShift Island Challenge was created by Anthony Green, Marco Berube and Nikhil Malvankar.
+The OpenShift Space Challenge was created by Anthony Green, Marco Berube and Nikhil Malvankar.
