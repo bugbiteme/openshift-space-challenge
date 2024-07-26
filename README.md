@@ -7,17 +7,17 @@ Make sure to have the `oc` and `jq` command-line tools installed on your laptop.
 
 ## Getting started
 
-Request "Red Hat OpenShift Container Platform 4.13 Workshop" from demo.redhat.com. Provisioning time is usually around 60 mins.
+Request "Red Hat OpenShift Container Platform Cluster (AWS)" from demo.redhat.com. Provisioning time is usually around 60 mins.
 
-On your laptop, create a python environment and install all python modules dependancies.
+On your laptop, create a python environment and install all python modules dependencies.
 `pip install -r requirements.txt`
 
-Log on your OpenShift cluster using the `oc login` as admin.
+Log on to your OpenShift cluster using the `oc login` as admin.
 
 Run `ansible-playbook deploy.yaml`.
 
-In addition to deploying CTFd, and gitea, the playbook creates player
-accounts on OCP, ctfd and gitea. Gitea credentials are
+In addition to deploying CTFd, and Gitea, the playbook creates player
+accounts on OCP, CTFd and Gitea. Gitea credentials are
 playerX/openshift. Credentials for CTFd and OCP are found in
 `credentials.txt`. PDF handouts are `credential-handouts.pdf`.
 
@@ -50,7 +50,7 @@ User access: see `credentials.csv`` file.
 
 ## Running Judges required by some challenges.
 
-Some challenges need a juge to get points or to receive some info on your app API endpoint.   You start all judges this way:
+Some challenges need a judge to get points or to receive some info on your app API endpoint.  You start all judges this way:
 `ansible-playbook judge/deployments/deploy-judges.yaml`
 
 This script will deploy all judges in the judge namespace.  Each judge will run in one pod, but you can scale those pods manually if needed.   
@@ -65,8 +65,7 @@ It's also possible to run any judge locally on your laptop.  Export your cluster
 
 ### Make new user credentials
 
-Run `make-user-creds.sh` if you ever wish to generate a new batch
-credentials.
+Run `make-user-creds.sh` if you ever wish to generate new batch credentials.
 
 ### Add more challenges
 
