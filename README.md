@@ -15,7 +15,7 @@ On your laptop, create a python environment and install all python modules depen
 Log on to your OpenShift cluster using the `oc login` as admin.
 
 Run `ansible-playbook deploy-player-cluster.yaml`.
-Run `ansible-playbook deploy-controller-cluster.yaml`.
+Run `ansible-playbook deploy-control-cluster.yaml`.
 
 In addition to deploying CTFd, and Gitea, the playbook creates player
 accounts on OCP, CTFd and Gitea. Gitea credentials are
