@@ -14,7 +14,8 @@ On your laptop, create a python environment and install all python modules depen
 
 Log on to your OpenShift cluster using the `oc login` as admin.
 
-Run `ansible-playbook deploy.yaml`.
+Run `ansible-playbook deploy-player-cluster.yaml`.
+Run `ansible-playbook deploy-controller-cluster.yaml`.
 
 In addition to deploying CTFd, and Gitea, the playbook creates player
 accounts on OCP, CTFd and Gitea. Gitea credentials are
@@ -53,7 +54,7 @@ User access: see `credentials.csv`` file.
 Some challenges need a judge to get points or to receive some info on your app API endpoint.  You start all judges this way:
 `ansible-playbook judge/deployments/deploy-judges.yaml`
 
-This script will deploy all judges in the judge namespace.  Each judge will run in one pod, but you can scale those pods manually if needed.   
+This script will deploy all judges in the judge namespace.  Each judge will run in one pod, but you can scale those pods manually if needed.
 
 It's also possible to run any judge locally on your laptop.  Export your cluster domain before running your judge script:
 `export CLUSTERDOMAIN=cluster-dgdbx.dgdbx.sandboxXXXX.opentlc.com`

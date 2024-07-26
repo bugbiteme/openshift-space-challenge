@@ -1,12 +1,12 @@
 # Week before Event
 
-- Reserve red.ht/island shortened URL
+- Reserve red.ht/space shortened URL
 - Print handouts
 
 # Day before Event
 
 - Stand up cluster
-- Update red.ht/island URL
+- Update red.ht/space URL
 
 # Day of Event
 
