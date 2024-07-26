@@ -321,7 +321,7 @@
         namespace: "{{ project_name }}"
         definition:
           apiVersion: apps/v1
-          kind: Deployment
+          kind: StatefulSet
           metadata:
             name: ctfd
             labels:
@@ -358,12 +358,12 @@
                     value: "9"
                   - name: SECRET_KEY
                     value: youllneverguess
-                resources:
-                  limits:
-                    cpu: '4'
-                  requests:
-                    cpu: '4'
-                image: "image-registry.openshift-image-registry.svc:5000/{{ project_name }}/ctfd:latest"
+                  resources:
+                    limits:
+                      cpu: '4'
+                    requests:
+                      cpu: '4'
+                  image: "image-registry.openshift-image-registry.svc:5000/{{ project_name }}/ctfd:latest"
                   imagePullPolicy: ""
                   name: ctfd
                   resources: {}
@@ -472,3 +472,13 @@
         - "*.in"
         dest: "{{ playbook_dir }}/ctfd-upload-me.zip"
         format: zip
+
+    - name: copy the upload file to ctfd-0
+      shell: oc -n ctfd cp "{{ playbook_dir }}/ctfd-upload-me.zip" ctfd-0:/tmp
+      retries: 20
+      delay: 15
+
+    - name: import the upload
+      shell: oc -n ctfd rsh ctfd-0 python manage.py import_ctf /tmp/ctfd-upload-me.zip
+      retries: 20
+      delay: 15
