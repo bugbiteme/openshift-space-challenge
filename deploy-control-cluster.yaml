@@ -60,7 +60,7 @@
               dockerStrategy:
                 from:
                   kind: DockerImage
-                  name: python:3.9-slim-buster
+                  name: python:3.11-slim-bookworm 
                 forcePull: true
                 noCache: true
               type: Docker
