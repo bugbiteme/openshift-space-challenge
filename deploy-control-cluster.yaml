@@ -60,7 +60,7 @@
               dockerStrategy:
                 from:
                   kind: DockerImage
-                  name: python:3.11-slim-bookworm 
+                  name: python:3.11-slim-bookworm
                 forcePull: true
                 noCache: true
               type: Docker
@@ -355,8 +355,15 @@
                   - name: UPLOAD_FOLDER
                     value: /var/uploads
                   - name: WORKERS
-                    value: "1"
-                  image: "image-registry.openshift-image-registry.svc:5000/{{ project_name }}/ctfd:latest"
+                    value: "9"
+                  - name: SECRET_KEY
+                    value: youllneverguess
+                resources:
+                  limits:
+                    cpu: '4'
+                  requests:
+                    cpu: '4'
+                image: "image-registry.openshift-image-registry.svc:5000/{{ project_name }}/ctfd:latest"
                   imagePullPolicy: ""
                   name: ctfd
                   resources: {}
