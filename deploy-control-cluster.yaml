@@ -479,6 +479,6 @@
       delay: 15
 
     - name: import the upload
-      shell: oc -n ctfd rsh ctfd-0 python manage.py import_ctf /tmp/ctfd-upload-me.zip
+      shell: sleep 60 && oc -n ctfd rsh ctfd-0 python manage.py import_ctf /tmp/ctfd-upload-me.zip
       retries: 20
       delay: 15
