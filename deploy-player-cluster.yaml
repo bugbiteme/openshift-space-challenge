@@ -122,7 +122,7 @@
         url: https://gitea-gitea.apps.{{ extracted_domain }}/api/v1/admin/users
         method: POST
         body: "{{ body }}"
-        status_code: 201
+        status_code: [200, 201]
         body_format: json
         validate_certs: false
         user: "gitadmin"
@@ -228,13 +228,19 @@
     - name: Move images to INSTRUCTIONS repo
       ansible.builtin.copy:
         src: 'images'
-        dest: '/tmp/INSTRUCTIONS/images/'
+        dest: '/tmp/INSTRUCTIONS/'
+        remote_src: yes
+
+    - name: Move resources to INSTRUCTIONS repo
+      ansible.builtin.copy:
+        src: 'resources'
+        dest: '/tmp/INSTRUCTIONS/'
         remote_src: yes
 
     - name: Add, commit, and push README.md
       shell: |
         git init
-        git add README.md images
+        git add README.md images resources
         git commit -m "New files"
         git remote add origin "https://starter:redhat123@gitea-gitea.apps.{{ extracted_domain }}/starter/INSTRUCTIONS.git"
         git push --set-upstream origin master

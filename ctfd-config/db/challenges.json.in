@@ -1,5 +1,5 @@
 {
-    "count": 2,
+    "count": 4,
     "results": [
         {
             "id": 1,
@@ -30,15 +30,32 @@
         {
             "id": 3,
             "name": "Engine Trouble",
-            "description": "As you explore the station, you come across the main engine room and notice a troubling sight: the ships engine, a late model StarLight XL, is broken beyond repair; a tangle of scorched circuits and shattered components! With no other options, you scour the storage bays and, to your relief, find a brand new QuantumPulse Thruster 3000 waiting to be installed! After some effort, you manage to replace the broken engine with the new one.\r\n\r\n<center><img src=\"files/fb643847e5cdc729d5641f99058fb5e1/manual.jpg\"/></center>\r\n\r\nHowever, a new problem arises. The HAL 8000 AI, which controls the station's systems, has no knowledge of this new QuantumPulse model!  Without understanding how to operate it, HAL 8000 can't start or manage the new engine.\r\n\r\nIn your search for solutions, hidden within the bubble-wrap for the engine, you discover the QuantumPulse Operating Manual! (url for manual here). This manual is your key to bringing HAL 8000 up to speed, but it needs to be processed into a format the AI can understand. You'll need to implement a Retrieval Augmented Generation (RAG) system to enable HAL 8000 to access and learn from the manual.\r\n\r\n## Objective:\r\nYour first task is to deploy a vector database, ChromaDB, within the OpenShift cluster. This database will store embeddings—numerical representations of text—from the new engine manual. Once ChromaDB is operational, HAL 8000 can query it to retrieve crucial information about the engine's operation.\r\n\r\n## Specification:\r\n\r\nA container image for chromadb can be found in a public container registry at `quay.io/atgreen0/chroma:latest`.\r\n\r\nTry deploying chromadb in your namespace.  Looking at the chroma startup logs, how many components does it start?\r\n\r\n* ocp: https://console-openshift-console.apps.{{ cluster_url }}",
+            "description": "As you explore the station, you come across the main engine room and notice a troubling sight: the ships engine, a late model StarLight XL, is broken beyond repair; a tangle of scorched circuits and shattered components! With no other options, you scour the storage bays and, to your relief, find a brand new QuantumPulse Thruster 3000 waiting to be installed! After some effort, you manage to replace the broken engine with the new one.\r\n\r\n<center><img src=\"files/fb643847e5cdc729d5641f99058fb5e1/manual.jpg\"/></center>\r\n\r\nHowever, a new problem arises. The HAL 8000 AI, which controls the station's systems, has no knowledge of this new QuantumPulse model!  Without understanding how to operate it, HAL 8000 can't start or manage the new engine.\r\n\r\nIn your search for solutions, hidden within the bubble-wrap for the engine, you discover the [QuantumPulse 3000 Owner's Manual](https://gitea-gitea.apps.{{ cluster_url }}/starter/INSTRUCTIONS/raw/branch/master/resources/quantumpulse-3000.md)! This manual is your key to bringing HAL 8000 up to speed, but it needs to be processed into a format the AI can understand. You'll need to implement a Retrieval Augmented Generation (RAG) system to enable HAL 8000 to access and learn from the manual.\r\n\r\n## Objective:\r\nYour first task is to deploy a vector database, ChromaDB, within the OpenShift cluster. This database will store embeddings—numerical representations of text—from the new engine manual. Once ChromaDB is operational, HAL 8000 can query it to retrieve crucial information about the engine's operation.\r\n\r\n## Specification:\r\n\r\nA container image for chromadb can be found in a public container registry at `quay.io/atgreen0/chroma:latest`.\r\n\r\nTry deploying chromadb in your namespace.  Looking at the chroma startup logs, how many componen`ts does it start?\r\n\r\n* ocp: https://console-openshift-console.apps.{{ cluster_url }}",
             "max_attempts": 0,
             "value": 50,
-            "category": "RAG to Riches",
+            "category": "RAG to the Rescue",
             "type": "standard",
             "state": "visible",
             "requirements": {
                 "prerequisites": [
                     2
+                ]
+            },
+            "connection_info": null,
+            "next_id": null
+        },
+        {
+            "id": 4,
+            "name": "Chunk by Chunk",
+            "description": "In order to populate your vector database, you will need to split up the [QuantumPulse 3000's Owner Manual](https://gitea-gitea.apps.{{ cluster_url }}/starter/INSTRUCTIONS/raw/branch/master/resources/quantumpulse-3000.md) into smaller chunks of text before feeding those to an embedding model to generate vectors for the vector database.  But we can take this one step at a time.\r\n\r\n## Objective:\r\nWrite code to read the markdown-formatted Owner's Manual, and split it up into fixed chunk sizes. Count the number of chunks.\r\n\r\n## Specification:\r\nEach chunk size should contain eight paragraphs of text.  More specifically, for the purposes of this challenge, any fragment of text separated by a blank line is a paragraph, even if it is only one line long (eg. a section header).  The final chunk may be less than eight paragraphs.  For now, we don't need to save the chunks anywhere -- just count them.\r\n\r\nHow many eight-paragraph chunks exist in the [QuantumPulse 3000's Owner Manual](https://gitea-gitea.apps.{{ cluster_url }}/starter/INSTRUCTIONS/raw/branch/master/resources/quantumpulse-3000.md)?\r\n\r\n* ocp: https://console-openshift-console.apps.{{ cluster_url }}\r\n* manual: https://gitea-gitea.apps.{{ cluster_url }}/starter/INSTRUCTIONS/raw/branch/master/resources/quantumpulse-3000.md\r\n",
+            "max_attempts": 0,
+            "value": 50,
+            "category": "RAG to the Rescue",
+            "type": "standard",
+            "state": "visible",
+            "requirements": {
+                "prerequisites": [
+                    2, 3
                 ]
             },
             "connection_info": null,
