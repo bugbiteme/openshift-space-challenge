@@ -408,7 +408,7 @@
       retries: 20
       delay: 15
 
-    - name: create island route
+    - name: create space route
       tags: ctfd-app
       kubernetes.core.k8s:
         namespace: "{{ project_name }}"
@@ -416,7 +416,7 @@
           kind: Route
           apiVersion: route.openshift.io/v1
           metadata:
-            name: island
+            name: space
             labels:
               app: ctfd
           spec:
@@ -473,12 +473,23 @@
         dest: "{{ playbook_dir }}/ctfd-upload-me.zip"
         format: zip
 
+    - ansible.builtin.debug:
+        msg: "URL is https://space-ctfd.apps.{{ extracted_domain }}/login"
+
+    - name: Wait for the URL to become available
+      ansible.builtin.uri:
+        url: "https://space-ctfd.apps.{{ extracted_domain }}/login"
+      register: result
+      retries: 30
+      delay: 10
+      until: result.status == 200
+
     - name: copy the upload file to ctfd-0
       shell: oc -n ctfd cp "{{ playbook_dir }}/ctfd-upload-me.zip" ctfd-0:/tmp
       retries: 20
       delay: 15
 
     - name: import the upload
-      shell: sleep 60 && oc -n ctfd rsh ctfd-0 python manage.py import_ctf /tmp/ctfd-upload-me.zip
+      shell: oc -n ctfd rsh ctfd-0 python manage.py import_ctf /tmp/ctfd-upload-me.zip
       retries: 20
       delay: 15
