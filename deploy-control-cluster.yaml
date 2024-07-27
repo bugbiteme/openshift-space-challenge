@@ -485,7 +485,7 @@
       until: result.status == 200
 
     - name: copy the upload file to ctfd-0
-      shell: oc -n ctfd cp "{{ playbook_dir }}/ctfd-upload-me.zip" ctfd-0:/tmp
+      shell: sleep 60 && oc -n ctfd cp "{{ playbook_dir }}/ctfd-upload-me.zip" ctfd-0:/tmp
       retries: 20
       delay: 15
 
