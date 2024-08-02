@@ -1,5 +1,5 @@
 {
-    "count": 4,
+    "count": 5,
     "results": [
         {
             "id": 1,
@@ -56,6 +56,30 @@
             "requirements": {
                 "prerequisites": [
                     2, 3
+                ]
+            },
+            "connection_info": null,
+            "next_id": null
+        },
+        {
+            "id": 4,
+            "name": "Embedding",
+            "description": "An embedding model is an AI model specifically trained to generate long lists of numbers (vectors) that represent the semantic meaning of a chunk of text.  You'll need an embedding model to populate our vector database with the text we will chunk out from the [QuantumPulse 3000's Owner Manual](https://gitea-gitea.apps.{{ cluster_url }}/starter/INSTRUCTIONS/raw/branch/master/resources/quantumpulse-3000.md). Fortunately, Space Command provided one such model that you can deploy on the ship's OpenShift cluster.\r\n\r\n# Objective:\r\nDeploy an embedding model on OpenShift.  You can read about embedding models here: https://ollama.com/blog/embedding-models\r\n\r\n# Specifications:\r\nThere's an embedding model available for deployment at `quay.io/atgreen0/ollama-embeddings:latest`.  Deploy this container image in your namespace.  To ensure that it is working, let's generate our first vector.   In the model's pod terminal run this:
+```
+curl http://localhost:8080/api/embeddings -d '{
+  \"model\": \"nomic-embed-text\",
+  \"prompt\": \"The speed of light in a vacuum is approximately 299,792,458 m/s.\"
+}'
+```
+The model should have responded with a json object containing a vector of numbers.  What is the very last number in the vector?\r\n\r\n* ocp: https://console-openshift-console.apps.{{ cluster_url }}\r\n",
+            "max_attempts": 0,
+            "value": 50,
+            "category": "RAG to the Rescue",
+            "type": "standard",
+            "state": "visible",
+            "requirements": {
+                "prerequisites": [
+                    2, 3, 4
                 ]
             },
             "connection_info": null,
