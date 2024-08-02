@@ -483,10 +483,11 @@
     - name: Wait for the URL to become available
       ansible.builtin.uri:
         url: "https://space-ctfd.apps.{{ extracted_domain }}/login"
+        status_code: [200, 500]
       register: result
       retries: 30
       delay: 10
-      until: result.status == 200
+      until: result.status == 200 or result.status == 500
 
     - name: copy the upload file to ctfd-0
       shell: sleep 60 && oc -n ctfd cp "{{ playbook_dir }}/ctfd-upload-me.zip" ctfd-0:/tmp
