@@ -443,16 +443,12 @@
     - name: Create ctfd users
       shell: "python3 {{ playbook_dir }}/make-ctfd-users.py > {{ playbook_dir }}/ctfd-config/db/users.json"
 
-# The choose_cluster variable is just a placeholder.  We are experimenting
-# with multi-player clusters here.
-
     - name: Patch challenges.json file
       template:
         src: "{{ playbook_dir }}/ctfd-config/db/challenges.json.in"
         dest: "{{ playbook_dir }}/ctfd-config/db/challenges.json"
       vars:
         cluster_url: "{{ extracted_domain }}"
-        choose_cluster: "document.body.innerHTML = document.body.innerHTML.replace(/@CLUSTER@/gi, ['{{ extracted_domain }}', '{{ extracted_domain }}', '{{ extracted_domain }}', '{{ extracted_domain }}'][CTFd.user.id % 4]);"
 
     - name: Patch config.json file
       template:
@@ -483,11 +479,10 @@
     - name: Wait for the URL to become available
       ansible.builtin.uri:
         url: "https://space-ctfd.apps.{{ extracted_domain }}/login"
-        status_code: [200, 500]
       register: result
       retries: 30
       delay: 10
-      until: result.status == 200 or result.status == 500
+      until: result.status == 200
 
     - name: copy the upload file to ctfd-0
       shell: sleep 60 && oc -n ctfd cp "{{ playbook_dir }}/ctfd-upload-me.zip" ctfd-0:/tmp
