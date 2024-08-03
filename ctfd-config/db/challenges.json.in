@@ -1,5 +1,5 @@
 {
-    "count": 5,
+    "count": 4,
     "results": [
         {
             "id": 1,
@@ -30,7 +30,7 @@
         {
             "id": 3,
             "name": "Engine Trouble",
-            "description": "As you explore the station, you come across the main engine room and notice a troubling sight: the ships engine, a late model StarLight XL, is broken beyond repair; a tangle of scorched circuits and shattered components! With no other options, you scour the storage bays and, to your relief, find a brand new QuantumPulse Thruster 3000 waiting to be installed! After some effort, you manage to replace the broken engine with the new one.\r\n\r\n<center><img src=\"files/fb643847e5cdc729d5641f99058fb5e1/manual.jpg\"/></center>\r\n\r\nHowever, a new problem arises. The HAL 8000 AI, which controls the station's systems, has no knowledge of this new QuantumPulse model!  Without understanding how to operate it, HAL 8000 can't start or manage the new engine.\r\n\r\nIn your search for solutions, hidden within the bubble-wrap for the engine, you discover the [QuantumPulse 3000 Owner's Manual](https://gitea-gitea.apps.@CLUSTER@/starter/INSTRUCTIONS/raw/branch/master/resources/quantumpulse-3000.md)! This manual is your key to bringing HAL 8000 up to speed, but it needs to be processed into a format the AI can understand. You'll need to implement a Retrieval Augmented Generation (RAG) system to enable HAL 8000 to access and learn from the manual.\r\n\r\n## Objective:\r\nYour first task is to deploy a vector database, ChromaDB, within the OpenShift cluster. This database will store embeddings—numerical representations of text—from the new engine manual. Once ChromaDB is operational, HAL 8000 can query it to retrieve crucial information about the engine's operation.\r\n\r\n## Specification:\r\n\r\nA container image for chromadb can be found in a public container registry at `quay.io/atgreen0/chroma:latest`.\r\n\r\nTry deploying chromadb in your namespace.  Looking at the chroma startup logs, how many components does it start?\r\n\r\n* ocp: https://console-openshift-console.apps.@CLUSTER@ <script defer> {{ choose_cluster }} </script> \r\n",
+            "description": "As you explore the station, you come across the main engine room and notice a troubling sight: the ships engine, a late model StarLight XL, is broken beyond repair; a tangle of scorched circuits and shattered components! With no other options, you scour the storage bays and, to your relief, find a brand new QuantumPulse Thruster 3000 waiting to be installed! After some effort, you manage to replace the broken engine with the new one.\r\n\r\n<center><img src=\"files/fb643847e5cdc729d5641f99058fb5e1/manual.jpg\"/></center>\r\n\r\nHowever, a new problem arises. The HAL 8000 AI, which controls the station's systems, has no knowledge of this new QuantumPulse model!  Without understanding how to operate it, HAL 8000 can't start or manage the new engine.\r\n\r\nIn your search for solutions, hidden within the bubble-wrap for the engine, you discover the [QuantumPulse 3000 Owner's Manual](https://gitea-gitea.apps.{{ cluster_url }}/starter/INSTRUCTIONS/raw/branch/master/resources/quantumpulse-3000.md)! This manual is your key to bringing HAL 8000 up to speed, but it needs to be processed into a format the AI can understand. You'll need to implement a Retrieval Augmented Generation (RAG) system to enable HAL 8000 to access and learn from the manual.\r\n\r\n## Objective:\r\nYour first task is to deploy a vector database, ChromaDB, within the OpenShift cluster. This database will store embeddings—numerical representations of text—from the new engine manual. Once ChromaDB is operational, HAL 8000 can query it to retrieve crucial information about the engine's operation.\r\n\r\n## Specification:\r\n\r\nA container image for chromadb can be found in a public container registry at `quay.io/atgreen0/chroma:latest`.\r\n\r\nTry deploying chromadb in your namespace.  Looking at the chroma startup logs, how many componen`ts does it start?\r\n\r\n* ocp: https://console-openshift-console.apps.{{ cluster_url }}",
             "max_attempts": 0,
             "value": 50,
             "category": "RAG to the Rescue",
@@ -56,23 +56,6 @@
             "requirements": {
                 "prerequisites": [
                     2, 3
-                ]
-            },
-            "connection_info": null,
-            "next_id": null
-        },
-        {
-            "id": 5,
-            "name": "Embedding",
-            "description": "An embedding model is an AI model specifically trained to generate long lists of numbers (vectors) representing the semantic meaning of a chunk of text.  You can read mode about embedding models here: https://ollama.com/blog/embedding-models\r\n\r\nYou'll need an embedding model to populate your vector database with the text you will chunk out from the [QuantumPulse 3000's Owner Manual](https://gitea-gitea.apps.{{ cluster_url }}/starter/INSTRUCTIONS/raw/branch/master/resources/quantumpulse-3000.md). Fortunately, Space Command provided one such model (`nomic-embed-text`) that you can deploy on the ship's OpenShift cluster.\r\n\r\n# Objective:\r\nDeploy and test an embedding model on OpenShift.\r\n\r\n# Specifications:\r\nThere's an embedding model available for deployment at `quay.io/atgreen0/ollama-embeddings:latest`.  Deploy this container image in your namespace.  To ensure that it is working, let's generate our first vector.   In the model's pod terminal run this:\r\n```\r\ncurl http://localhost:8080/api/embeddings -d '{\r\n  \"model\": \"nomic-embed-text\",\r\n  \"prompt\": \"The speed of light in a vacuum is approximately 299,792,458 m/s.\"\r\n}'\r\n```\r\nThe model should have responded with a JSON object containing a vector of numbers.  What is the very last number in the vector?\r\n\r\n* ocp: https://console-openshift-console.apps.{{ cluster_url }}\r\n",
-            "max_attempts": 0,
-            "value": 50,
-            "category": "RAG to the Rescue",
-            "type": "standard",
-            "state": "visible",
-            "requirements": {
-                "prerequisites": [
-                    2, 3, 4
                 ]
             },
             "connection_info": null,
