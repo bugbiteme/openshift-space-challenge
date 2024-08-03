@@ -46,7 +46,7 @@
         },
         {
             "id": 4,
-            "name": "Chunk by Chunk",
+            "name": "Chunk It Up",
             "description": "In order to populate your vector database, you will need to split up the [QuantumPulse 3000's Owner Manual](https://gitea-gitea.apps.{{ cluster_url }}/starter/INSTRUCTIONS/raw/branch/master/resources/quantumpulse-3000.md) into smaller chunks of text before feeding those to an embedding model to generate vectors for the vector database.  But we can take this one step at a time.\r\n\r\n## Objective:\r\nWrite code to read the markdown-formatted Owner's Manual, and split it up into fixed chunk sizes. Count the number of chunks.\r\n\r\n## Specification:\r\nEach chunk size should contain eight paragraphs of text.  More specifically, for the purposes of this challenge, any fragment of text separated by a blank line is a paragraph, even if it is only one line long (eg. a section header).  The final chunk may be less than eight paragraphs.  For now, we don't need to save the chunks anywhere -- just count them.\r\n\r\nHow many eight-paragraph chunks exist in the [QuantumPulse 3000's Owner Manual](https://gitea-gitea.apps.{{ cluster_url }}/starter/INSTRUCTIONS/raw/branch/master/resources/quantumpulse-3000.md)?\r\n\r\n* gitea: https://gitea-gitea.apps.{{ cluster_url }}\r\n* ocp: https://console-openshift-console.apps.{{ cluster_url }}\r\n* manual: https://gitea-gitea.apps.{{ cluster_url }}/starter/INSTRUCTIONS/raw/branch/master/resources/quantumpulse-3000.md\r\n",
             "max_attempts": 0,
             "value": 50,
