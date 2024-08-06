@@ -1,1 +1,48 @@
-{"count":5,"results":[{"id":1,"challenge_id":1,"type":"static","content":"done","data":"case_insensitive"},{"id":2,"challenge_id":2,"type":"static","content":"lightspeed","data":"case_insensitive"},{"id":3,"challenge_id":3,"type":"static","content":"7","data":""},{"id":4,"challenge_id":4,"type":"static","content":"26","data":""},{"id":5,"challenge_id":5,"type":"static","content":"-0.7463786005973816","data":""}],"meta":{}}
+{
+  "count": 6,
+  "results": [
+    {
+      "id": 1,
+      "challenge_id": 1,
+      "type": "static",
+      "content": "done",
+      "data": "case_insensitive"
+    },
+    {
+      "id": 2,
+      "challenge_id": 2,
+      "type": "static",
+      "content": "lightspeed",
+      "data": "case_insensitive"
+    },
+    {
+      "id": 3,
+      "challenge_id": 3,
+      "type": "static",
+      "content": "7",
+      "data": ""
+    },
+    {
+      "id": 4,
+      "challenge_id": 4,
+      "type": "static",
+      "content": "26",
+      "data": ""
+    },
+    {
+      "id": 5,
+      "challenge_id": 5,
+      "type": "static",
+      "content": "-0.7463786005973816",
+      "data": ""
+    },
+    {
+      "id": 6,
+      "challenge_id": 6,
+      "type": "static",
+      "content": "19.5",
+      "data": "case_insensitive"
+    }
+  ],
+  "meta": {}
+}
