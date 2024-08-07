@@ -464,12 +464,9 @@
       vars:
         cluster_url: "{{ extracted_domain }}"
 
-    - name: validate challenges file
+    - name: validating challenges.json
       shell: jq empty "{{ playbook_dir }}/ctfd-config/db/challenges.json"
       any_errors_fatal: true
-
-    - ansible.builtin.debug:
-        msg: "challenges.json file validated"
 
     - name: create ctfd archive for uploading
       community.general.archive:
