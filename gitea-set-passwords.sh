@@ -71,7 +71,7 @@ while true; do
         ./gitea --config conf/app.ini admin user change-password -u player66 -p C5zgsgSt
         ./gitea --config conf/app.ini admin user change-password -u player67 -p XPdXWKNC
         ./gitea --config conf/app.ini admin user change-password -u player68 -p DY3BdHxw
-        ./gitea --config conf/app.ini admin user change-password -u player69 -p dEguy3gR
+        ./gitea --config conf/app.ini admin user change-password -u player69 -p dEguy3gR --must-change-password=false
         ./gitea --config conf/app.ini admin user change-password -u player70 -p VTY8W7b2
         ./gitea --config conf/app.ini admin user change-password -u player71 -p fArTn3ec
         ./gitea --config conf/app.ini admin user change-password -u player72 -p Dr2v7t62
