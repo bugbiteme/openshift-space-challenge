@@ -3,106 +3,106 @@ set -x
 while true; do
     output=$(./gitea --config conf/app.ini admin user list)
     if echo "$output" | grep -q "player100"; then
-        ./gitea --config conf/app.ini admin user change-password -u player1 -p zPDdXTJb
-        ./gitea --config conf/app.ini admin user change-password -u player2 -p 4TEhueU5
-        ./gitea --config conf/app.ini admin user change-password -u player3 -p nsNwNSaA
-        ./gitea --config conf/app.ini admin user change-password -u player4 -p qq7hgVHU
-        ./gitea --config conf/app.ini admin user change-password -u player5 -p uD2ktvax
-        ./gitea --config conf/app.ini admin user change-password -u player6 -p cgSR6ZTG
-        ./gitea --config conf/app.ini admin user change-password -u player7 -p Gv5dgt6P
-        ./gitea --config conf/app.ini admin user change-password -u player8 -p 7wkfUrhB
-        ./gitea --config conf/app.ini admin user change-password -u player9 -p EH9AhWHp
-        ./gitea --config conf/app.ini admin user change-password -u player10 -p NEFuQBPa
-        ./gitea --config conf/app.ini admin user change-password -u player11 -p F4KCKubf
-        ./gitea --config conf/app.ini admin user change-password -u player12 -p 2gbVWh5P
-        ./gitea --config conf/app.ini admin user change-password -u player13 -p yDMHFNJt
-        ./gitea --config conf/app.ini admin user change-password -u player14 -p peZjSepw
-        ./gitea --config conf/app.ini admin user change-password -u player15 -p YrKdahqG
-        ./gitea --config conf/app.ini admin user change-password -u player16 -p VubuUVnE
-        ./gitea --config conf/app.ini admin user change-password -u player17 -p hFjmtexC
-        ./gitea --config conf/app.ini admin user change-password -u player18 -p XTGAePgf
-        ./gitea --config conf/app.ini admin user change-password -u player19 -p sCdTtSTj
-        ./gitea --config conf/app.ini admin user change-password -u player20 -p hGGwVamu
-        ./gitea --config conf/app.ini admin user change-password -u player21 -p njguFJV9
-        ./gitea --config conf/app.ini admin user change-password -u player22 -p 8hsQ3qRN
-        ./gitea --config conf/app.ini admin user change-password -u player23 -p ht4U4wq8
-        ./gitea --config conf/app.ini admin user change-password -u player24 -p Rd7jUZEa
-        ./gitea --config conf/app.ini admin user change-password -u player25 -p S8A5UHv7
-        ./gitea --config conf/app.ini admin user change-password -u player26 -p t2PFeA3D
-        ./gitea --config conf/app.ini admin user change-password -u player27 -p zuRcUyGC
-        ./gitea --config conf/app.ini admin user change-password -u player28 -p kr42Kvr9
-        ./gitea --config conf/app.ini admin user change-password -u player29 -p WWu7GNmN
-        ./gitea --config conf/app.ini admin user change-password -u player30 -p avjjE6jh
-        ./gitea --config conf/app.ini admin user change-password -u player31 -p RbjvPRNa
-        ./gitea --config conf/app.ini admin user change-password -u player32 -p ZHhGUhaW
-        ./gitea --config conf/app.ini admin user change-password -u player33 -p Dpgbhpya
-        ./gitea --config conf/app.ini admin user change-password -u player34 -p k5JzbsJc
-        ./gitea --config conf/app.ini admin user change-password -u player35 -p 2kpT6HAG
-        ./gitea --config conf/app.ini admin user change-password -u player36 -p B6tNSsrk
-        ./gitea --config conf/app.ini admin user change-password -u player37 -p 55juvytp
-        ./gitea --config conf/app.ini admin user change-password -u player38 -p 6QQ5HFvz
-        ./gitea --config conf/app.ini admin user change-password -u player39 -p Rmqe8pez
-        ./gitea --config conf/app.ini admin user change-password -u player40 -p fcGt5QWw
-        ./gitea --config conf/app.ini admin user change-password -u player41 -p QMde4j6c
-        ./gitea --config conf/app.ini admin user change-password -u player42 -p 6nqEndxS
-        ./gitea --config conf/app.ini admin user change-password -u player43 -p h4fuHuc7
-        ./gitea --config conf/app.ini admin user change-password -u player44 -p vXMdTrSC
-        ./gitea --config conf/app.ini admin user change-password -u player45 -p T5U9p6MT
-        ./gitea --config conf/app.ini admin user change-password -u player46 -p g9pr9r9R
-        ./gitea --config conf/app.ini admin user change-password -u player47 -p hcWjaExa
-        ./gitea --config conf/app.ini admin user change-password -u player48 -p ythfz6fw
-        ./gitea --config conf/app.ini admin user change-password -u player49 -p x2n5fJag
-        ./gitea --config conf/app.ini admin user change-password -u player50 -p DdhgURh8
-        ./gitea --config conf/app.ini admin user change-password -u player51 -p EQyfh2F8
-        ./gitea --config conf/app.ini admin user change-password -u player52 -p XmPDMeru
-        ./gitea --config conf/app.ini admin user change-password -u player53 -p 2Hm8DWw2
-        ./gitea --config conf/app.ini admin user change-password -u player54 -p aEbNQdjD
-        ./gitea --config conf/app.ini admin user change-password -u player55 -p bda3aAMS
-        ./gitea --config conf/app.ini admin user change-password -u player56 -p gQ4ZS3Mv
-        ./gitea --config conf/app.ini admin user change-password -u player57 -p mgRhY6KQ
-        ./gitea --config conf/app.ini admin user change-password -u player58 -p kwMwDCms
-        ./gitea --config conf/app.ini admin user change-password -u player59 -p wcrYeQQM
-        ./gitea --config conf/app.ini admin user change-password -u player60 -p UJwGajkG
-        ./gitea --config conf/app.ini admin user change-password -u player61 -p CP6HWnv5
-        ./gitea --config conf/app.ini admin user change-password -u player62 -p fu6DNh7Z
-        ./gitea --config conf/app.ini admin user change-password -u player63 -p Y8tV93AJ
-        ./gitea --config conf/app.ini admin user change-password -u player64 -p yTbNty7N
-        ./gitea --config conf/app.ini admin user change-password -u player65 -p ghTKJpcE
-        ./gitea --config conf/app.ini admin user change-password -u player66 -p C5zgsgSt
-        ./gitea --config conf/app.ini admin user change-password -u player67 -p XPdXWKNC
-        ./gitea --config conf/app.ini admin user change-password -u player68 -p DY3BdHxw
+        ./gitea --config conf/app.ini admin user change-password -u player1 -p zPDdXTJb --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player2 -p 4TEhueU5 --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player3 -p nsNwNSaA --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player4 -p qq7hgVHU --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player5 -p uD2ktvax --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player6 -p cgSR6ZTG --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player7 -p Gv5dgt6P --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player8 -p 7wkfUrhB --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player9 -p EH9AhWHp --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player10 -p NEFuQBPa --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player11 -p F4KCKubf --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player12 -p 2gbVWh5P --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player13 -p yDMHFNJt --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player14 -p peZjSepw --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player15 -p YrKdahqG --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player16 -p VubuUVnE --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player17 -p hFjmtexC --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player18 -p XTGAePgf --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player19 -p sCdTtSTj --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player20 -p hGGwVamu --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player21 -p njguFJV9 --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player22 -p 8hsQ3qRN --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player23 -p ht4U4wq8 --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player24 -p Rd7jUZEa --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player25 -p S8A5UHv7 --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player26 -p t2PFeA3D --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player27 -p zuRcUyGC --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player28 -p kr42Kvr9 --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player29 -p WWu7GNmN --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player30 -p avjjE6jh --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player31 -p RbjvPRNa --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player32 -p ZHhGUhaW --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player33 -p Dpgbhpya --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player34 -p k5JzbsJc --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player35 -p 2kpT6HAG --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player36 -p B6tNSsrk --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player37 -p 55juvytp --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player38 -p 6QQ5HFvz --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player39 -p Rmqe8pez --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player40 -p fcGt5QWw --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player41 -p QMde4j6c --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player42 -p 6nqEndxS --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player43 -p h4fuHuc7 --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player44 -p vXMdTrSC --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player45 -p T5U9p6MT --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player46 -p g9pr9r9R --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player47 -p hcWjaExa --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player48 -p ythfz6fw --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player49 -p x2n5fJag --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player50 -p DdhgURh8 --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player51 -p EQyfh2F8 --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player52 -p XmPDMeru --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player53 -p 2Hm8DWw2 --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player54 -p aEbNQdjD --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player55 -p bda3aAMS --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player56 -p gQ4ZS3Mv --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player57 -p mgRhY6KQ --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player58 -p kwMwDCms --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player59 -p wcrYeQQM --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player60 -p UJwGajkG --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player61 -p CP6HWnv5 --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player62 -p fu6DNh7Z --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player63 -p Y8tV93AJ --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player64 -p yTbNty7N --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player65 -p ghTKJpcE --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player66 -p C5zgsgSt --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player67 -p XPdXWKNC --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player68 -p DY3BdHxw --must-change-password=false
         ./gitea --config conf/app.ini admin user change-password -u player69 -p dEguy3gR --must-change-password=false
-        ./gitea --config conf/app.ini admin user change-password -u player70 -p VTY8W7b2
-        ./gitea --config conf/app.ini admin user change-password -u player71 -p fArTn3ec
-        ./gitea --config conf/app.ini admin user change-password -u player72 -p Dr2v7t62
-        ./gitea --config conf/app.ini admin user change-password -u player73 -p tPPzc6qz
-        ./gitea --config conf/app.ini admin user change-password -u player74 -p qm4AN8Av
-        ./gitea --config conf/app.ini admin user change-password -u player75 -p hcKUP2Ak
-        ./gitea --config conf/app.ini admin user change-password -u player76 -p D3w8E4rw
-        ./gitea --config conf/app.ini admin user change-password -u player77 -p adeHCGGM
-        ./gitea --config conf/app.ini admin user change-password -u player78 -p yjQjYcp2
-        ./gitea --config conf/app.ini admin user change-password -u player79 -p CybpUcYj
-        ./gitea --config conf/app.ini admin user change-password -u player80 -p 2bxRhJ2y
-        ./gitea --config conf/app.ini admin user change-password -u player81 -p nEt7bMrJ
-        ./gitea --config conf/app.ini admin user change-password -u player82 -p WPc46egh
-        ./gitea --config conf/app.ini admin user change-password -u player83 -p pGd8UQPn
-        ./gitea --config conf/app.ini admin user change-password -u player84 -p bD4Mxtds
-        ./gitea --config conf/app.ini admin user change-password -u player85 -p xsddSWUz
-        ./gitea --config conf/app.ini admin user change-password -u player86 -p HkfcM8QY
-        ./gitea --config conf/app.ini admin user change-password -u player87 -p apUXM7q4
-        ./gitea --config conf/app.ini admin user change-password -u player88 -p ycYwQcDX
-        ./gitea --config conf/app.ini admin user change-password -u player89 -p Kd3wrtNj
-        ./gitea --config conf/app.ini admin user change-password -u player90 -p Rd3MkEpm
-        ./gitea --config conf/app.ini admin user change-password -u player91 -p NktSsN3P
-        ./gitea --config conf/app.ini admin user change-password -u player92 -p TbMdhKHd
-        ./gitea --config conf/app.ini admin user change-password -u player93 -p JuBeznDu
-        ./gitea --config conf/app.ini admin user change-password -u player94 -p YWFYZuZx
-        ./gitea --config conf/app.ini admin user change-password -u player95 -p 7MeTaBfw
-        ./gitea --config conf/app.ini admin user change-password -u player96 -p tKMzv45H
-        ./gitea --config conf/app.ini admin user change-password -u player97 -p Re9zP677
-        ./gitea --config conf/app.ini admin user change-password -u player98 -p AccRacJ8
-        ./gitea --config conf/app.ini admin user change-password -u player99 -p b8Hz6HZh
-        ./gitea --config conf/app.ini admin user change-password -u player100 -p xPBxFYKN
+        ./gitea --config conf/app.ini admin user change-password -u player70 -p VTY8W7b2 --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player71 -p fArTn3ec --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player72 -p Dr2v7t62 --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player73 -p tPPzc6qz --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player74 -p qm4AN8Av --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player75 -p hcKUP2Ak --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player76 -p D3w8E4rw --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player77 -p adeHCGGM --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player78 -p yjQjYcp2 --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player79 -p CybpUcYj --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player80 -p 2bxRhJ2y --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player81 -p nEt7bMrJ --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player82 -p WPc46egh --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player83 -p pGd8UQPn --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player84 -p bD4Mxtds --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player85 -p xsddSWUz --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player86 -p HkfcM8QY --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player87 -p apUXM7q4 --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player88 -p ycYwQcDX --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player89 -p Kd3wrtNj --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player90 -p Rd3MkEpm --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player91 -p NktSsN3P --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player92 -p TbMdhKHd --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player93 -p JuBeznDu --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player94 -p YWFYZuZx --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player95 -p 7MeTaBfw --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player96 -p tKMzv45H --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player97 -p Re9zP677 --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player98 -p AccRacJ8 --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player99 -p b8Hz6HZh --must-change-password=false
+        ./gitea --config conf/app.ini admin user change-password -u player100 -p xPBxFYKN --must-change-password=false
         exit 0;
     fi
     sleep 10
