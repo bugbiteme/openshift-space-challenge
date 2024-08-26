@@ -1,5 +1,5 @@
 {
-  "count": 6,
+  "count": 8,
   "results": [
     {
       "id": 1,
@@ -41,6 +41,20 @@
       "challenge_id": 6,
       "type": "static",
       "content": "19.5",
+      "data": "case_insensitive"
+    },
+    {
+      "id": 7,
+      "challenge_id": 7,
+      "type": "static",
+      "content": "22.545",
+      "data": "case_insensitive"
+    },
+    {
+      "id": 8,
+      "challenge_id": 8,
+      "type": "static",
+      "content": "ack100",
       "data": "case_insensitive"
     }
   ],
