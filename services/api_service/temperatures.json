@@ -1,0 +1,84 @@
+{
+    "rooms": [
+        {
+            "name": "Galactic Galley",
+            "temperature": 22.5
+        },
+        {
+            "name": "Astral Athletics",
+            "temperature": 20.1
+        },
+        {
+            "name": "Stellar Science Labs",
+            "temperature": 23.8
+        },
+        {
+            "name": "The Void Vault",
+            "temperature": 21.2
+        },
+        {
+            "name": "Gravitational Lounge",
+            "temperature": 24.1
+        },
+        {
+            "name": "Nebula Nursery",
+            "temperature": 22.9
+        },
+        {
+            "name": "Cosmic Cargo Bay",
+            "temperature": 21.5
+        },
+        {
+            "name": "Astral Aft Deck",
+            "temperature": 23.4
+        },
+        {
+            "name": "The Black Hole Briefing Room",
+            "temperature": 22.2
+        },
+        {
+            "name": "Quantum Quarters",
+            "temperature": 21.8
+        },
+        {
+            "name": "Orbital Oasis",
+            "temperature": 24.9
+        },
+        {
+            "name": "Wormhole Workbench",
+            "temperature": 22.1
+        },
+        {
+            "name": "Gravitational Gym",
+            "temperature": 20.5
+        },
+        {
+            "name": "Alien Art Gallery",
+            "temperature": 23.2
+        },
+        {
+            "name": "Starlight Sanctuary",
+            "temperature": 22.6
+        },
+        {
+            "name": "Rocket Radar Station",
+            "temperature": 21.9
+        },
+        {
+            "name": "Cosmic Cargo Bay Storage",
+            "temperature": 21.1
+        },
+        {
+            "name": "Galactic Gaming Parlor",
+            "temperature": 23.5
+        },
+        {
+            "name": "Solarium",
+            "temperature": 25.2
+        },
+        {
+            "name": "The Final Frontier Foyer",
+            "temperature": 22.4
+        }
+    ]
+}
