@@ -1,0 +1,52 @@
+{
+  "name": "user-distribution",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node -r dotenv/config ./bin/www",
+    "start:dev": "nodemon -r dotenv/config ./bin/www",
+    "deploy:nodeshift": "nodeshift --expose --namespace.name=user-distribution --namespace.create=true",
+    "deploy:oc": "oc apply -f openshift.yaml"
+  },
+  "dependencies": {
+    "barelog": "~0.2.0",
+    "body-parser": "^1.19.0",
+    "cache-manager": "~3.2.1",
+    "cache-manager-redis-store": "~2.0.0",
+    "connect-redis": "~4.0.4",
+    "cookie-parser": "~1.4.4",
+    "csv-parser": "^3.0.0",
+    "debug": "~2.6.9",
+    "dotenv": "~8.2.0",
+    "env-var": "~6.1.0",
+    "express": "~4.19.2",
+    "express-basic-auth": "~1.2.0",
+    "express-session": "~1.17.1",
+    "hbs": "~4.2.0",
+    "less-middleware": "~3.1.0",
+    "lodash.maxby": "~4.6.0",
+    "morgan": "~1.9.1",
+    "multer": "^1.4.5-lts.1",
+    "p-locate": "~4.1.0",
+    "p-map": "~4.0.0",
+    "p-queue": "~6.3.0",
+    "redis": "3.1.2",
+    "timestring": "~6.0.0"
+  },
+  "devDependencies": {
+    "loadtest": "~4.1.0",
+    "nodemon": "~2.0.3",
+    "nodeshift": "~6.0.2"
+  },
+  "author": "ecrosbie@redhat.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Crosbie/username-distribution.git"
+  },
+  "license": "GPL-3.0",
+  "description": "This web app distributes usernames and passwords to individuals who are taking part in an OpenShift based workshop. Deploying this app in OpenShift and exposing it publicly will give users a central access point, giving them their individual login credentials and links to lab guides.",
+  "bugs": {
+    "url": "https://github.com/Crosbie/username-distribution/issues"
+  },
+  "homepage": "https://github.com/Crosbie/username-distribution#readme",
+  "main": "app.js"
+}
