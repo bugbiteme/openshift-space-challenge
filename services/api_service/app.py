@@ -7,6 +7,9 @@ import os
 #global variables oxygen level
 oxygen_level = 19.5
 
+#global variables spaceship speed
+spaceship_speed = 52
+
 app = Flask(__name__)
 
 @app.route('/api/v1/oxygen', methods=['GET'])
@@ -35,6 +38,24 @@ def get_camera1():
 
     # Return the image file
     return send_file(file_path, mimetype='image/png')
+
+@app.route('/api/v1/speed', methods=['GET'])
+def get_speed():
+	return jsonify({"spaceship_speed": spaceship_speed})
+
+@app.route('/api/v1/speed', methods=['POST'])
+def set_speed():
+	global spaceship_speed
+	data = request.get_json()
+	spaceship_speed = data['spaceship_speed']
+	# round speed to 0 decimal
+	if round(spaceship_speed, 0) == 148:
+		ack_token = "ack100"
+	else:
+		ack_number = round(spaceship_speed / 1.5)
+		ack_token = "ACK" + f"{ack_number:03d}"
+
+	return jsonify({"spaceship_speed": spaceship_speed, "ack_flag": ack_token})
 
 
 if __name__ == '__main__':
