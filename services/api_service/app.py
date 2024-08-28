@@ -57,6 +57,14 @@ def set_speed():
 
 	return jsonify({"spaceship_speed": spaceship_speed, "ack_flag": ack_token})
 
+@app.errorhandler(404)
+def page_not_found(e):
+    # Define the absolute path to the file
+    file_path = os.path.join(os.path.dirname(__file__), '404.png')
+
+    # Return the image file
+    return send_file(file_path, mimetype='image/png')	
+
 
 if __name__ == '__main__':
 	app.run(host='0.0.0.0', port=8080)
