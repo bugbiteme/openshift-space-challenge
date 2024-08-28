@@ -1,5 +1,5 @@
 {
-  "count": 8,
+  "count": 9,
   "results": [
     {
       "id": 1,
@@ -117,6 +117,26 @@
       "type": "standard",
       "state": "visible",
       "requirements": null,
+      "connection_info": null,
+      "next_id": null
+    },
+    {
+      "id": 9,
+      "name": "Rag Service",
+      "description": "Now that we have a working embedding model and Vector DB, it's time to build the service the ship's AI will call to ask about the [QuantumPulse 3000's Owner Manual](https://gitea-gitea.apps.{{ cluster_url }}/starter/INSTRUCTIONS/raw/branch/master/resources/quantumpulse-3000.md).\r\n# Objective:\r\nImplement a service on the ship's OpenShift cluster that will accept posts from the ship's AI, and find relevant text from the vector DB.  To solve this, you will need to write a service that will:\r\n- populate the vectordb with the chunked text you have already created.\r\n- respond to https posts from the ship's AI to find the closest matching text from the DB.\r\n\r\nTo retrieve the flag, tell the API server to test your implementation by... FIXME TBD# Specifications:\r\n**Endpoint:** POST /\r\n\r\n**Input:**\r\n\r\nPlain text body describing what the AI wants to learn about.\r\n**Response:** JSON output from the vector database.* gitea: https://gitea-gitea.apps.{{ cluster_url }}\r\n\r\nThe starter repo on gitea contains sample starters showing how to interact with the vector DB\r\n\r\nocp: https://console-openshift-console.apps.{{ cluster_url }}\r\nnode RAG starter: https://gitea-gitea.apps.{{ cluster_url }}/starter/node-rag-starter\r\n",
+      "max_attempts": 0,
+      "value": 50,
+      "category": "RAG to the Rescue",
+      "type": "standard",
+      "state": "visible",
+      "requirements": {
+        "prerequisites": [
+          2,
+          3,
+          4,
+          5
+        ]
+      },
       "connection_info": null,
       "next_id": null
     }

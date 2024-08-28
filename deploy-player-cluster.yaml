@@ -201,6 +201,7 @@
         - { url: 'https://github.com/catalyst-ctfd/node-starter.git', name: 'node-starter' }
         - { url: 'https://github.com/catalyst-ctfd/springboot-starter.git', name: 'springboot-starter' }
         - { url: 'https://github.com/catalyst-ctfd/quarkus-starter.git', name: 'quarkus-starter' }
+        - { url: 'https://github.com/catalyst-ctfd/node-rag-starter.git', name: 'node-rag-starter' }
       ignore_errors: true
 
     - name: Create INSTRUCTIONS repo in Gitea
