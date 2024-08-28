@@ -42,10 +42,22 @@
         oc adm policy add-role-to-user edit "player{{ item }}" -n "player{{ item }}"
       with_sequence: start=1 end={{ player_count }}
 
-    - name: create quotas for each player ns 
-      shell: |
-        oc create quota nsq --hard=cpu=2,memory=2G -n "player{{ item }}"
+    - name: create player limitranges
+      kubernetes.core.k8s:
+        namespace: "player{{ item }}"
+        definition:
+          apiVersion: v1
+          kind: LimitRange
+          metadata:
+            name: resource-limits
+          spec:
+            limits:
+              - type: Container
+                max:
+                  cpu: 2
       with_sequence: start=1 end={{ player_count }}
+      retries: 20
+      delay: 15
 
     - name: Get the cluster console URL
       shell: oc get routes --all-namespaces | grep console-openshift | awk '{ print $3 }'
