@@ -45,7 +45,7 @@
       "next_id": null
     },
     {
-      "id": 4,
+      "id": 5,
       "name": "Chunk It Up",
       "description": "In order to populate your vector database, you will need to split up the [QuantumPulse 3000's Owner Manual](https://gitea-gitea.apps.{{ cluster_url }}/starter/INSTRUCTIONS/raw/branch/master/resources/quantumpulse-3000.md) into smaller chunks of text before feeding those to an embedding model to generate vectors for the vector database.  But we can take this one step at a time.\r\n\r\n### Objective:\r\nWrite code to read the markdown-formatted Owner's Manual, and split it up into fixed chunk sizes. Count the number of chunks.\r\n\r\n### Specification:\r\nEach chunk size should contain eight paragraphs of text.  More specifically, for the purposes of this challenge, any fragment of text separated by a blank line is a paragraph, even if it is only one line long (eg. a section header).  The final chunk may be less than eight paragraphs.  For now, we don't need to save the chunks anywhere -- just count them.\r\n\r\nHow many eight-paragraph chunks exist in the [QuantumPulse 3000's Owner Manual](https://gitea-gitea.apps.{{ cluster_url }}/starter/INSTRUCTIONS/raw/branch/master/resources/quantumpulse-3000.md)?\r\n\r\n* gitea: https://gitea-gitea.apps.{{ cluster_url }}\r\n* ocp: https://console-openshift-console.apps.{{ cluster_url }}\r\n* manual: https://gitea-gitea.apps.{{ cluster_url }}/starter/INSTRUCTIONS/raw/branch/master/resources/quantumpulse-3000.md\r\n",
       "max_attempts": 0,
@@ -56,14 +56,15 @@
       "requirements": {
         "prerequisites": [
           2,
-          3
+          3,
+          4
         ]
       },
       "connection_info": null,
       "next_id": null
     },
     {
-      "id": 5,
+      "id": 4,
       "name": "Embedding",
       "description": "An embedding model is an AI model specifically trained to generate long lists of numbers (vectors) representing the semantic meaning of a chunk of text.  You can read more about embedding models here: https://ollama.com/blog/embedding-models\r\n\r\nYou'll need an embedding model to populate your vector database with the text you will chunk out from the [QuantumPulse 3000's Owner Manual](https://gitea-gitea.apps.{{ cluster_url }}/starter/INSTRUCTIONS/raw/branch/master/resources/quantumpulse-3000.md). Fortunately, Space Command provided an emedding model (`nomic-embed-text`) that you should be able to deploy on the ship's OpenShift cluster.\r\n\r\n## Objective:\r\nDeploy and test an embedding model on OpenShift.\r\n\r\n## Specifications:\r\nThere's an embedding model available for deployment at `quay.io/atgreen0/ollama-embedding:latest`.  Deploy this container image in your namespace.  To ensure that it is working, let's generate our first vector.   In the model's pod terminal run this:\r\n```\r\ncurl http://localhost:8080/api/embeddings -d '{\r\n  \"model\": \"nomic-embed-text\",\r\n  \"prompt\": \"The speed of light in a vacuum is approximately 299,792,458 m/s.\"\r\n}'\r\n```\r\nThe model should have responded with a JSON object containing a vector of numbers.  What is the very last number in the vector?\r\n\r\n* gitea: https://gitea-gitea.apps.{{ cluster_url }}\r\n* ocp: https://console-openshift-console.apps.{{ cluster_url }}\r\n",
       "max_attempts": 0,
@@ -74,8 +75,7 @@
       "requirements": {
         "prerequisites": [
           2,
-          3,
-          4
+          3
         ]
       },
       "connection_info": null,
