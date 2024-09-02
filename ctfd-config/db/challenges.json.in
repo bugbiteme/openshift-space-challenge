@@ -107,6 +107,7 @@
         "prerequisites": [
           2
         ]
+      },
       "connection_info": null,
       "next_id": null
     },
@@ -123,6 +124,7 @@
         "prerequisites": [
           2
         ]
+      },
       "connection_info": null,
       "next_id": null
     },
