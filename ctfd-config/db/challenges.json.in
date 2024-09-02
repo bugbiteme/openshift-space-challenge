@@ -103,7 +103,10 @@
       "category": "Basic controls",
       "type": "standard",
       "state": "visible",
-      "requirements": null,
+      "requirements": {
+        "prerequisites": [
+          2
+        ]
       "connection_info": null,
       "next_id": null
     },
@@ -116,7 +119,10 @@
       "category": "Basic controls",
       "type": "standard",
       "state": "visible",
-      "requirements": null,
+      "requirements": {
+        "prerequisites": [
+          2
+        ]
       "connection_info": null,
       "next_id": null
     },
@@ -151,7 +157,8 @@
       "state": "visible",
       "requirements": {
         "prerequisites": [
-          2
+            2,
+            6
         ]
       }
     },
@@ -166,7 +173,9 @@
       "state": "visible",
       "requirements": {
         "prerequisites": [
-          2
+            2,
+            6,
+            10
         ]
       },
       "connection_info": null,
