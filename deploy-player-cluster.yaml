@@ -125,6 +125,7 @@
 
     - name: Work around weird problem https://access.redhat.com/solutions/6971276
       shell: oc delete validatingwebhookconfigurations controller.devfile.io && oc delete mutatingwebhookconfigurations controller.devfile.io
+      ignore_errors: true
 
     - name: set gitea passwords
       shell: |
