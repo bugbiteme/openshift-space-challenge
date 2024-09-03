@@ -1,0 +1,86 @@
+- name: Load the clusters!
+  hosts: localhost
+  gather_facts: false
+  connection: local
+  vars:
+    player_count: 10
+
+  tasks:
+
+    - name: Deploy ship
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            name: ship-deployment
+            namespace: "player{{ item }}"
+          spec:
+            replicas: 1
+            selector:
+              matchLabels:
+                app: ship
+            template:
+              metadata:
+                labels:
+                  app: ship
+              spec:
+                containers:
+                - name: ship
+                  image: quay.io/atgreen0/ship_api:latest
+                  ports:
+                  - containerPort: 8080
+      with_sequence: start=1 end={{ player_count }}
+
+    - name: Deploy chroma
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            name: chroma-deployment
+            namespace: "player{{ item }}"
+          spec:
+            replicas: 1
+            selector:
+              matchLabels:
+                app: chroma
+            template:
+              metadata:
+                labels:
+                  app: chroma
+              spec:
+                containers:
+                - name: chroma
+                  image: quay.io/atgreen0/chroma:latest
+                  ports:
+                  - containerPort: 8080
+      with_sequence: start=1 end={{ player_count }}
+
+    - name: Deploy ollama-embedding
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            name: ollama-embedding-deployment
+            namespace: "player{{ item }}"
+          spec:
+            replicas: 1
+            selector:
+              matchLabels:
+                app: ollama-embedding
+            template:
+              metadata:
+                labels:
+                  app: ollama-embedding
+              spec:
+                containers:
+                - name: ollama-embedding
+                  image: quay.io/atgreen0/ollama-embedding:latest
+                  ports:
+                  - containerPort: 8080
+      with_sequence: start=1 end={{ player_count }}
