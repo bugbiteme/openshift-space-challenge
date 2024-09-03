@@ -182,6 +182,36 @@
       },
       "connection_info": null,
       "next_id": null
+    },
+    {
+      "id": 13,
+      "name": "Planet database",
+      "description": "### Objective:\r\n🚨 Alert! 🚨 We've got smoke billowing out of the mechanical room!\r\n\r\nThe good news? Our top-notch robot mechanic, R2FixU, has already pinpointed the issue. The bad news? Fixing it in the cold, unforgiving void of space is a no-go. We need to land, and we need to land fast—before things get as messy as a Wookiee’s hairball.\r\n\r\nFirst things first, let's fire up the ol' planet database and find the nearest rock we can safely park this hunk of metal on. \r\n\r\n\r\n### Specification:\r\n\r\nA container image with the database can be found in a public container registry at \r\n`quay.io/mberube/planetdb:latest`\r\n\r\nLaunch this image on OpenShift and make sure to use the following environment variables to configure your database properly:\r\n\r\n* MYSQL_ROOT_PASSWORD\r\n* MYSQL_DATABASE\r\n* MYSQL_USER\r\n* MYSQL_PASSWORD\r\n\r\nFeel free to set those variables to any value you want.  just make sure that you will remember those values as you will need to connect to this database.\r\n\r\nIn this database, you will find a \"planets\" table.   Find a way to count the number of planets listed in this table.    Type the number of planet as your flag.\r\n\r\n* ocp: https://console-openshift-console.apps.cluster-mj8xc.mj8xc.sandbox1025.opentlc.com",
+      "max_attempts": 0,
+      "value": 30,
+      "category": "Emergency landing",
+      "type": "standard",
+      "state": "visible",
+      "requirements": null,
+      "connection_info": null,
+      "next_id": null
+    },
+    {
+      "id": 14,
+      "name": "Closest planet",
+      "description": "### Objective:\r\nNow that our database is running, let's find the cloest planet.   Our current ship coordinates are:  \r\n\r\ngalactic_latitude = 15.23\r\ngalactic_longitude = 95.3\r\n\r\n\r\n### Specification:\r\n\r\nLook into your gitea repository, you should find some code helping you get started and connect to a mysql database.     Modify this code to find the closest planet to our current location.\r\n\r\nType the name of this planet as the flag below to get your points.\r\n\r\n\r\n* ocp: https://console-openshift-console.apps.cluster-mj8xc.mj8xc.sandbox1025.opentlc.com",
+      "max_attempts": 0,
+      "value": 100,
+      "category": "Emergency landing",
+      "type": "standard",
+      "state": "visible",
+      "requirements": {
+        "prerequisites": [
+          13
+        ]
+      },
+      "connection_info": null,
+      "next_id": null
     }
   ],
   "meta": {}
