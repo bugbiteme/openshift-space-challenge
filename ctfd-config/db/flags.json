@@ -77,6 +77,20 @@
       "type": "static",
       "content": "QUASAR",
       "data": "case_insensitive"
+    },
+    {
+      "id": 12,
+      "challenge_id": 13,
+      "type": "static",
+      "content": "71",
+      "data": "case_insensitive"
+    },
+    {
+      "id": 13,
+      "challenge_id": 14,
+      "type": "static",
+      "content": "Pandora",
+      "data": "case_insensitive"
     }
   ],
   "meta": {}
