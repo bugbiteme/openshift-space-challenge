@@ -33,6 +33,32 @@
                   - containerPort: 8080
       with_sequence: start=1 end={{ player_count }}
 
+    - name: Deploy planetdb
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            name: planetdb-deployment
+            namespace: "player{{ item }}"
+          spec:
+            replicas: 1
+            selector:
+              matchLabels:
+                app: planetdb
+            template:
+              metadata:
+                labels:
+                  app: planetdb
+              spec:
+                containers:
+                - name: planetdb
+                  image: quay.io/mberube/planetdb:latest
+                  ports:
+                  - containerPort: 8080
+      with_sequence: start=1 end={{ player_count }}
+
     - name: Deploy chroma
       kubernetes.core.k8s:
         state: present
