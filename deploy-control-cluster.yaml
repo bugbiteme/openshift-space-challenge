@@ -488,6 +488,9 @@
       delay: 10
       until: result.status == 200
 
+    - name: Work around weird problem: https://access.redhat.com/solutions/6971276
+      shell: oc delete validatingwebhookconfigurations controller.devfile.io && oc delete mutatingwebhookconfigurations controller.devfile.io
+
     - name: copy the upload file to ctfd-0
       shell: sleep 60 && oc -n ctfd cp "{{ playbook_dir }}/ctfd-upload-me.zip" ctfd-0:/tmp
       retries: 20
