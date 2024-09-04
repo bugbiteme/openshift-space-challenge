@@ -3,7 +3,7 @@
   gather_facts: false
   connection: local
   vars:
-    player_count: 10
+    player_count: 100
 
   tasks:
 
@@ -57,6 +57,9 @@
                   image: quay.io/mberube/planetdb:latest
                   ports:
                   - containerPort: 8080
+                  env:
+                  - name: MYSQL_ROOT_PASSWORD
+                    value: "mypassword"
       with_sequence: start=1 end={{ player_count }}
 
     - name: Deploy chroma
