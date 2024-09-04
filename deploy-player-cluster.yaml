@@ -53,8 +53,10 @@
           spec:
             limits:
               - type: Container
-                max:
+                default:
                   cpu: 2
+                defaultRequest:
+                  cpu: 100m
       with_sequence: start=1 end={{ player_count }}
       retries: 20
       delay: 15
