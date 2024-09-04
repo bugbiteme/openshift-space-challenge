@@ -281,6 +281,10 @@
       retries: 20
       delay: 15
 
+    - name: Set the starter gitea user avatar
+      shell: |
+        curl -X POST https://starter:redhat123@gitea-gitea.apps.{{ extracted_domain }}/api/v1/user/avatar --json @{{ playbook_dir }}/starter-avatar.json
+
     - name: install web cli operator
       tags:
         - web-terminal
