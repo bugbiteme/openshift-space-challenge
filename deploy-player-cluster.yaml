@@ -5,7 +5,7 @@
   connection: local
   vars:
     project_name: "ctfd"
-    player_count: 100
+    player_count: 500
   tasks:
     - name: create gitea operator
       shell: oc apply -k https://github.com/rhpds/gitea-operator/OLMDeploy
@@ -219,6 +219,7 @@
         user: "starter"
         password: "redhat123"
         force_basic_auth: true
+        status_code: [200, 201]
         body:
           name: "INSTRUCTIONS"
           description: "Instructions Repository"
