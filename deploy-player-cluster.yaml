@@ -292,3 +292,35 @@
         - web-terminal
       shell: |
         oc apply -f web-cli-operator/subscription.yaml -n openshift-operators
+
+    - name: Deploy daemonset for image caching
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: apps/v1
+          kind: DaemonSet
+          metadata:
+            name: game-image-cache
+            namespace: default
+          spec:
+            selector:
+              matchLabels:
+                app: game-image-cache
+            template:
+              metadata:
+                labels:
+                  app: game-image-cache
+              spec:
+                containers:
+                - name: ship
+                  image: quay.io/atgreen0/ship_api:latest
+                  command: ['sh', '-c', 'while true; do sleep 9000; done']
+                - name: planetdb
+                  image: quay.io/mberube/planetdb:latest
+                  command: ['sh', '-c', 'while true; do sleep 9000; done']
+                - name: chroma
+                  image: quay.io/atgreen0/chroma:latest
+                  command: ['sh', '-c', 'while true; do sleep 9000; done']
+                - name: ollama-embedding
+                  image: quay.io/atgreen0/ollama-embedding:latest
+                  command: ['sh', '-c', 'while true; do sleep 9000; done']
