@@ -5,7 +5,7 @@
   connection: local
   vars:
     project_name: "ctfd"
-    player_count: 2
+    player_count: 100 
     ud_namespace: "username-distribution"
   tasks:
 
