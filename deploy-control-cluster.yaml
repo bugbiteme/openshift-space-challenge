@@ -479,11 +479,11 @@
         format: zip
 
     - ansible.builtin.debug:
-        msg: "URL is https://space-ctfd.apps.{{ extracted_domain }}/setup"
+        msg: "URL is https://space-ctfd.apps.{{ extracted_domain }}/login"
 
     - name: Wait for the URL to become available
       ansible.builtin.uri:
-        url: "https://space-ctfd.apps.{{ extracted_domain }}/setup"
+        url: "https://space-ctfd.apps.{{ extracted_domain }}/login"
         validate_certs: false
       register: result
       retries: 30
