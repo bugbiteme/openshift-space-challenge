@@ -5,7 +5,7 @@
   connection: local
   vars:
     project_name: "ctfd"
-    player_count: 500
+    player_count: 100
   tasks:
     - name: create gitea operator
       shell: oc apply -k https://github.com/rhpds/gitea-operator/OLMDeploy
