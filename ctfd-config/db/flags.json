@@ -91,6 +91,13 @@
       "type": "static",
       "content": "Pandora",
       "data": "case_insensitive"
+    },
+    {
+      "id":14,
+      "challenge_id":15,
+      "type":"static",
+      "content":"FLAG_HELLO_99",
+      "data":""
     }
   ],
   "meta": {}
