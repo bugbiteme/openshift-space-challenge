@@ -706,6 +706,9 @@
               termination: edge
             wildcardPolicy: None
 
+    - ansible.builtin.debug:
+        msg: "User Assignment URL is https://username-distribution-username-distribution.apps.{{ extracted_domain }}"
+
     - name: Wait for the URL to become available
       ansible.builtin.uri:
         url: "https://username-distribution-username-distribution.apps.{{ extracted_domain }}"
