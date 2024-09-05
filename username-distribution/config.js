@@ -8,11 +8,11 @@ const env = require('env-var').from({
   LAB_DURATION_HOURS: '2h',
   LAB_USER_COUNT: '50',
   LAB_USER_PASS: 'openshift',
-  LAB_USER_ACCESS_TOKEN: 'redhatlabs',
+  LAB_USER_ACCESS_TOKEN: 'openshift',
   LAB_BLOCKLIST: '',
   LAB_USER_PREFIX: 'player',
   LAB_USER_PAD_ZERO: 'false',
-  LAB_ADMIN_PASS: 'pleasechangethis',
+  LAB_ADMIN_PASS: 'r3dh4t1!',
   LAB_MODULE_URLS: 'https:red.ht/island;OCP Space Adventure',
   LAB_EXTRA_URLS: '',
 

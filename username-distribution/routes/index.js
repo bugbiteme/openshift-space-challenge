@@ -27,7 +27,7 @@ router.get('/request-account', urlencoded(), (req, res) => {
 router.post('/request-account', urlencoded(), (req, res) => {
   if (!req.body.email) {
     res.render('sorry', {
-      message: 'Please enter a valid proper email address to request an account.'
+      message: 'Please enter a valid email address to request an account.'
     })
   } else if (req.body.accessToken !== config.accounts.accessToken) {
     res.render('sorry', {
