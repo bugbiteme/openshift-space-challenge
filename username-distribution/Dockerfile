@@ -10,10 +10,10 @@ RUN npm ci --omit=dev
 COPY --chown=1001:1001 . .
 
 # Configure fastify port and host defaults
-ENV FASTIFY_PORT 8080
-ENV FASTIFY_ADDRESS 0.0.0.0
+#ENV FASTIFY_PORT 8080
+#ENV FASTIFY_ADDRESS 0.0.0.0
 
 # Note that the container exposes services on 8080
 EXPOSE 8080
 
-CMD [ "./node_modules/.bin/fastify", "start", "-l", "info", "app.js" ]
+CMD [ "npm", "start"]
