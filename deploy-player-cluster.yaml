@@ -208,6 +208,7 @@
         - { url: 'https://github.com/catalyst-ctfd/springboot-starter.git', name: 'springboot-starter' }
         - { url: 'https://github.com/catalyst-ctfd/quarkus-starter.git', name: 'quarkus-starter' }
         - { url: 'https://github.com/catalyst-ctfd/node-rag-starter.git', name: 'node-rag-starter' }
+        - { url: 'https://github.com/catalyst-ctfd/python-mysql-starter.git', name: 'python-mysql-starter' }
       ignore_errors: true
 
     - name: Create INSTRUCTIONS repo in Gitea
