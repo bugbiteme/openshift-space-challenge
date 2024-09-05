@@ -5,7 +5,8 @@
   connection: local
   vars:
     project_name: "ctfd"
-    player_count: 100
+    player_count: 2
+    ud_namespace: "username-distribution"
   tasks:
 
   tasks:
@@ -478,11 +479,12 @@
         format: zip
 
     - ansible.builtin.debug:
-        msg: "URL is https://space-ctfd.apps.{{ extracted_domain }}/login"
+        msg: "URL is https://space-ctfd.apps.{{ extracted_domain }}/setup"
 
     - name: Wait for the URL to become available
       ansible.builtin.uri:
-        url: "https://space-ctfd.apps.{{ extracted_domain }}/login"
+        url: "https://space-ctfd.apps.{{ extracted_domain }}/setup"
+        validate_certs: false
       register: result
       retries: 30
       delay: 10
@@ -501,3 +503,214 @@
       shell: oc -n ctfd rsh ctfd-0 python manage.py import_ctf /tmp/ctfd-upload-me.zip
       retries: 20
       delay: 15
+
+# Deploy the username-distribution app for dynamic user assignment
+
+    - name: create {{ ud_namespace }} namespace
+      kubernetes.core.k8s:
+        api_version: v1
+        kind: Namespace
+        name: "{{ ud_namespace }}"
+        state: present
+        wait: yes
+      retries: 20
+      delay: 15
+
+    - name: Create a Redis Deployment
+      k8s:
+        state: present
+        definition: |
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            namespace: "{{ ud_namespace }}"
+            name: redis
+            labels:
+              app: redis
+          spec:
+            replicas: 1
+            selector:
+              matchLabels:
+                app: redis
+            template:
+              metadata:
+                labels:
+                  app: redis
+              spec:
+                containers:
+                  - name: redis
+                    image: redis:latest
+                    ports:
+                      - containerPort: 6379
+                    volumeMounts:
+                      - name: redis-data
+                        mountPath: /data
+                volumes:
+                  - name: redis-data
+                    persistentVolumeClaim:
+                      claimName: redis-pvc
+    - name: Create a Redis Service
+      k8s:
+        state: present
+        definition: |
+          apiVersion: v1
+          kind: Service
+          metadata:
+            namespace: "{{ ud_namespace }}"
+            name: redis
+          spec:
+            ports:
+              - port: 6379
+                targetPort: 6379
+            selector:
+              app: redis
+    - name: Create a Persistent Volume Claim for Redis
+      k8s:
+        state: present
+        definition: |
+          apiVersion: v1
+          kind: PersistentVolumeClaim
+          metadata:
+            name: redis-pvc
+            namespace: "{{ ud_namespace }}"
+          spec:
+            accessModes:
+              - ReadWriteOnce
+            resources:
+              requests:
+                storage: 1Gi
+
+    - name: create imagestream
+      tags: ctfd-app
+      kubernetes.core.k8s:
+        api_version: image.openshift.io/v1
+        namespace: "{{ ud_namespace }}"
+        kind: ImageStream
+        name: "username-distribution"
+        state: present
+        wait: yes
+      retries: 20
+      delay: 15
+
+    - name: Create a Kubernetes Secret
+      k8s:
+        state: present
+        definition:
+          apiVersion: v1
+          kind: Secret
+          metadata:
+            name: gitlab-access-token-secret
+            namespace: "{{ ud_namespace }}"  # Change to your desired namespace
+          type: kubernetes.io/basic-auth
+          data:
+            username: ''
+            password: "Z2xwYXQtTGdlcGdMeEVDODlCeUFGUE1Ec1k="
+      retries: 20
+      delay: 15
+
+    - name: Create a BuildConfig for S2I build
+      k8s:
+        state: present
+        definition: |
+          apiVersion: build.openshift.io/v1
+          kind: BuildConfig
+          metadata:
+            name: "username-distribution"
+            namespace: "{{ ud_namespace }}"
+          spec:
+            source:
+              type: Git
+              git:
+                uri: "https://gitlab.consulting.redhat.com/openshift-island-challenge/openshift-space-challenge.git"
+              contextDir: username-distribution
+              sourceSecret:
+                name: gitlab-access-token-secret
+            strategy:
+              type: Docker
+              dockerStrategy:
+                dockerfilePath: Dockerfile
+            output:
+              to:
+                kind: ImageStreamTag
+                name: "username-distribution:latest"
+
+    - name: Start the build
+      command: oc start-build username-distribution --wait
+      register: build_result
+      failed_when: build_result.rc != 0
+
+    - name: create username-distribution deployment
+      kubernetes.core.k8s:
+        namespace: "{{ ud_namespace }}"
+        definition:
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            namespace: "{{ ud_namespace }}"
+            labels:
+              app: username-distribution
+            name: username-distribution
+          spec:
+            replicas: 1
+            selector:
+              matchLabels:
+                app: username-distribution
+            strategy:
+              type: RollingUpdate
+            template:
+              metadata:
+                labels:
+                  app: username-distribution
+              spec:
+                containers:
+                  - name: "username-distribution"
+                    image: "image-registry.openshift-image-registry.svc:5000/{{ ud_namespace }}/username-distribution:latest"
+                    ports:
+                      - containerPort: 8080
+                    env:
+                    - name: LAB_REDIS_HOST
+                      value: redis
+
+    - name: Create a Service
+      k8s:
+        state: present
+        definition: |
+          apiVersion: v1
+          kind: Service
+          metadata:
+            name: "username-distribution"
+            namespace: "{{ ud_namespace }}"
+          spec:
+            ports:
+              - port: 8080
+                targetPort: 8080
+            selector:
+              app: "username-distribution"
+
+    - name: Create an Route
+      k8s:
+        state: present
+        definition: |
+          apiVersion: route.openshift.io/v1
+          kind: Route
+          metadata:
+            name: "username-distribution"
+            namespace: "{{ ud_namespace }}"
+          spec:
+            to:
+              kind: Service
+              name: "username-distribution"
+            port:
+              targetPort: 8080
+            tls:
+              termination: edge
+            wildcardPolicy: None
+
+    - name: Wait for the URL to become available
+      ansible.builtin.uri:
+        url: "https://username-distribution-username-distribution.apps.{{ extracted_domain }}"
+        validate_certs: false
+      register: result
+      retries: 30
+      delay: 10
+      until: result.status == 200
