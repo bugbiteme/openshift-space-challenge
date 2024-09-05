@@ -96,7 +96,7 @@
       "id":14,
       "challenge_id":15,
       "type":"static",
-      "content":"FLAG_HELLO_99",
+      "content":"HELLO_WORLD",
       "data":""
     }
   ],
