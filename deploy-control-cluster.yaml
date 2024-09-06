@@ -635,7 +635,7 @@
                 name: "username-distribution:latest"
 
     - name: Start the build
-      command: oc start-build username-distribution --wait
+      command: oc start-build username-distribution -n "{{ ud_namespace }}"  --wait
       register: build_result
       failed_when: build_result.rc != 0
 
