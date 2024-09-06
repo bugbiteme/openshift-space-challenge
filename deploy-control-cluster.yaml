@@ -670,6 +670,12 @@
                     env:
                     - name: LAB_REDIS_HOST
                       value: redis
+                    - name: LAB_DURATION_HOURS
+                      value: 1y
+                    - name: LAB_MODULE_URLS
+                      value: "https://gitea-gitea.apps.{{ extracted_domain }}/starter/INSTRUCTIONS;OpenShift Space Challenge"
+                    - name: LAB_USER_COUNT
+                      value: "100"
 
     - name: Create a Service
       k8s:
