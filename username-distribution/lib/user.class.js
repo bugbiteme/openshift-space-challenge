@@ -95,7 +95,8 @@ class User {
       password: this.password
     }
 
-    log(`setting cached data for user ${this.username} to:`, data)
+    //log(`setting cached data for user ${this.username} to:`, data)
+    log(`setting cached data for user ${this.username}`)
     await cacheSet(this.cacheKey, JSON.stringify(data))
   }
 

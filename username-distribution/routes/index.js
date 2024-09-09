@@ -11,7 +11,6 @@ const assigmentQ = new PQueue({
 })
 
 var title = config.eventTitle;
-var password = config.accounts.password;
 
 router.get('/request-account', urlencoded(), (req, res) => {
   if (req.session.email) {
@@ -73,7 +72,7 @@ router.post('/', json(), async (req, res) => {
 /* GET home page. */
 router.get('/', async (req, res) => {
   var email = req.session.email
-
+  
   if (!email) {
     res.redirect('/request-account')
   } else {
@@ -82,6 +81,7 @@ router.get('/', async (req, res) => {
     // to multiple users
     assigmentQ.add(async () => {
       var username = req.session.username
+      var password = ''
 
       if (username) {
         const valid = await users.isUserAssignmentValid(username)
@@ -96,9 +96,11 @@ router.get('/', async (req, res) => {
       if (!username) {
         log('the incoming connection has no user in the session, requesting new user assignment')
         let user = await users.getAndAssignUser(req.headers['x-forwarded-for'] || req.connection.remoteAddress, email)
+        
+
 
         if (user) {
-          log('found free user is', user)
+          log('found free user is', user.email)
           username = user.username
           password = user.password
         }
@@ -111,6 +113,9 @@ router.get('/', async (req, res) => {
       } else {
         req.session.username = username
 
+        const validUser = await users.getUser(username)
+        password = validUser.password
+
         var subs = [
           ['USERNAME', username],
           ['EMAIL', email],
@@ -122,10 +127,12 @@ router.get('/', async (req, res) => {
           ['LAB_USER_PREFIX', config.accounts.prefix]
         ];
 
+        log
+
         res.render('index', {
           username,
           email,
-          password: password,
+          password,
           title: title,
           modules: config.modules.map(function(val){
               val = val.split(';');

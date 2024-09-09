@@ -25,7 +25,6 @@ exports.isUserAssignmentValid = async (username) => {
   if (userAccount) {
     const data = await userAccount.getUserInfo()
     const isDisabled = data.disabled
-    log('user data', data)
     if (isDisabled) {
       await userAccount.unassign()
       return false
@@ -136,7 +135,6 @@ function generateUserList () {
   })
 
   for (let i = 0; i < config.accounts.number; i++) {
-    log('setting user for demo')
     const userNum = i + 1
     const user = new User(userNum)
 
@@ -151,4 +149,24 @@ function generateUserList () {
   }
 
   return list
+}
+
+
+/**
+ * 
+ * find the user in cache and returns it
+ * @returns {User}
+ */
+exports.getUser = async (username) => {
+
+  // check for existing account under this email
+  log(`check if user exist for ${username}`)
+  const userAccount =  users.find(u => u.username === username)
+
+  if (!userAccount) {
+    return undefined
+  }
+  else { 
+   return userAccount 
+  }
 }
