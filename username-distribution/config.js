@@ -40,8 +40,7 @@ module.exports = {
   accounts: {
     accessToken: env.get('LAB_USER_ACCESS_TOKEN').asString(),
     number: env.get('LAB_USER_COUNT').asIntPositive(),
-    password: env.get('LAB_USER_PASS').asString(),
-    // Can be set as a comma separated list of names
+   // Can be set as a comma separated list of names
     blockedUsers: env.get('LAB_BLOCKLIST').asArray(),
     prefix: env.get('LAB_USER_PREFIX').asString(),
     padZeroes: env.get('LAB_USER_PAD_ZERO').asBool()
