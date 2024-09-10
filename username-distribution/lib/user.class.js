@@ -7,7 +7,6 @@ const log = require('barelog')
 const config = require('../config')
 const cache = require('./cache')
 const { promisify } = require('util')
-//const csvFilePath = 'credentials.csv'
 
 const cacheGet = promisify(cache.get).bind(cache);
 const cacheSet = promisify(cache.set).bind(cache);
