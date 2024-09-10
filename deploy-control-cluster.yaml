@@ -5,7 +5,7 @@
   connection: local
   vars:
     project_name: "ctfd"
-    player_count: 100 
+    player_count: "100" 
     ud_namespace: "username-distribution"
   tasks:
 
@@ -675,7 +675,7 @@
                     - name: LAB_MODULE_URLS
                       value: "https://gitea-gitea.apps.{{ extracted_domain }}/starter/INSTRUCTIONS;OpenShift Space Challenge"
                     - name: LAB_USER_COUNT
-                      value: "100"
+                      value: "{{ player_count }}"
 
     - name: Create a Service
       k8s:
