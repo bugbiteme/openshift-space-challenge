@@ -5,7 +5,7 @@
   connection: local
   vars:
     project_name: "ctfd"
-    player_count: "100" 
+    player_count: "100"
     ud_namespace: "username-distribution"
   tasks:
 
@@ -486,13 +486,13 @@
         url: "https://space-ctfd.apps.{{ extracted_domain }}/login"
         validate_certs: false
       register: result
-      retries: 30
+      retries: 60
       delay: 10
       until: result.status == 200
 
-    - name: "Work around weird problem https://access.redhat.com/solutions/6971276"
-      shell: oc delete validatingwebhookconfigurations controller.devfile.io && oc delete mutatingwebhookconfigurations controller.devfile.io
-      ignore_errors: true
+#    - name: "Work around weird problem https://access.redhat.com/solutions/6971276"
+#      shell: oc delete validatingwebhookconfigurations controller.devfile.io && oc delete mutatingwebhookconfigurations controller.devfile.io
+#      ignore_errors: true
 
     - name: copy the upload file to ctfd-0
       shell: sleep 60 && oc -n ctfd cp "{{ playbook_dir }}/ctfd-upload-me.zip" ctfd-0:/tmp

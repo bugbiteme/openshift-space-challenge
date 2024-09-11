@@ -125,9 +125,9 @@
       shell: "oc wait --namespace=gitea --for=condition=Ready pods --selector app=gitea --timeout=600s"
       register: gitea_pod_created
 
-    - name: Work around weird problem https://access.redhat.com/solutions/6971276
-      shell: oc delete validatingwebhookconfigurations controller.devfile.io && oc delete mutatingwebhookconfigurations controller.devfile.io
-      ignore_errors: true
+#    - name: Work around weird problem https://access.redhat.com/solutions/6971276
+#      shell: oc delete validatingwebhookconfigurations controller.devfile.io && oc delete mutatingwebhookconfigurations controller.devfile.io
+#      ignore_errors: true
 
     - name: set gitea passwords
       shell: |
