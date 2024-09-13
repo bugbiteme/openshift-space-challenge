@@ -446,13 +446,6 @@
     - name: Create ctfd users
       shell: "python3 {{ playbook_dir }}/make-ctfd-users.py > {{ playbook_dir }}/ctfd-config/db/users.json"
 
-    - name: Patch challenges.json file
-      template:
-        src: "{{ playbook_dir }}/ctfd-config/db/challenges.json.in"
-        dest: "{{ playbook_dir }}/ctfd-config/db/challenges.json"
-      vars:
-        cluster_url: "{{ extracted_domain }}"
-
     - name: Patch config.json file
       template:
         src: "{{ playbook_dir }}/ctfd-config/db/config.json.in"

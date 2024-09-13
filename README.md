@@ -3,7 +3,12 @@
 ## Requirements
 
 Currently tested to work on OCP 4.16 as deployed by "Red Hat OpenShift
-Container Platform Cluster (AWS)" from demo.redhat.com
+Container Platform Cluster (AWS)" from demo.redhat.com.
+
+The game requires a control cluster, and one or more player clusters.
+The control cluster can also be a game cluster, however, to ensure a
+good experience, especially for large groups, we recommend deploying a
+control cluster and one or more player clusters.
 
 Make sure to have the `oc` and `jq` command-line tools installed on your laptop.
 
@@ -16,10 +21,26 @@ On your laptop, create a python environment and install all python
 modules dependencies.
 `pip install -r requirements.txt`
 
-Log on to your OpenShift cluster using the `oc login` as admin.
+Create a file called game-clusters.yaml that identifies the domains
+for both the control and player clusters.  It should look something
+like this.
+```
+---
+control_cluster: cluster-abcd5.acd5.sandbox1337.opentlc.com
 
-Run `ansible-playbook deploy-player-cluster.yaml`.
-Run `ansible-playbook deploy-control-cluster.yaml`.
+player_clusters:
+ - cluster-vnb47.vnb47.sandbox3000.opentlc.com
+ - cluster-n5mmk.n5mmk.sandbox290.opentlc.com
+ - cluster-94bh6.94bh6.sandbox1488.opentlc.com
+```
+
+Log on to your control cluster using `oc login` as admin and run
+the deployment playbook like so:
+`ansible-playbook deploy-control-cluster.yaml`.
+
+For each player cluster, log into the cluster using `oc login` as
+admin and run the player cluster deployment playbook like so:
+`ansible-playbook deploy-player-cluster.yaml`.
 
 In addition to deploying CTFd, and Gitea, the playbook creates player
 accounts on OCP, CTFd and Gitea. Credentials for CTFd, gitea and OCP
