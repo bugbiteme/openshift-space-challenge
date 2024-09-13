@@ -9,8 +9,8 @@ CREDENTIALS_FILE="credentials.csv"
 # Start a new credentials file
 echo "username,password" > $CREDENTIALS_FILE
 
-# Loop to generate 100 players
-for i in $(seq 1 100); do
+# Loop to generate 400 players
+for i in $(seq 1 400); do
   # Generate random 8 character password
   PASSWORD=$(python -c "import random; import string; \
     print(''.join(random.choice(string.ascii_letters + string.digits) \

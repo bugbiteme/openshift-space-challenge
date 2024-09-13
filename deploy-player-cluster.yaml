@@ -5,7 +5,7 @@
   connection: local
   vars:
     project_name: "ctfd"
-    player_count: 100
+    player_count: 400
   tasks:
     - name: create gitea operator
       shell: oc apply -k https://github.com/rhpds/gitea-operator/OLMDeploy
@@ -124,10 +124,6 @@
     - name: Wait for gitea to become ready
       shell: "oc wait --namespace=gitea --for=condition=Ready pods --selector app=gitea --timeout=600s"
       register: gitea_pod_created
-
-#    - name: Work around weird problem https://access.redhat.com/solutions/6971276
-#      shell: oc delete validatingwebhookconfigurations controller.devfile.io && oc delete mutatingwebhookconfigurations controller.devfile.io
-#      ignore_errors: true
 
     - name: set gitea passwords
       shell: |
