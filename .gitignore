@@ -4,7 +4,6 @@
 *.dvi
 .players.htpasswd
 /judge/settings.ini
-/ctfd-config/db/challenges.json
 /ctfd-config/db/config.json
 /ctfd-upload-me.zip
 .venv/
