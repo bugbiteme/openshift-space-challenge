@@ -89,7 +89,7 @@
           metadata:
             name: gitea
           spec:
-            giteaUserNumber: 100
+            giteaUserNumber: 400
             giteaAdminPasswordLength: 32
             giteaGenerateUserFormat: player%d
             giteaVolumeSize: 4Gi
