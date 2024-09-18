@@ -1,5 +1,5 @@
 {
-  "count": 11,
+  "count": 15,
   "results": [
     {
       "id": 1,
@@ -84,7 +84,7 @@
     {
       "id": 6,
       "name": "API service down",
-      "description": "\r\nYour ship computer API service is down.\r\n\r\n### Objective:\r\nRestart your computer API service in OpenShift.  This will allow you to communicate with the ship using code in future challenges.  \r\n\r\n\r\n### Specification:\r\n\r\nA container image for the api service can be found in a public container registry at \r\n`quay.io/atgreen0/ship_api:latest`\r\n\r\nIn your project (nameplace) playerX, run this image as a container pod and make sure to add a route to be able to reach this service.   This can easily be done in Add=>Container image.\r\n\r\nFinally, to retrieve the oxygen level on the ship, hit the following api endpoint with your browser:  /api/v1/oxygen\r\n\r\nConfirm the oxygen level as your flag for this challenge to receive your points.\r\n\r\n* ocp: https://console-openshift-console.apps.@CLUSTER_DOMAIN@\r\n\r\n <script>fixupClusterDomain()</script>",
+      "description": "\r\nYour ship's computer, the HAL8000, is down.\r\n\r\n### Objective:\r\nRestart your computer API service in OpenShift.  This will allow you to communicate with the ship using code in future challenges.  \r\n\r\n\r\n### Specification:\r\n\r\nA container image for the api service can be found in a public container registry at \r\n`quay.io/atgreen0/ship_api:latest`\r\n\r\nIn your project (nameplace) playerX, run this image as a container pod and make sure to add a route to be able to reach this service.   This can easily be done in Add=>Container image.\r\n\r\nFinally, to retrieve the oxygen level on the ship, hit the following api endpoint with your browser:  /api/v1/oxygen\r\n\r\nConfirm the oxygen level as your flag for this challenge to receive your points.\r\n\r\n* ocp: https://console-openshift-console.apps.@CLUSTER_DOMAIN@\r\n\r\n <script>fixupClusterDomain()</script>",
       "max_attempts": 0,
       "value": 10,
       "category": "Warm Up",
@@ -151,7 +151,7 @@
     {
       "id": 10,
       "name": "Turtle Count",
-      "description": "As you delve deeper into the mysteries of the space station, your exploration brings you to an unexpected discovery. In a remote section of the station, you find a communication relay buzzing with faint activity. The source of the signal is puzzling—a race of space-faring turtles known as the Chelonids, who communicate through intricate patterns and symbols. These beings, renowned for their wisdom and ancient knowledge, are trying to send you a message, but their communication method is unlike anything you've seen before.\r\n\r\nTheir message is being sent in fragments that must be assembled together in order to be interpreted correctly.  However, damage to the turtlecomms input array buffer has the messages arriving out of order. The good news is that the Chelonids are sending the same series of message fragments over and over again in a repeating loop, so if you wait long enough you are sure to capture them all.\r\n\r\n### Objective\r\n\r\nYour first objective is to create a service that can receive the turtle instruction messages and sort them into the right order. Your flag is the total number of steps in the message sequence.\r\n\r\n### Specification\r\n\r\nImplement an http service that listens for incoming JSON POST messages containing turtle instructions.  The service should be called `turtlecomms` and the endpoint is `/instruction`.  JSON messages will be posted to `turtlecomms` via http on port 8080.  The ship is routing incoming messages through your `ship-api` service, so there is no need to provide an external route to this service.\r\n\r\nEach message will contain a sequence number (`seq`) and an instruction (`instruction`).  The instructions are arriving out of order, but once they are sorted they start at 1 and each instruction step goes up by 1.  The sequence of instructions ends with an empty `instruction` (\"\") and is not included the in total count of sequence steps.\r\n\r\nYour first flag is simply the number of steps in the message sequence.\r\n\r\n* ocp: https://console-openshift-console.apps.@CLUSTER_DOMAIN@\r\n* gitea: https://gitea-gitea.apps.@CLUSTER_DOMAIN@\r\n <script>fixupClusterDomain()</script>",
+      "description": "A deeper inspection of the Chelonid's message fragments reveals that the sequence numbers of the fragments are arriving out of order.  This must be due to some additional damage to the ship's input array buffer.  The good news is that the Chelonids are sending the same series of message fragments over and over again in a repeating loop, so if you wait long enough you are sure to capture them all and will be able to sort them.\r\n\r\n### Objective\r\n\r\nDetermine the length of the repeating Chelonid message.\r\n\r\n### Specification\r\n\r\nThe instructions are arriving out of order, but once they are sorted they start at 1 and each instruction step goes up by 1.  The sequence of instructions ends with an empty `instruction` (\"\") and is not included the in total count of sequence steps.\r\n\r\nYour first flag is simply the number of steps in the message sequence.\r\n\r\n* ocp: https://console-openshift-console.apps.@CLUSTER_DOMAIN@\r\n* gitea: https://gitea-gitea.apps.@CLUSTER_DOMAIN@\r\n <script>fixupClusterDomain()</script>",
       "max_attempts": 0,
       "value": 50,
       "category": "Space Turtles",
@@ -160,7 +160,8 @@
       "requirements": {
         "prerequisites": [
             2,
-            6
+            6,
+            12
         ]
       }
     },
@@ -177,6 +178,7 @@
         "prerequisites": [
             2,
             6,
+            12,
             10
         ]
       },
@@ -230,8 +232,24 @@
       "requirements": null,
       "connection_info": null,
       "next_id": null
+    },
+    {
+      "id": 12,
+      "name": "Turtle Comms",
+      "description": "As you delve deeper into the mysteries of the space station, your exploration brings you to an unexpected discovery. In a remote section of the station, you find a communication relay buzzing with faint activity. The source of the signal is puzzling—a race of space-faring turtles known as the Chelonids, who communicate through intricate patterns and symbols. These beings, renowned for their wisdom and ancient knowledge, are trying to send you a message, but their communication method is unlike anything you've seen before.\r\n\r\nIt appears as through their message is being sent in fragments of instructions that must be assembled together in order to be interpreted correctly.  But as the communications relay is unreliable, you will need to build a new one to start receiving uncorrupted message fragments.\r\n\r\n### Objective\r\n\r\nYour first objective is to create an API service that can receive the turtle instruction messages.\r\n\r\n### Specification\r\n\r\nImplement an http service that listens for incoming JSON POST messages containing turtle instructions.  The service should be called `turtlecomms` and the endpoint is `/instruction`.  JSON messages will be posted to `turtlecomms` via http on port 8080.  The ship is routing incoming messages through your `ship-api` service, so there is no need to provide an external route to this service.\r\n\r\nEach message will contain a sequence number (`seq`), an instruction string (`instruction`) and a checksum string (`checksum`).\r\n\r\nYour first flag is simply the `checksum` value from any of the messages.\r\n\r\n* ocp: https://console-openshift-console.apps.@CLUSTER_DOMAIN@\r\n* gitea: https://gitea-gitea.apps.@CLUSTER_DOMAIN@\r\n <script>fixupClusterDomain()</script>",
+      "max_attempts": 0,
+      "value": 50,
+      "category": "Space Turtles",
+      "type": "standard",
+      "state": "visible",
+      "requirements": {
+          "prerequisites": [
+              2,
+              6
+          ]},
+      "connection_info": null,
+      "next_id": null
     }
-
   ],
   "meta": {}
 }
