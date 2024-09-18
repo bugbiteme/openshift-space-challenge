@@ -21,6 +21,13 @@
 	    "location": "fb643847e5cdc729d5641f99058fb5e1/manual.jpg",
 	    "challenge_id": null,
 	    "page_id": null
+	},
+	{
+	    "id": 4,
+	    "type": "page",
+	    "location": "fb643847e5cdc729d5641f99058fb5e2/space-turtle.jpg",
+	    "challenge_id": null,
+	    "page_id": null
 	}
     ],
     "meta": {}
