@@ -17,7 +17,7 @@
     {
       "id": 2,
       "name": "Unlock the ship",
-      "description": "Wait for the game master to provide a KEY to unlock the rest of the island.  \r\nEnter this key in the flag section and click submit.\r\n\r\n",
+      "description": "Wait for the game master to provide a KEY to unlock the rest of the station.  \r\nEnter this key in the flag section and click submit.\r\n\r\n",
       "max_attempts": 0,
       "value": 11,
       "category": "Warm Up",
