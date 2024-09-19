@@ -7,7 +7,7 @@
   - "game-clusters.yaml"
   vars:
     project_name: "ctfd"
-    player_count: "100"
+    player_count: "400"
     ud_namespace: "username-distribution"
   tasks:
 
@@ -667,8 +667,6 @@
                       value: redis
                     - name: LAB_DURATION_HOURS
                       value: 1y
-                    - name: LAB_MODULE_URLS
-                      value: "https://gitea-gitea.apps.{{ extracted_domain }}/starter/INSTRUCTIONS;OpenShift Space Challenge"
                     - name: LAB_USER_COUNT
                       value: "{{ player_count }}"
                     - name: LAB_PLAYER_CLUSTERS
