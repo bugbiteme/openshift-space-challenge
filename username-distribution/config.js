@@ -15,6 +15,7 @@ const env = require('env-var').from({
   LAB_ADMIN_PASS: 'r3dh4t1!',
   LAB_MODULE_URLS: 'https:red.ht/island;OCP Space Adventure',
   LAB_EXTRA_URLS: '',
+  //LAB_PLAYER_CLUSTERS: 'https://url1,https://url2,https://url3',
 
   // If you plan to use redis uncomment and set these,
   // or provide in values for them in the environment
@@ -25,6 +26,9 @@ const env = require('env-var').from({
   // the defaults defined above if defined
   ...process.env
 })
+
+const urls = process.env.LAB_PLAYER_CLUSTERS;
+const playerClusters = urls ? urls.split(',') : [];
 
 module.exports = {
   redis: {
@@ -47,5 +51,6 @@ module.exports = {
   },
   // Comma separated list of URLS
   modules: env.get('LAB_MODULE_URLS').asArray(),
-  extraUrls: env.get('LAB_EXTRA_URLS').asArray()
+  extraUrls: env.get('LAB_EXTRA_URLS').asArray(),
+  playerClusters
 }

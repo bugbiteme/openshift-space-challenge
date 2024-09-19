@@ -157,7 +157,8 @@ router.get('/', async (req, res) => {
               prettyName = prettyName.replace(new RegExp('%' + sub[0] + '%', 'g'), sub[1])
             })
             return {url: url, prettyName: prettyName}
-          })
+          }),
+          playerClusters: config.playerClusters
         });
       }
     })

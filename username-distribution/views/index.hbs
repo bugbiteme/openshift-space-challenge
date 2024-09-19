@@ -47,32 +47,30 @@ ability to solve the challenges ahead.
         </p>
       </div>
     </div>
-
+    {{log  this.playerClusters}}
+    
     {{!-- Modules section --}}
     <div class="flex-1 flex-grow mx-4 text-left rounded shadow-md" id="modules">
       <h3 class="text-xl p-2 pl-4 text-white bg-red-700 rounded-t">Start Your Space Adventure</h3>
       <div class="p-4 pt-2 rounded-b">
-        {{#each modules}}
           {{#if @index}}
             {{!-- First item (index 0) requires margin-top of 4 --}}
             <h4 class="text-xl text-gray-700 mt-4">Instructions</h4>
           {{else}}
             <h4 class="text-xl text-gray-700 mt-2">Instructions</h4>
           {{/if}}
-          <a class="text-base mt-2 block text-blue-600" target="_blank" href="{{this.url}}">
-            {{#if this.prettyName}}
-              {{this.prettyName}}
-            {{else}}
-              {{this.url}}
-            {{/if}}
+          <a class="text-base mt-2 block text-blue-600" target="_blank" href="{{ dynamicUrl this.username playerClusters }}">
+            OCP Space Adventure
           </a>
-        {{/each}}
       </div>
     </div>
   </div>
     <div class="d-flex mt-4 justify-content-center">
       {{#each extraUrls}}
-      <a class="text-base mt-2 text-blue-600" target="_blank" href="{{this.url}}">{{this.prettyName}}</a>
+    <a href="{{this}}">Link</a>
+    <a class="text-base mt-2 text-blue-600" target="_blank" href="{{this.url}}">{{this.prettyName}}</a>
+
+      
       {{!-- add a separator except for the last one --}}
       {{#if @last}}
       {{else}}

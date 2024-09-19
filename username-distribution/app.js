@@ -14,6 +14,16 @@ hbs.registerHelper('incr', function(value, options){
   return parseInt(value) + 1;
 });
 
+hbs.registerHelper('dynamicUrl', function(playerString, urls) {
+  // Extract number from the string
+  var playerNumber = parseInt(playerString.replace(/\D/g, ''), 10);
+  playerNumber = playerNumber + 1;
+  // Calculate the URL index using modulus
+  const urlIndex = playerNumber % urls.length;
+  // Return the URL
+  return urls[urlIndex];
+});
+
 var indexRouter = require('./routes/index');
 var adminRouter = require('./routes/admin');
 
