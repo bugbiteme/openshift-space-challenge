@@ -7,7 +7,7 @@
   - "game-clusters.yaml"
   vars:
     project_name: "ctfd"
-    player_count: "100"
+    player_count: "400"
     ud_namespace: "username-distribution"
   tasks:
 
