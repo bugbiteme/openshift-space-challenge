@@ -671,6 +671,8 @@
                       value: "https://gitea-gitea.apps.{{ extracted_domain }}/starter/INSTRUCTIONS;OpenShift Space Challenge"
                     - name: LAB_USER_COUNT
                       value: "{{ player_count }}"
+                    - name: LAB_PLAYER_CLUSTERS
+                      value: "{{ player_clusters | map('regex_replace', '^(.*)$', 'https://gitea-gitea.apps.\\1/starter/INSTRUCTIONS/src/branch/master/README.md') | join(',') }}"
 
     - name: Create a Service
       k8s:
