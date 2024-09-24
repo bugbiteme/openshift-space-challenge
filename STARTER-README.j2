@@ -202,3 +202,13 @@ your browser.
 <p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images/p10-shadowed.png" alt="drawing" width="700"/></p>
 
 ---
+
+## Appendix
+
+> [!CAUTION]
+
+For a fresh start, you can delete all of the contents of your player namespace (including your web-terminal cache) with the following command:
+
+```bash
+NAMESPACE=${NAMESPACE} oc get "$(oc api-resources --namespaced=true --verbs=list -o name | awk '{printf "%s%s",sep,$0;sep=","}')" --ignore-not-found -n "$NAMESPACE" --no-headers -o=custom-columns=KIND:.kind,NAME:.metadata.name,NAMESPACE:.metadata.namespace --sort-by='kind' 2>/dev/null | awk '!/^PackageManifest|^LimitRange|^EndpointSlice/ {system("oc delete --ignore-not-found "$1" "$2" -n "$3)};'
+```
