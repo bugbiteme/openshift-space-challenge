@@ -4,7 +4,7 @@
     {
       "id": 1,
       "name": "The Captain's Log",
-      "description": "This ship's computer will keep track of your progress in the Captain's Log.  But first you need to identify yourself to the Log Computer.\r\n\r\n### Objective:\r\nYour current name is `playerX`.   Please change this to your real name and also add your email address.  This will be important to have a chance to win prizes.\r\n\r\n### Specifications:\r\nIn the top right corner, click on \"Settings\"\r\nChange the User Name for your full name:  e.g.  John Smith\r\nChange the Email address:  e.g. jsmith@mycompany.com\r\n\r\nOnce completed, enter \"DONE\" in the flag section and click submit to receive your first point!\r\n",
+        "description": "This ship's computer will keep track of your progress in the Captain's Log.  But first you need to identify yourself to the Log Computer.\r\n\r\n### Objective:\r\nYour current name is `@PLAYER_USERNAME@`.   Please change this to your real name and also add your email address.  This will be important to have a chance to win prizes.\r\n\r\n### Specifications:\r\nIn the top right corner, click on \"Settings\"\r\nChange the User Name for your full name:  e.g.  John Smith\r\nChange the Email address:  e.g. jsmith@mycompany.com\r\n\r\nOnce completed, enter \"DONE\" in the flag section and click submit to receive your first point!\r\n\r\nNOTE: Once you change your name, you will have to use this new name for future logins to the game application.<script>fixupClusterDomain()</script>\r\n",
       "max_attempts": 0,
       "value": 10,
       "category": "Warm Up",
@@ -23,7 +23,11 @@
       "category": "Warm Up",
       "type": "standard",
       "state": "visible",
-      "requirements": null,
+      "requirements": {
+        "prerequisites": [
+          1
+        ]
+      },
       "connection_info": null,
       "next_id": null
     },
