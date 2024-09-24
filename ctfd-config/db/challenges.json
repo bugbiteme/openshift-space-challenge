@@ -1,5 +1,5 @@
 {
-  "count": 15,
+  "count": 16,
   "results": [
     {
       "id": 1,
@@ -236,7 +236,7 @@
     {
       "id": 12,
       "name": "Turtle Comms",
-        "description": "As you delve deeper into the mysteries of the space station, your exploration brings you to an unexpected discovery. In a remote section of the station, you find a communication relay buzzing with faint activity. The source of the signal is puzzling—a race of space-faring turtles known as the Chelonids, Interstellar Federation members who communicate through intricate patterns and symbols.<center><img src=\"files/fb643847e5cdc729d5641f99058fb5e2/space-turtle.jpg\"/></center> These beings, renowned for their wisdom and ancient knowledge, are trying to send you a message, but their communication method is unlike anything you've seen before.\r\n\r\nIt appears as through their message is being sent in fragments of instructions that must be assembled together in order to be interpreted correctly.  But as the communications relay is unreliable, you will need to build a new one to start receiving uncorrupted message fragments.\r\n\r\n### Objective\r\n\r\nYour first objective is to create an API service that can receive the turtle instruction messages.\r\n\r\n### Specification\r\n\r\nImplement an http service that listens for incoming JSON POST messages containing turtle instructions.  The service should be called `turtlecomms` and the endpoint is `/instruction`.  JSON messages will be posted to `turtlecomms` via http on port 8080.  The ship is routing incoming messages through the HAL8000 `ship-api` service you've already deployed, so there is no need to provide an external route to this service.\r\n\r\nEach message will contain a sequence number (`seq`), an instruction string (`instruction`) and a checksum string (`checksum`).\r\n\r\nYour first flag is simply the `checksum` value from any one of the messages.\r\n\r\n* ocp: https://console-openshift-console.apps.@CLUSTER_DOMAIN@\r\n* gitea: https://gitea-gitea.apps.@CLUSTER_DOMAIN@\r\n <script>fixupClusterDomain()</script>",
+      "description": "As you delve deeper into the mysteries of the space station, your exploration brings you to an unexpected discovery. In a remote section of the station, you find a communication relay buzzing with faint activity. The source of the signal is puzzling—a race of space-faring turtles known as the Chelonids, Interstellar Federation members who communicate through intricate patterns and symbols.<center><img src=\"files/fb643847e5cdc729d5641f99058fb5e2/space-turtle.jpg\"/></center> These beings, renowned for their wisdom and ancient knowledge, are trying to send you a message, but their communication method is unlike anything you've seen before.\r\n\r\nIt appears as through their message is being sent in fragments of instructions that must be assembled together in order to be interpreted correctly.  But as the communications relay is unreliable, you will need to build a new one to start receiving uncorrupted message fragments.\r\n\r\n### Objective\r\n\r\nYour first objective is to create an API service that can receive the turtle instruction messages.\r\n\r\n### Specification\r\n\r\nImplement an http service that listens for incoming JSON POST messages containing turtle instructions.  The service should be called `turtlecomms` and the endpoint is `/instruction`.  JSON messages will be posted to `turtlecomms` via http on port 8080.  The ship is routing incoming messages through the HAL8000 `ship-api` service you've already deployed, so there is no need to provide an external route to this service.\r\n\r\nEach message will contain a sequence number (`seq`), an instruction string (`instruction`) and a checksum string (`checksum`).\r\n\r\nYour first flag is simply the `checksum` value from any one of the messages.\r\n\r\n* ocp: https://console-openshift-console.apps.@CLUSTER_DOMAIN@\r\n* gitea: https://gitea-gitea.apps.@CLUSTER_DOMAIN@\r\n <script>fixupClusterDomain()</script>",
       "max_attempts": 0,
       "value": 50,
       "category": "Space Turtles",
@@ -246,6 +246,22 @@
           "prerequisites": [
               2,
               6
+          ]},
+      "connection_info": null,
+      "next_id": null
+    },
+    {
+      "id": 16,
+      "name": "Diplomacy Key",
+      "description": "As you approach Pandora for your emergency landing, scans show that the planet belongs to a highly advanced alien civilization, one with strict diplomatic protocols. Miscommunication could be disastrous, leading to hostile reactions or even worse—your crew’s destruction.\r\n\r\nFortunately, the HAL 8000 system has identified a secret diplomatic code stored in the station's Kubernetes infrastructure, hidden within a file in a persistent volume. This \"Diplomacy Key\" is the only way to safely request landing and ensure peaceful negotiations with the planet's inhabitants.\r\n\r\nYour mission is to locate the file, extract passphrase found within, and use it to transmit a diplomatic landing request before it's too late. Fail, and the automated defenses of the planet will see your descent as an act of aggression. Succeed, and you might just secure safe passage.\r\n\r\n* ocp: https://console-openshift-console.apps.@CLUSTER_DOMAIN@\r\n <script>fixupClusterDomain()</script>",
+      "max_attempts": 0,
+      "value": 11,
+      "category": "Emergency landing",
+      "type": "standard",
+      "state": "visible",
+      "requirements": {
+          "prerequisites": [
+              14
           ]},
       "connection_info": null,
       "next_id": null

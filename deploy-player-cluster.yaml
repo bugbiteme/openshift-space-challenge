@@ -291,6 +291,83 @@
       shell: |
         curl -X POST https://starter:redhat123@gitea-gitea.apps.{{ extracted_domain }}/api/v1/user/avatar --json @{{ playbook_dir }}/starter-avatar.json
 
+    - name: create diplomacy key pvc
+      tags:
+        - pv-challenge
+      kubernetes.core.k8s:
+        namespace: "player{{ item }}"
+        definition:
+          apiVersion: v1
+          kind: PersistentVolumeClaim
+          metadata:
+            name: diplomacy-key-pvc
+            labels:
+              app: diplomacy-key-pvc
+          spec:
+            accessModes:
+            - ReadWriteOnce
+            resources:
+              requests:
+                storage: 1Mi
+      with_sequence: start=1 end={{ player_count }}
+      retries: 20
+      delay: 15
+
+    - name: Deploy phrase-key pod to mount the key file to pv
+      tags:
+        - pv-challenge
+      kubernetes.core.k8s:
+        namespace: "player{{ item }}"
+        definition:
+          apiVersion: v1
+          kind: Pod
+          metadata:
+            name: diplomacy-key-pod
+          spec:
+            volumes:
+              - name: diplomacy-key-vol
+                persistentVolumeClaim:
+                  claimName: diplomacy-key-pvc
+            containers:
+              - name: diplomacy-key-container
+                image: registry.access.redhat.com/ubi8/httpd-24:1-274.1692780861
+                ports:
+                  - containerPort: 8080
+                    name: "http-server"
+                volumeMounts:
+                  - mountPath: "/tmp/diplomacy-key/"
+                    name: diplomacy-key-vol
+            initContainers:
+              - command:
+                  - /bin/bash
+                  - '-c'
+                  - >-
+                      echo "Klaatu barada nikto" > /tmp/diplomacy-key/key.txt;
+                image: registry.redhat.io/openshift4/ose-cli
+                imagePullPolicy: IfNotPresent
+                name: my-init-container
+                volumeMounts:
+                  - name: diplomacy-key-vol
+                    mountPath: /tmp/diplomacy-key/
+      with_sequence: start=1 end={{ player_count }}
+      retries: 20
+      delay: 15
+
+    - name: delete diplomacy-key pod after mounting the diplomacy key file
+      tags:
+        - pv-challenge
+      shell: |
+        oc delete pod diplomacy-key-pod -n player{{ item }}
+      with_sequence: start=1 end={{ player_count }}
+      retries: 20
+      delay: 15
+
+    - name: Disable project creation for players
+      shell: |
+        oc patch clusterrolebinding.rbac self-provisioners -p '{"subjects": null}'
+      retries: 20
+      delay: 15
+
     - name: install web cli operator
       tags:
         - web-terminal

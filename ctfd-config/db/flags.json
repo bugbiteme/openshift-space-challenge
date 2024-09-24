@@ -1,5 +1,5 @@
 {
-  "count": 15,
+  "count": 16,
   "results": [
     {
       "id": 1,
@@ -104,6 +104,13 @@
       "challenge_id":15,
       "type":"static",
       "content":"HELLO_WORLD",
+      "data":""
+    },
+    {
+      "id":16,
+      "challenge_id":16,
+      "type":"static",
+      "content":"Klaatu barada nikto",
       "data":""
     }
   ],
