@@ -1,0 +1,143 @@
+---
+- name: Deploy OpenShift Space Challenge Player Cluster
+  hosts: localhost
+  gather_facts: false
+  connection: local
+  vars_files:
+  - "game-clusters.yaml"
+  vars:
+    project_name: "ctfd"
+    player_count: 10
+  tasks:
+    ###########################
+    # Control Resource Usage  #
+    ###########################
+
+    - name: Create Kyverno Resources
+      kubernetes.core.helm:
+        name: kyverno
+        chart_ref: "https://github.com/nirmata/kyverno-charts/releases/download/kyverno-3.2.4/kyverno-3.2.4.tgz"
+        release_namespace: kyverno
+        create_namespace: true
+
+    - name: Create Gatekeeper Resources
+      kubernetes.core.k8s:
+        definition: "{{ item }}"
+        wait: true
+      loop:
+      - apiVersion: kyverno.io/v1
+        kind: ClusterPolicy
+        metadata:
+          name: add-default-resources-deployment
+        spec:
+          admission: true
+          background: false
+          rules:
+          - match:
+              any:
+              - resources:
+                  kinds:
+                  - Deployment
+                  namespaces:
+                  - player*
+            mutate:
+              foreach:
+              - list: request.object.spec.template.spec.[ephemeralContainers, initContainers, containers][]
+                patchStrategicMerge:
+                  spec:
+                    template:
+                      spec:
+                        containers:
+                        - (name): '{{element.name}}'
+                          resources:
+                            limits:
+                              +(cpu): 100m
+                              +(memory): 100Mi
+                            requests:
+                              +(cpu): 100m
+                              +(memory): 100Mi
+            name: add-default-requests-deployment
+            skipBackgroundRequests: true
+          validationFailureAction: Audit
+      - apiVersion: kyverno.io/v1
+        kind: ClusterPolicy
+        metadata:
+          name: add-default-resources-build
+        spec:
+          admission: true
+          background: false
+          rules:
+          - match:
+              any:
+              - resources:
+                  kinds:
+                  - BuildConfig
+                  namespaces:
+                  - player*
+            mutate:
+              patchStrategicMerge:
+                spec:
+                  resources:
+                    limits:
+                      +(cpu): 100m
+                      +(memory): 100Mi
+                    requests:
+                      +(cpu): 100m
+                      +(memory): 100Mi
+            name: add-default-requests-build
+            skipBackgroundRequests: true
+          validationFailureAction: Audit
+      - apiVersion: kyverno.io/v1
+        kind: ClusterPolicy
+        metadata:
+          name: add-default-resources-pod
+        spec:
+          admission: true
+          background: false
+          rules:
+          - match:
+              any:
+              - resources:
+                  kinds:
+                  - Pod
+                  namespaces:
+                  - player*
+            mutate:
+              foreach:
+              - list: "request.object.spec.[ephemeralContainers, initContainers, containers][]"
+                patchStrategicMerge:
+                  spec:
+                    containers:
+                    - (name): '{{element.name}}'
+                      resources:
+                        limits:
+                          +(cpu): 100m
+                          +(memory): 100Mi
+                        requests:
+                          +(cpu): 100m
+                          +(memory): 100Mi
+            name: add-default-requests-pod
+            skipBackgroundRequests: true
+          validationFailureAction: Audit
+
+    - name: Create Quota Per Namespace
+      kubernetes.core.k8s:
+        definition:
+          apiVersion: v1
+          kind: ResourceQuota
+          metadata:
+            name: default
+            namespace: "player{{ item }}"
+          spec:
+            hard:
+              requests.cpu: '4'
+              requests.memory: 2Gi
+              limits.cpu: '4'
+              limits.memory: 2Gi
+      with_sequence: start=1 end={{ player_count }}
+      retries: 20
+      delay: 15              
+
+    ###########################
+    # /Control Resource Usage #
+    ###########################
