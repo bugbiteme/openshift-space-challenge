@@ -8,6 +8,7 @@
   vars:
     project_name: "ctfd"
     player_count: 400
+
   tasks:
     - name: create gitea operator
       shell: oc apply -k https://github.com/rhpds/gitea-operator/OLMDeploy
@@ -259,6 +260,12 @@
         dest: '/tmp/INSTRUCTIONS/'
         remote_src: yes
 
+    - name: Move images to INSTRUCTIONS repo
+      ansible.builtin.copy:
+        src: 'images1'
+        dest: '/tmp/INSTRUCTIONS/'
+        remote_src: yes
+
     - name: Move resources to INSTRUCTIONS repo
       ansible.builtin.copy:
         src: 'resources'
@@ -268,7 +275,7 @@
     - name: Add, commit, and push README.md
       shell: |
         git init
-        git add README.md images resources
+        git add README.md images images1 resources
         git commit -m "New files"
         git remote add origin "https://starter:redhat123@gitea-gitea.apps.{{ extracted_domain }}/starter/INSTRUCTIONS.git"
         git push --set-upstream origin master
@@ -359,8 +366,7 @@
       shell: |
         oc delete pod diplomacy-key-pod -n player{{ item }}
       with_sequence: start=1 end={{ player_count }}
-      retries: 20
-      delay: 15
+      ignore_errors: true
 
     - name: Disable project creation for players
       shell: |
