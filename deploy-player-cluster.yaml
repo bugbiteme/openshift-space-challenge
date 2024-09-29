@@ -254,13 +254,7 @@
         dest: '/tmp/INSTRUCTIONS/README.md'
         remote_src: yes
 
-    - name: Move images to INSTRUCTIONS repo
-      ansible.builtin.copy:
-        src: 'images'
-        dest: '/tmp/INSTRUCTIONS/'
-        remote_src: yes
-
-    - name: Move images to INSTRUCTIONS repo
+    - name: Move images1 to INSTRUCTIONS repo
       ansible.builtin.copy:
         src: 'images1'
         dest: '/tmp/INSTRUCTIONS/'
@@ -275,7 +269,7 @@
     - name: Add, commit, and push README.md
       shell: |
         git init
-        git add README.md images images1 resources
+        git add README.md images1 resources
         git commit -m "New files"
         git remote add origin "https://starter:redhat123@gitea-gitea.apps.{{ extracted_domain }}/starter/INSTRUCTIONS.git"
         git push --set-upstream origin master
