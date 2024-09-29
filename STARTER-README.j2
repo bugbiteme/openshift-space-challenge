@@ -1,6 +1,6 @@
 # Important Links
 
-Space Challenges: [https://space-ctfd.apps.{{ control_cluster }}](https://space-ctfd.apps.{{ control_cluster }})
+Space Challenges: [https://space-ctfd.apps.{{ control_cluster }}](https://space-ctfd.apps.cluster-2qtng.2qtng.sandbox2228.opentlc.com)
 
 OpenShift console: [https://console-openshift-console.apps.{{ player_cluster }}](https://console-openshift-console.apps.{{ player_cluster }})
 
@@ -23,135 +23,48 @@ The following instructions are intended to get you past the ship's
 
 ## Table of Contents
 
-1. [Step 1: Prepare your private application repo](#step-1-prepare-your-private-application-repo)
-2. [Step 2: Build and deploy in OpenShift](#step-2-build-and-deploy-in-openshift)
-3. [Step 3: Modifying your application](#step-3-modifying-your-application)
+1. [Step 1: Deploy a container from an image](#step-1-deploy-a-container-from-an-image)
+1. [Step 2: Prepare your personal application repo](#step-2-prepare-your-personal-application-repo)
+2. [Step 3: Build and deploy in OpenShift](#step-3-build-and-deploy-in-openshift)
+3. [Step 4: Modifying your application](#step-3-modifying-your-application)
 
 ---
 
-## Step 1: Prepare your private application repo
+## Step 1: Deploy a container from an image
 
-The "starter" account on gitea includes a number of starter
-application repos.  We'll be using the python starter app for the
-purposes of these instructions.
+The first thing we'll do is deploy an application into OpenShift from a pre-built container image.
+First, you'll need to login to the OpenShift console using your game credentials.
 
-First you'll need to connect to gitea and login using your game
-credentials.   The login link is on the top right of the screen.
-
-<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images/shadow_i1.png" alt="drawing" width="700"/></p>
-
-Once you log in, you'll be looking at your gitea account contents.  Of
-course, there are no git repos in your account yet.  We will have to
-copy one of the starter repos in here.
-
-<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images/shadow_i3.png" alt="drawing" width="700"/></p>
-
-Go to the `starter` account at https://gitea-gitea.apps.{{ player_cluster }}/starter to
-see the list of available choices.
-
-<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images/shadow_i4.png" alt="drawing" width="700"/></p>
-
-Select the `python-starter` repo, and copy the `HTTPS` URL by clicking
-on the copy icon to the left of the URL.
-
-<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images/shadow_i6.png" alt="drawing" width="700"/></p>
-
-Now go back to your own account and select `New Migration` in the top
-right of the browser window.
-
-<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images/shadow_i7.png" alt="drawing" width="700"/></p>
-
-Now select `gitea` from the list of possible migration sources.
-
-<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images/shadow_i8.png" alt="drawing" width="700"/></p>
-
-Paste the `python-starter` URL into `Migrate / Clone from URL` field,
-and check the `Make Repository Private` box.  Now click on the green
-`Migrate Repository` button.  This will copy the `python-starter` repo
-into your private gitea account.
-
-<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images/shadow_i9.png" alt="drawing" width="700"/></p>
-
-You will need the repo URL for this repository in order to tell
-OpenShift how to build it.  So just like before, press the copy button
-to the right of the blue `HTTPS` field.
-
-<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images/shadow_i10.png" alt="drawing" width="700"/></p>
-
----
-
-## Step 2: Build and Deploy in OpenShift
-
-Now that we have a private copy of one of the starter applications, we
-can build and deploy it on OpenShift.  First, you'll need to login to
-the OpenShift console using your game credentials.
-
-<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images/shadow_i11.png" alt="drawing" width="700"/></p>
+<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images1/pic1_shadow.png" alt="drawing" width="700"/></p>
 
 You're now looking at the *Developer Perspective* of the OCP console.  You can go through the tour if you like, or just `Skip tour`.
 
-<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images/shadow_i12.png" alt="drawing" width="700"/></p>
+<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images1/pic2_shadow.png" alt="drawing" width="700"/></p>
 
-You have an OpenShift project assigned to you already.  In this case,
-we are `player1`.  Select the `player1` project from this list.
+You have an OpenShift project assigned to you already.  In this case,  we are `player1`.  Select the `player1` project from this list.
 
-<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images/shadow_i14.png" alt="drawing" width="700"/></p>
+<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images1/pic3_shadow.png" alt="drawing" width="700"/></p>
 
 The *Add* page provides many options for adding application resources
-to your project namespace.  We're going to use the `Import from Git`
-option to bring our application code over from gitea.
+to your project namespace.  We're going to use the `Container images`
+option to create a container pod from a pre-built container image.
 
-<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images/shadow_i15.png" alt="drawing" width="700"/></p>
+<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images1/pic7_shadow.png" alt="drawing" width="700"/></p>
 
-We'll need to fill in a few fields on this `Import from Git` page.
-First, paste the URL for your starter repo into `Git Repo URL` field.
+Enter the image name, in this case `quay.io/atgreen0/ship_api:latest`.
+This is the ship's API service image, and it is hosted in the public
+`quay.io` registry.
 
-<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images/shadow_i16.png" alt="drawing" width="700"/></p>
+<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images1/pic8_shadow.png" alt="drawing" width="700"/></p>
 
-Next, because it's a private repo, we'll need to give OpenShift the
-credentials (your username/password) to access the private report.
-Click on the `Advanced Git options` drop-down button, and go to the
-`Source Secret` section.  Click on `Select Secret name` and `Create
-new Secret`.
+Click on the `Create` button to pull the image, and create the
+container pod.  You will soon see OpenShift's "Topology" view for your
+namespace, with the fully deployed container.
 
-<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images/shadow_i17.png" alt="drawing" width="700"/></p>
+<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images1/pic9_shadow.png" alt="drawing" width="700"/></p>
 
-Enter a secret a name (`git` in this example), followed by your
-username and password for basic authentication.  Clicking on `Create`
-will create the kubernetes Secret object that OpenShift will use to
-access your private repository.  Be sure to use this same secret any
-time you want to import a private git repo into your OpenShift
-project.
-
-<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images/shadow_i22.png" alt="drawing" width="700"/></p>
-
-Scrolling down, you'll see a number of builder container images.
-Select the image that matches your application (python, in our
-example).  This is an s2i container image that knows how to build
-applications from source.
-
-<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images/p1-shadowed.png" alt="drawing" width="700"/></p>
-
-Finally, we need to specify a unique `Name` for the application.
-Importantly, OpenShift will use this name to automatically create a
-Route for network ingress.  For this example, we're using `hello`.
-When OpenShift creates your application in this manner, it will
-automatically create the route `hello-playerX.apps.{{ player_cluster }}`,
-where `playerX` is your project name / namespace.
-
-Now click on the `Create` button.
-
-<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images/p3-shadowed.png" alt="drawing" width="700"/></p>
-
-You will now be taken to the developer Topology view.  You can always
-get back to this view by selecting Topology on the left hand side of
-the web console.
-
-The glyph in the center of the screen represents your python
-application.  Click on `hello` at the bottom and a sidebar will appear
-with important information and links.
-
-<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images/p4-shadowed.png" alt="drawing" width="700"/></p>
+Clicking on `ship` label beneath the openshift logo for your
+application will bring up `Deployment` details on the right.
 
 From here you can see:
 * the list of builds and their logs.
@@ -165,40 +78,118 @@ your application.  Take some time to explore them, while remembering
 that you can always get back to the Topology view by using the sidebar
 on the left.
 
-Also note that the button on the top right of the python logo is a
-link to your route.  Once the application has been built and deployed,
-clicking on that link should show "Hello World".
+<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images1/pic10_shadow.png" alt="drawing" width="700"/></p>
 
-<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images/p5-shadowed.png" alt="drawing" width="700"/></p>
+Clicking on the arrow on the top right of the openshift logo for you
+application will take you to the `Route` URL for your application.
+Note that the default endpoint, `\`, will present you with a 404
+error.
+
+<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images1/pic11_shadow.png" alt="drawing" width="700"/></p>
 
 ---
 
-## Step 3: Modifying your application
+## Step 2: Prepare your personal application repo
 
-Now that your service is running in OpenShift, you'll want to make a change and deploy the new version.  First, let's back to our application repo in gitea.
+The `starter` account at
+https://gitea-gitea.apps.{{ player_cluster }}/starter
+includes a number of starter application repos.  We'll be using the
+python starter app for the purposes of these instructions.
 
-<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images/p6-shadowed.png" alt="drawing" width="700"/></p>
+First you'll need to connect to gitea and login using your game
+credentials.   The `Sign in` button is on the top right of the screen.
 
-We want to change the "Hello World" message to "Bonjour Monde".  The code for displaying "Hello World" is found in `app.py`.   Click on `app.py` to view the code.
+<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images1/pic13_shadow.png" alt="drawing" width="700"/></p>
 
-<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images/p7-shadowed.png" alt="drawing" width="700"/></p>
+Once you log in, you'll be looking at your gitea account contents.  Of
+course, there are no git repos in your account yet.  We will have to
+fork one of the starter repos in here.
 
-Gitea has a nice built-in web-based editor you can use to make your change.   Click on the pencil icon near the top right of your code window to bring up the editor.  Now go to line 8 of the python program and make the necessary change as below.
+<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images1/pic15_shadow.png" alt="drawing" width="700"/></p>
 
-<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images/p8-shadowed.png" alt="drawing" width="700"/></p>
+Go to the `starter` account at https://gitea-gitea.apps.{{ player_cluster }}/starter to
+see the list of available choices.
 
-Once you've edited your code, you need to commit this change back into gitea's git repo.  Scroll down to find the green `Commit Changes` button, and click on that.
+<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images1/pic16_shadow.png" alt="drawing" width="700"/></p>
 
-<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images/p9-shadowed.png" alt="drawing" width="700"/></p>
+Select the `Python starter` application to view the repo contents.
 
-Now that you've changed your code in gitea, switch back to your
-project on OpenShift.  Bring up the sidebar on the right again, and
-find the `Start Build` button.  Clicking on that should start a new
-build, where it will pull your code from git and create a new
-container image.  Once built, it will automatically deploy the new
-version, and clicking on the route should bring up `Bonjour Monde` in
-your browser.
+<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images1/pic17_shadow.png" alt="drawing" width="700"/></p>
 
-<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images/p10-shadowed.png" alt="drawing" width="700"/></p>
+We need to fork this repo into your own account, by selecting the `Fork` button near the top right of the page.  Finalize the action by selecting the `Fork repository` button.
+
+<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images1/pic18_shadow.png" alt="drawing" width="700"/></p>
+
+Now that it's forked, you'll see a copy of the repo in your own
+account.  Copy the `HTTPS` URL for this project, as we'll need it for
+the next step.
+
+<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images1/pic19_shadow.png" alt="drawing" width="700"/></p>
+
+---
+
+## Step 3: Build and deploy in OpenShift
+
+Return to the `Add` page in OpenShift, and this time select `Import from Git` this time.   Paste your personal `Python starter` URL into `Git Repo URL` field.
+
+<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images1/pic20_shadow.png" alt="drawing" width="700"/></p>
+
+Scroll down and select the `Python` builder image to tell OpenShift that this is a git repo for a python application.
+
+<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images1/pic21_shadow.png" alt="drawing" width="700"/></p>
+
+Keep scrolling down and enter the name `hello` before selecting the `Create` button.
+
+<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images1/pic23_shadow.png" alt="drawing" width="700"/></p>
+
+Now, back on the `Topology` view, you should see the new `hello`
+deployment.  On the right hand side you'll see the list of application
+`Builds`, as we are building from source code.  Explore the build logs
+to see how the application container is built.
+
+<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images1/pic24_shadow.png" alt="drawing" width="700"/></p>
+
+You may see `ImagePullbackErrors` errors as OpenShift attempts to
+deploy before the first container image is built.  You can always
+force a new deployment by selecting `Restart rollout` from the
+three-dot menu to the right of deployment name underneath you
+application icon.
+
+<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images1/pic25_shadow.png" alt="drawing" width="700"/></p>
+
+---
+
+## Step 4: Modifying your application
+
+You may find that you will want to modify the applications you've
+built from source.  Fortunately, gitea includes a built-in editor for
+you to edit your code and commit changes straight from your browser.
+
+First, go back to the `python-starter` repo in your personal gitea account and select the `app.py` file.
+
+<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images1/pic27_shadow.png" alt="drawing" width="700"/></p>
+
+Now that you see the `app.py` source code, select the pen icon near the top right of your code windows.
+
+<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images1/pic28_shadow.png" alt="drawing" width="700"/></p>
+
+This will take you to the python code editor.  Make whatever changes you deem neccesary
+
+<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images1/pic29_shadow.png" alt="drawing" width="700"/></p>
+
+Scroll down to see the `Commit Changes` button.  Select this.
+
+<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images1/pic30_shadow.png" alt="drawing" width="700"/></p>
+
+Now return to the OpenShift `Topology` view and select `Start Build`
+in the `Builds` section.  This will pull your new code from gitea and
+create a new container image with these changes.
+
+<p align="center"><img src="https://gitea-gitea.apps.{{ player_cluster }}/starter/INSTRUCTIONS/raw/branch/master/images1/pic31_shadow.png" alt="drawing" width="700"/></p>
+
+One built, you can deploy the new image by selecting `Restart rollout`
+as described above, or just deleting the current pod by clicking on it
+from the `Topology` view and (mid-image, above), and selecting `Delete Pod`
+from the `Actions` menu on the top right.
 
 ---
