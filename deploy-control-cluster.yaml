@@ -9,7 +9,6 @@
     project_name: "ctfd"
     player_count: "400"
     ud_namespace: "username-distribution"
-  tasks:
 
   tasks:
     - name: create {{ project_name }} namespace
@@ -345,6 +344,8 @@
                 - env:
                   - name: ACCESS_LOG
                     value: '-'
+                  - name: SQLALCHEMY_MAX_OVERFLOW
+                    value: '100'
                   - name: DATABASE_URL
                     value: mysql+pymysql://ctfd:ctfd@ctfd-mysql-db/ctfd
                   - name: ERROR_LOG
@@ -358,14 +359,16 @@
                   - name: UPLOAD_FOLDER
                     value: /var/uploads
                   - name: WORKERS
-                    value: "9"
+                    value: "17"
+                  - name: WORKER_CLASS
+                    value: "sync"
                   - name: SECRET_KEY
                     value: youllneverguess
                   resources:
                     limits:
-                      cpu: '4'
+                      cpu: '8'
                     requests:
-                      cpu: '4'
+                      cpu: '8'
                   image: "image-registry.openshift-image-registry.svc:5000/{{ project_name }}/ctfd:latest"
                   imagePullPolicy: ""
                   name: ctfd
@@ -436,7 +439,7 @@
       delay: 15
 
     - name: Get the cluster console URL
-      shell: oc get routes --all-namespaces | grep console-openshift | awk '{ print $3 }'
+      shell: oc  get routes --all-namespaces | grep console-openshift | awk '{ print $3 }'
       register: oc_output
 
     - name: Extract the cluster domain
