@@ -6,6 +6,732 @@
   vars_files:
   - "game-clusters.yaml"
   vars:
+    ansible_python_interpreter: "{{ playbook_dir }}/space/bin/python3.13"
+    project_name: "ctfd"
+    player_count: "50"
+    ud_namespace: "username-distribution"
+  environment:
+    K8S_AUTH_KUBECONFIG: "{{ lookup('env', 'HOME') + '/.kube/config' }}"
+
+  tasks:
+    - name: create {{ project_name }} namespace
+      kubernetes.core.k8s:
+        api_version: v1
+        kind: Namespace
+        name: "{{ project_name }}"
+        state: present
+        wait: yes
+      retries: 20
+      delay: 15
+
+    - name: create imagestream
+      tags: ctfd-app
+      kubernetes.core.k8s:
+        api_version: image.openshift.io/v1
+        namespace: "{{ project_name }}"
+        kind: ImageStream
+        name: "ctfd"
+        state: present
+        wait: yes
+      retries: 20
+      delay: 15
+
+    - name: create buildconfig for CTFd
+      tags: ctfd-app
+      kubernetes.core.k8s:
+        namespace: "{{ project_name }}"
+        definition:
+          apiVersion: build.openshift.io/v1
+          kind: BuildConfig
+          metadata:
+            annotations:
+            labels:
+              app: ctfd
+            name: ctfd
+          spec:
+            output:
+              to:
+                kind: ImageStreamTag
+                name: ctfd:latest
+            triggers:
+              - type: "ConfigChange"
+            source:
+              git:
+                ref: master
+                uri: https://github.com/catalyst-ctfd/CTFd
+              contextDir:
+              type: Git
+            strategy:
+              dockerStrategy:
+                from:
+                  kind: DockerImage
+                  name: python:3.11-slim-bookworm
+                forcePull: true
+                noCache: true
+              type: Docker
+        wait: yes
+      retries: 20
+      delay: 15
+
+    - name: create mysql pvc
+      tags: ctfd-app
+      kubernetes.core.k8s:
+        namespace: "{{ project_name }}"
+        definition:
+          apiVersion: v1
+          kind: PersistentVolumeClaim
+          metadata:
+            namespace: "{{ project_name }}"
+            creationTimestamp: null
+            labels:
+              ctfd: mysql-pv
+              app: ctfd-mysql-db-pv
+            name: ctfd-mysql-db-pv
+          spec:
+            accessModes:
+            - ReadWriteOnce
+            resources:
+              requests:
+                storage: 10Gi
+      retries: 20
+      delay: 15
+
+    - name: create mysql deployment
+      tags: ctfd-app
+      kubernetes.core.k8s:
+        namespace: "{{ project_name }}"
+        definition:
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            namespace: "{{ project_name }}"
+            creationTimestamp: null
+            labels:
+              ctfd: mysql
+              app: ctfd-mysql-db
+            name: ctfd-mysql-db
+          spec:
+            replicas: 1
+            selector:
+              matchLabels:
+                app: ctfd-mysql-db
+            strategy:
+              type: Recreate
+            template:
+              metadata:
+                creationTimestamp: null
+                labels:
+                  ctfd: mysql
+                  app: ctfd-mysql-db
+              spec:
+                containers:
+                - args:
+                  - mysqld
+                  - --character-set-server=utf8mb4
+                  - --collation-server=utf8mb4_unicode_ci
+                  - --wait_timeout=28800
+                  - --log-warnings=0
+                  env:
+                  - name: MYSQL_DATABASE
+                    value: ctfd
+                  - name: MYSQL_PASSWORD
+                    value: ctfd
+                  - name: MYSQL_ROOT_PASSWORD
+                    value: ctfd
+                  - name: MYSQL_USER
+                    value: ctfd
+                  image: mariadb:10.4.12
+                  imagePullPolicy: ""
+                  name: ctfd-mysql-db
+                  resources: {}
+                  volumeMounts:
+                  - mountPath: /var/lib/mysql
+                    name: ctfd-mysql-db-pv
+                restartPolicy: Always
+                serviceAccountName: ""
+                automountServiceAccountToken: false
+                volumes:
+                - name: ctfd-mysql-db-pv
+                  persistentVolumeClaim:
+                    claimName: ctfd-mysql-db-pv
+      retries: 20
+      delay: 15
+
+    - name: create mysql service
+      tags: ctfd-app
+      kubernetes.core.k8s:
+        namespace: "{{ project_name }}"
+        definition:
+          apiVersion: v1
+          kind: Service
+          metadata:
+            namespace: "{{ project_name }}"
+            creationTimestamp: null
+            labels:
+              app: ctfd-mysql-db
+            name: ctfd-mysql-db
+          spec:
+            ports:
+            - name: mysql
+              port: 3306
+              protocol: TCP
+              targetPort: 3306
+            selector:
+              app: ctfd-mysql-db
+            type: ClusterIP
+      retries: 20
+      delay: 15
+
+    - name: create redis pvc
+      tags: ctfd-app
+      kubernetes.core.k8s:
+        namespace: "{{ project_name }}"
+        definition:
+          apiVersion: v1
+          kind: PersistentVolumeClaim
+          metadata:
+            namespace: "{{ project_name }}"
+            creationTimestamp: null
+            name: ctfd-redis-cache-pv
+            labels:
+              ctfd: redis-pv
+              app: ctfd-redis-cache-pv
+          spec:
+            accessModes:
+            - ReadWriteOnce
+            resources:
+              requests:
+                storage: 10Gi
+      retries: 20
+      delay: 15
+
+    - name: create redis deployment
+      tags: ctfd-app
+      kubernetes.core.k8s:
+        namespace: "{{ project_name }}"
+        definition:
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            namespace: "{{ project_name }}"
+            creationTimestamp: null
+            name: ctfd-redis-cache
+            labels:
+              ctfd: redis
+              app: ctfd-redis-cache
+          spec:
+            replicas: 1
+            selector:
+              matchLabels:
+                app: ctfd-redis-cache
+            strategy:
+              type: Recreate
+            template:
+              metadata:
+                creationTimestamp: null
+                labels:
+                  ctfd: redis
+                  app: ctfd-redis-cache
+              spec:
+                containers:
+                - image: redis:4
+                  imagePullPolicy: ""
+                  name: ctfd-redis-cache
+                  resources: {}
+                  volumeMounts:
+                  - mountPath: /data
+                    name: ctfd-redis-cache-pv
+                restartPolicy: Always
+                serviceAccountName: ""
+                automountServiceAccountToken: false
+                volumes:
+                - name: ctfd-redis-cache-pv
+                  persistentVolumeClaim:
+                    claimName: ctfd-redis-cache-pv
+      retries: 20
+      delay: 15
+
+    - name: create redis service
+      tags: ctfd-app
+      kubernetes.core.k8s:
+        namespace: "{{ project_name }}"
+        definition:
+          apiVersion: v1
+          kind: Service
+          metadata:
+            namespace: "{{ project_name }}"
+            creationTimestamp: null
+            labels:
+              app: ctfd-redis-cache
+            name: ctfd-redis-cache
+          spec:
+            ports:
+            - name: redis
+              port: 6379
+              protocol: TCP
+              targetPort: 6379
+            selector:
+              app: ctfd-redis-cache
+            type: ClusterIP
+      retries: 20
+      delay: 15
+
+    - name: create ctfd logs pvc
+      tags: ctfd-app
+      kubernetes.core.k8s:
+        namespace: "{{ project_name }}"
+        definition:
+          apiVersion: v1
+          kind: PersistentVolumeClaim
+          metadata:
+            creationTimestamp: null
+            labels:
+              ctfd: ctf-pv
+              app: ctf-pv-logs
+            name: ctf-pv-logs
+          spec:
+            accessModes:
+            - ReadWriteOnce
+            resources:
+              requests:
+                storage: 10Gi
+      retries: 20
+      delay: 15
+
+    - name: create ctfd uploads pvc
+      tags: ctfd-app
+      kubernetes.core.k8s:
+        namespace: "{{ project_name }}"
+        definition:
+          apiVersion: v1
+          kind: PersistentVolumeClaim
+          metadata:
+            creationTimestamp: null
+            labels:
+              ctfd: ctf-pv
+              app: ctfd-pv-uploads
+            name: ctfd-pv-uploads
+          spec:
+            accessModes:
+            - ReadWriteOnce
+            resources:
+              requests:
+                storage: 1Gi
+      retries: 20
+      delay: 15
+
+    - name: create ctfd deployment
+      tags: ctfd-app
+      kubernetes.core.k8s:
+        namespace: "{{ project_name }}"
+        definition:
+          apiVersion: apps/v1
+          kind: StatefulSet
+          metadata:
+            name: ctfd
+            labels:
+              ctfd: ctfd
+              app: ctfd
+          spec:
+            replicas: 1
+            selector:
+              matchLabels:
+                app: ctfd
+            template:
+              metadata:
+                labels:
+                  ctfd: ctfd
+                  app: ctfd
+              spec:
+                containers:
+                - env:
+                  - name: ACCESS_LOG
+                    value: '-'
+                  - name: SQLALCHEMY_MAX_OVERFLOW
+                    value: '100'
+                  - name: DATABASE_URL
+                    value: mysql+pymysql://ctfd:ctfd@ctfd-mysql-db/ctfd
+                  - name: ERROR_LOG
+                    value: '-'
+                  - name: LOG_FOLDER
+                    value: /var/log/CTFd
+                  - name: REDIS_URL
+                    value: redis://ctfd-redis-cache:6379
+                  - name: REVERSE_PROXY
+                    value: "true"
+                  - name: UPLOAD_FOLDER
+                    value: /var/uploads
+                  - name: WORKERS
+                    value: "17"
+                  - name: WORKER_CLASS
+                    value: "sync"
+                  - name: SECRET_KEY
+                    value: youllneverguess
+                  resources:
+                    limits:
+                      cpu: '8'
+                    requests:
+                      cpu: '8'
+                  image: "image-registry.openshift-image-registry.svc:5000/{{ project_name }}/ctfd:latest"
+                  imagePullPolicy: ""
+                  name: ctfd
+                  resources: {}
+                  volumeMounts:
+                  - mountPath: /var/log/CTFd
+                    name: ctf-pv-logs
+                  - mountPath: /var/uploads
+                    name: ctfd-pv-uploads
+                restartPolicy: Always
+                serviceAccountName: ""
+                automountServiceAccountToken: false
+                volumes:
+                - name: ctf-pv-logs
+                  persistentVolumeClaim:
+                    claimName: ctf-pv-logs
+                - name: ctfd-pv-uploads
+                  persistentVolumeClaim:
+                    claimName: ctfd-pv-uploads
+      retries: 20
+      delay: 15
+
+    - name: create ctfd service
+      tags: ctfd-app
+      kubernetes.core.k8s:
+        namespace: "{{ project_name }}"
+        definition:
+          apiVersion: v1
+          kind: Service
+          metadata:
+            labels:
+              app: ctfd
+            name: ctfd
+          spec:
+            ports:
+            - name: ui
+              port: 8000
+              protocol: TCP
+              targetPort: 8000
+            selector:
+              app: ctfd
+            type: ClusterIP
+      retries: 20
+      delay: 15
+
+    - name: create space route
+      tags: ctfd-app
+      kubernetes.core.k8s:
+        namespace: "{{ project_name }}"
+        definition:
+          kind: Route
+          apiVersion: route.openshift.io/v1
+          metadata:
+            name: space
+            labels:
+              app: ctfd
+          spec:
+            to:
+              kind: Service
+              name: ctfd
+              weight: 100
+            port:
+              targetPort: ui
+            tls:
+              termination: edge
+            wildcardPolicy: None
+      retries: 20
+      delay: 15
+
+    - name: Get the cluster console URL
+      shell: oc  get routes --all-namespaces | grep console-openshift | awk '{ print $3 }'
+      register: oc_output
+
+    - name: Extract the cluster domain
+      set_fact:
+        extracted_domain: "{{ oc_output.stdout.split('apps.')[1] }}"
+
+    - name: Create ctfd users
+      shell: "python3 {{ playbook_dir }}/make-ctfd-users.py > {{ playbook_dir }}/ctfd-config/db/users.json"
+
+    - name: Patch config.json file
+      template:
+        src: "{{ playbook_dir }}/ctfd-config/db/config.json.in"
+        dest: "{{ playbook_dir }}/ctfd-config/db/config.json"
+      vars:
+        cluster_url: "{{ extracted_domain }}"
+
+    - name: Patch judge config/settings.ini
+      template:
+        src: "{{ playbook_dir }}/judge/settings.ini.in"
+        dest: "{{ playbook_dir }}/judge/settings.ini"
+      vars:
+        cluster_url: "{{ extracted_domain }}"
+
+    - name: validating challenges.json
+      shell: jq empty "{{ playbook_dir }}/ctfd-config/db/challenges.json"
+      any_errors_fatal: true
+
+    - name: create ctfd archive for uploading
+      community.general.archive:
+        path:
+        - "{{ playbook_dir }}/ctfd-config/"
+        exclusion_patterns:
+        - "*.in"
+        dest: "{{ playbook_dir }}/ctfd-upload-me.zip"
+        format: zip
+
+    - ansible.builtin.debug:
+        msg: "URL is https://space-ctfd.apps.{{ extracted_domain }}/login"
+
+    - name: Wait for the URL to become available
+      ansible.builtin.uri:
+        url: "https://space-ctfd.apps.{{ extracted_domain }}/login"
+        validate_certs: false
+      register: result
+      retries: 60
+      delay: 10
+      until: result.status == 200
+
+#    - name: "Work around weird problem https://access.redhat.com/solutions/6971276"
+#      shell: oc delete validatingwebhookconfigurations controller.devfile.io && oc delete mutatingwebhookconfigurations controller.devfile.io
+#      ignore_errors: true
+
+    - name: copy the upload file to ctfd-0
+      shell: sleep 60 && oc -n ctfd cp "{{ playbook_dir }}/ctfd-upload-me.zip" ctfd-0:/tmp
+      retries: 20
+      delay: 15
+
+    - name: import the upload
+      shell: oc -n ctfd rsh ctfd-0 python manage.py import_ctf /tmp/ctfd-upload-me.zip
+      retries: 20
+      delay: 15
+
+# Deploy the username-distribution app for dynamic user assignment
+
+    - name: create {{ ud_namespace }} namespace
+      kubernetes.core.k8s:
+        api_version: v1
+        kind: Namespace
+        name: "{{ ud_namespace }}"
+        state: present
+        wait: yes
+      retries: 20
+      delay: 15
+
+    - name: Create a Redis Deployment
+      k8s:
+        state: present
+        definition: |
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            namespace: "{{ ud_namespace }}"
+            name: redis
+            labels:
+              app: redis
+          spec:
+            replicas: 1
+            selector:
+              matchLabels:
+                app: redis
+            template:
+              metadata:
+                labels:
+                  app: redis
+              spec:
+                containers:
+                  - name: redis
+                    image: redis:latest
+                    ports:
+                      - containerPort: 6379
+                    volumeMounts:
+                      - name: redis-data
+                        mountPath: /data
+                volumes:
+                  - name: redis-data
+                    persistentVolumeClaim:
+                      claimName: redis-pvc
+    - name: Create a Redis Service
+      k8s:
+        state: present
+        definition: |
+          apiVersion: v1
+          kind: Service
+          metadata:
+            namespace: "{{ ud_namespace }}"
+            name: redis
+          spec:
+            ports:
+              - port: 6379
+                targetPort: 6379
+            selector:
+              app: redis
+    - name: Create a Persistent Volume Claim for Redis
+      k8s:
+        state: present
+        definition: |
+          apiVersion: v1
+          kind: PersistentVolumeClaim
+          metadata:
+            name: redis-pvc
+            namespace: "{{ ud_namespace }}"
+          spec:
+            accessModes:
+              - ReadWriteOnce
+            resources:
+              requests:
+                storage: 1Gi
+
+    - name: create imagestream
+      tags: ctfd-app
+      kubernetes.core.k8s:
+        api_version: image.openshift.io/v1
+        namespace: "{{ ud_namespace }}"
+        kind: ImageStream
+        name: "username-distribution"
+        state: present
+        wait: yes
+      retries: 20
+      delay: 15
+
+    - name: Create a Kubernetes Secret
+      k8s:
+        state: present
+        definition:
+          apiVersion: v1
+          kind: Secret
+          metadata:
+            name: gitlab-access-token-secret
+            namespace: "{{ ud_namespace }}"  # Change to your desired namespace
+          type: kubernetes.io/basic-auth
+          data:
+            username: ''
+            password: "Z2xwYXQtTGdlcGdMeEVDODlCeUFGUE1Ec1k="
+      retries: 20
+      delay: 15
+
+    - name: Create a BuildConfig for S2I build
+      k8s:
+        state: present
+        definition: |
+          apiVersion: build.openshift.io/v1
+          kind: BuildConfig
+          metadata:
+            name: "username-distribution"
+            namespace: "{{ ud_namespace }}"
+          spec:
+            source:
+              type: Git
+              git:
+                uri: "https://gitlab.consulting.redhat.com/openshift-island-challenge/openshift-space-challenge.git"
+              contextDir: username-distribution
+              sourceSecret:
+                name: gitlab-access-token-secret
+            strategy:
+              type: Docker
+              dockerStrategy:
+                dockerfilePath: Dockerfile
+            output:
+              to:
+                kind: ImageStreamTag
+                name: "username-distribution:latest"
+
+    - name: Start the build
+      command: oc start-build username-distribution -n "{{ ud_namespace }}"  --wait
+      register: build_result
+      failed_when: build_result.rc != 0
+
+    - name: create username-distribution deployment
+      kubernetes.core.k8s:
+        namespace: "{{ ud_namespace }}"
+        definition:
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            namespace: "{{ ud_namespace }}"
+            labels:
+              app: username-distribution
+            name: username-distribution
+          spec:
+            replicas: 1
+            selector:
+              matchLabels:
+                app: username-distribution
+            strategy:
+              type: RollingUpdate
+            template:
+              metadata:
+                labels:
+                  app: username-distribution
+              spec:
+                containers:
+                  - name: "username-distribution"
+                    image: "image-registry.openshift-image-registry.svc:5000/{{ ud_namespace }}/username-distribution:latest"
+                    ports:
+                      - containerPort: 8080
+                    env:
+                    - name: LAB_REDIS_HOST
+                      value: redis
+                    - name: LAB_DURATION_HOURS
+                      value: 1y
+                    - name: LAB_USER_COUNT
+                      value: "{{ player_count }}"
+                    - name: LAB_PLAYER_CLUSTERS
+                      value: "{{ player_clusters | map('regex_replace', '^(.*)$', 'https://gitea-gitea.apps.\\1/starter/INSTRUCTIONS/src/branch/master/README.md') | join(',') }}"
+
+    - name: Create a Service
+      k8s:
+        state: present
+        definition: |
+          apiVersion: v1
+          kind: Service
+          metadata:
+            name: "username-distribution"
+            namespace: "{{ ud_namespace }}"
+          spec:
+            ports:
+              - port: 8080
+                targetPort: 8080
+            selector:
+              app: "username-distribution"
+
+    - name: Create an Route
+      k8s:
+        state: present
+        definition: |
+          apiVersion: route.openshift.io/v1
+          kind: Route
+          metadata:
+            name: "username-distribution"
+            namespace: "{{ ud_namespace }}"
+          spec:
+            to:
+              kind: Service
+              name: "username-distribution"
+            port:
+              targetPort: 8080
+            tls:
+              termination: edge
+            wildcardPolicy: None
+
+    - ansible.builtin.debug:
+        msg: "User Assignment URL is https://username-distribution-username-distribution.apps.{{ extracted_domain }}"
+
+    - name: Wait for the URL to become available
+      ansible.builtin.uri:
+        url: "https://username-distribution-username-distribution.apps.{{ extracted_domain }}"
+        validate_certs: false
+      register: result
+      retries: 30
+      delay: 10
+      until: result.status == 200
+---
+- name: Deploy CTFd
+  hosts: localhost
+  gather_facts: false
+  connection: local
+  vars_files:
+  - "game-clusters.yaml"
+  vars:
     project_name: "ctfd"
     player_count: "400"
     ud_namespace: "username-distribution"
