@@ -82,3 +82,22 @@ Using the admin access in CTFd, you can create new challenges. Under Config/Back
 # Authors
 
 The OpenShift Space Challenge was created by Anthony Green, Marco Berube and Nikhil Malvankar.
+
+# LL Notes
+Login using the following method
+
+```bash
+oc login \
+  -u admin -p '<admin password>' \
+  --server='https://api.cluster-<xxx>.<yyy>.opentlc.com:6443' \
+  --insecure-skip-tls-verify=true
+```
+
+Create virtual environment
+
+```bash
+python3 -m venv space           
+source space/bin/activate
+```
+
+Playbook was modified to work on my laptop
